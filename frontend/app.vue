@@ -1,3 +1,8 @@
+<script setup>
+const colorMode = useColorMode()
+
+</script>
+
 <template>
     <div class="h-screen flex flex-col">
         <div class="navbar bg-base-100">
@@ -34,5 +39,3 @@
     </div>
 
 </template>
-<script setup lang="ts">
-</script>
