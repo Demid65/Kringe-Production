@@ -1,35 +1,15 @@
 <script setup lang="ts">
-    const cards = useState<CardData[]>('cards', () => [
-      {
-        title: "card 1",
-        id: "1"
-      },
-      {
-        title: "card 2",
-        id: "2"
-      },
-      {
-        title: "card 3",
-        id: "3"
-      },
-    ])
+import {popularThemes as ptMock, newThemes as ntMock} from "~/types/mocks";
 
-    function idToPath(id: string): string {
-      return `/themes/${id}`
-    }
+const popularThemes = useState<CardData[]>("popularThemes", () => ptMock);
 
-    type CardData = {
-      title: string,
-      id: string
-    }
+const newThemes = useState<CardData[]>("newThemes", () => ntMock)
+
 </script>
 
 <template>
-  <div v-for="card in cards" class="flex flex-col p-1 container mx-auto">
-    <div>
-      <NuxtLink :to="idToPath(card.id)">
-        <ListCard :title="card.title" :cardId="card.id"/>
-      </NuxtLink>
+    <div class="flex flex-col gap-8 container mx-auto px-2 ">
+        <ListCard :content="popularThemes" header="Popular" />
+        <ListCard :content="newThemes" header="New" />
     </div>
-  </div>
 </template>
