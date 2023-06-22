@@ -25,3 +25,14 @@ interface MainCardLink {
     id: string,
     target?: Categories
 }
+
+type CourseData = {
+    [key in Categories]: {
+        text?: string,
+        files: [{
+            name: string,
+            type: string,
+            id: string
+        }]
+    };
+};

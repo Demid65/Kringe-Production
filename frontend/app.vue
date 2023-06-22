@@ -9,12 +9,12 @@
             </div>
             <div class="flex-none">
                 <div class="dropdown dropdown-end">
-                    <label tabIndex={0} class="btn btn-ghost btn-circle avatar placeholder">
-                        <div class="w-10 rounded-full ring ring-neutral">
+                    <label tabIndex="0" class="btn btn-ghost btn-circle avatar placeholder">
+                        <div tabIndex="0" class="w-10 rounded-full ring ring-accent">
                             <span class="text-lg">USR</span>
                         </div>
                     </label>
-                    <ul tabIndex={0} class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                    <ul tabIndex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                         <li>
                             <NuxtLink :to="`/profile`">
                                 Profile
@@ -32,7 +32,7 @@
         <div class="flex flex-row flex-1 p-4 pt-0">
             <input type="checkbox" class="drawer-toggle">
             <NuxtPage />
-            <SideBar class="hidden lg:block"/>
+            <SideBar class="hidden lg:flex"/>
         </div>
     </div>
 
