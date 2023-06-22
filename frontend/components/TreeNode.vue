@@ -10,12 +10,12 @@ const props = defineProps({
 </script>
 
 <template>
-    <div v-if="props.data?.children !== null" className="collapse bg-base-200 collapse-arrow">
+    <div v-if="props.data?.children !== null" class="collapse bg-base-200 collapse-arrow">
         <input type="checkbox" class="min-h-0" />
-        <div className="collapse-title min-h-0 p-1">
+        <div class="collapse-title min-h-0 p-1">
             <p class="pl-4">{{ props.data.title }}</p>
         </div>
-        <div className="collapse-content">
+        <div class="collapse-content">
             <div v-for="child in props.data.children">
                 <TreeNode :data="child" />
             </div>

@@ -5,7 +5,7 @@ const treeData = useState<TreeNode[]>('treeData', () => sidebarTree)
 </script>
 
 <template>
-    <div class=" flex flex-col flex-none bg-base-200 p-4 h-full rounded-xl">
+    <div class=" flex flex-col flex-none bg-base-200 p-4 h-full rounded-xl shadow-xl">
         <input type="text" class="input bg-base-300" placeholder="search...">
         <div v-for="node in treeData" class="flex flex-col">
             <TreeNode :data="node"/>

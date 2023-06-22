@@ -7,10 +7,12 @@ export const sidebarTree: TreeNode[] = [
                 children: [
                     {
                         title: 'SM1_SM1_BS1',
+                        id: 'sm1_sm1_bs1',
                         children: null
                     },
                     {
                         title: 'SM2_SM1_BS1',
+                        id: 'sm2_sm1_bs1',
                         children: null
                     }
                 ]
@@ -20,10 +22,12 @@ export const sidebarTree: TreeNode[] = [
                 children: [
                     {
                         title: 'SM1_SM2_BS1',
+                        id: 'sm1_sm2_bs1',
                         children: null
                     },
                     {
                         title: 'SM2_SM2_BS1',
+                        id: 'sm2_sm2_bs1',
                         children: null
                     }
                 ]
