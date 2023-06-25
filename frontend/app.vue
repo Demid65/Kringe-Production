@@ -33,7 +33,7 @@
       </div>
     </div>
     
-    <div class="fixed bottom-4 right-4 z-50 lg:hidden" style="z-index: 9999;">
+    <div class="fixed bottom-4 right-4 lg:hidden z-50">
       <button class="rounded-full bg-blue-500 text-white p-2" @click="toggleSidebar">
         <svg
           class="h-6 w-6"
@@ -50,7 +50,7 @@
       </button>
     </div>
     
-    <div :class="['fixed inset-0 z-50 bg-white bg-opacity-75 overflow-y-auto', isSidebarVisible ? 'block' : 'hidden', 'lg:hidden']">
+    <div :class="['fixed inset-0 z-10 bg-white bg-opacity-75 overflow-y-auto', isSidebarVisible ? 'block' : 'hidden', 'lg:hidden']">
       <div class="absolute inset-0 flex justify-end">
         <button class="text-2xl px-4 py-2" @click="toggleSidebar">&times;</button>
       </div>
@@ -88,10 +88,10 @@ export default {
 };
 </script>
   
-  <style scoped>
-  @media (min-width: 1024px) {
-    .flex-1 {
-      flex: 1;
+<style scoped>
+    @media (min-width: 1024px) {
+        .flex-1 {
+            flex: 1;
+        }
     }
-  }
-  </style>
+</style>
