@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import {popularThemes as ptMock, newThemes as ntMock} from "~/types/mocks";
 
-const popularThemes = useState<CardData[]>("popularThemes", () => ptMock);
 
-const newThemes = useState<CardData[]>("newThemes", () => ntMock)
-
-const { data: cards, pending, error, refresh } = await useFetch('/api/getMain')
+const { data: cards, pending, error, refresh } = await useFetch('/api/mocks', {
+    query: {
+        data: 'main'
+    }
+})
 
 </script>
 
 <template>
-    <div class="flex flex-col gap-8 container h-full shadow-xl mx-auto px-2 ">
+    <div class="flex flex-col gap-8 container h-full mx-auto px-2 ">
 
         <FetchPlaceholder :pending="pending" :error="error" >
-            <ListCard :content="cards.popular" header="Popular" />
-            <ListCard :content="cards.new" header="New" />
+            <ListCard :content="cards.popular" :pending="pending" :error="error" header="Popular" />
+            <ListCard :content="cards.new" :pending="pending" :error="error" header="New" />
         </FetchPlaceholder>
 
     </div>

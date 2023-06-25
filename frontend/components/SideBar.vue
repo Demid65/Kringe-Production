@@ -3,7 +3,11 @@ import {sidebarTree} from "~/types/mocks";
 
 const treeData = useState('treeData', () => sidebarTree)
 
-const { data: tree, pending, error, refresh } = await useFetch('/api/getTree')
+const { data: tree, pending, error, refresh } = await useFetch('/api/mocks', {
+    query: {
+        data: 'sidebar'
+    }
+})
 
 </script>
 

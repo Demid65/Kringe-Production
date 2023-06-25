@@ -115,33 +115,94 @@ export const sidebarTree: TreeNode[] = [
         ]
     }
 ]
-export const newThemes: CardData[] = [
-    {
-        title: "card 1",
-        id: "1",
-    },
-    {
-        title: "card 2",
-        id: "2",
-    },
-    {
-        title: "card 3",
-        id: "3",
-    }
-]
-export const popularThemes: CardData[] = [
-    {
-        title: "card 1",
-        id: "1",
-    },
-    {
-        title: "card 2",
-        id: "2",
-    },
-    {
-        title: "card 3",
-        id: "3",
-    }
-]
+export const mainData: {
+    popular: CardData[],
+    new: CardData[]
+} = {
+    popular: [
+        {
+            title: "MA1 - Fall 23 - Assignment 1 - Discussion",
+            id: "BS1_MA1_A1",
+        },
+        {
+            title: "BS3 - Best electives - Discussion",
+            id: "BS3_electives",
+        },
+        {
+            title: "AGLA - Shared notes",
+            id: "BS1_AGLA",
+        }
+    ],
+    new: [
+        {
+            title: "MA1 - Fall 23 - Assignment 1 - Discussion",
+            id: "BS1_MA1_A1",
+        },
+        {
+            title: "BS3 - Best electives - Discussion",
+            id: "BS3_electives",
+        },
+        {
+            title: "AGLA - Shared notes",
+            id: "BS1_AGLA",
+        }
+    ]
+}
 
-export const themeTopics: TreeNode[] = sidebarTree
+export const themeTopics = {
+    title: 'MA1',
+    lectures: {
+        files: [
+            {
+                name: 'lec1',
+                type: 'pdf',
+                id: 'lec1'
+            },
+            {
+                name: 'lec2',
+                type: 'pdf',
+                id: 'lec2'
+            },
+            {
+                name: 'lec3',
+                type: 'pdf',
+                id: 'lec3'
+            }
+        ]
+    },
+    tutorials: {
+        files: [
+            {
+                name: 'tut1',
+                type: 'pdf',
+                id: 'tut1'
+            },
+            {
+                name: 'tut2',
+                type: 'pdf',
+                id: 'tut2'
+            }
+        ]
+    },
+    labs: {
+        files: []
+    },
+    shared: {
+        files: [
+            {
+                name: 'test 1 cheatsheet',
+                type: 'pdf',
+                id: '12'
+            }
+        ]
+    },
+    exams: {
+        files: []
+    },
+    additional: {
+        files: []
+    },
+    info: {
+        files: []
+    }
+}

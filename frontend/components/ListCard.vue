@@ -3,7 +3,9 @@
 
     const props = defineProps([
         'content',
-        'header'
+        'header',
+        'pending',
+        'error'
     ])
 
 </script>
@@ -12,11 +14,11 @@
     <div class="card bg-base-200 shadow-xl">
         <div class="card-body p-4">
             <h1 class="card-title rounded-lg bg-base-300 p-2">{{ props.header }}</h1>
-            <h1 v-if="props.content.pending">Fetching...</h1>
-            <h1 v-else-if="props.content.error">Error</h1>
+            <h1 v-if="props.pending">Fetching...</h1>
+            <h1 v-else-if="props.error">Error</h1>
             <template v-else>
                 <div v-for="theme in props.content" class="flex flex-col">
-                    <NuxtLink :to="`/${theme.id}`">
+                    <NuxtLink :to="`/theme/${theme.id}`">
                         <div class="ml-4 p-2 bg-base-300 rounded-lg flex flex-row items-center gap-x-4">
                             <div class="badge badge-accent badge-sm"></div>
                             <h2>
