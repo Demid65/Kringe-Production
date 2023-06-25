@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {categoriesList} from "~/types/types";
+import {categoriesList} from "~/utils/types";
 
 defineProps(['modelValue'])
 defineEmits(['update:modelValue'])

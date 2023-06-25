@@ -1,10 +1,11 @@
 <script setup lang="ts">
     import {$fetch} from "ofetch";
+    import {routesMap} from "~/utils/routes";
 
     const props = defineProps(['title', 'files'])
 
     function getFile(fileId: string) {
-        $fetch('/api/getFile', {
+        $fetch(routesMap['getFile'], {
             query: {
                 id: fileId
             }

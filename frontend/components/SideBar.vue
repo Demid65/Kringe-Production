@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import {sidebarTree} from "~/types/mocks";
+import {routesMap} from "~/utils/routes";
 
-const treeData = useState('treeData', () => sidebarTree)
-
-const { data: tree, pending, error, refresh } = await useFetch('/api/mocks', {
+const { data: tree, pending, error, refresh } = await useFetch(routesMap['sidebarData'], {
     query: {
         data: 'sidebar'
     }

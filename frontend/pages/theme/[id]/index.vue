@@ -1,6 +1,8 @@
 <script setup lang="ts">
 
-const { data: cards, pending, error, refresh } = await useFetch('/api/mocks', {
+import {routesMap} from "~/utils/routes";
+
+const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseData'], {
     query: {
         data: 'theme'
     }

@@ -1,4 +1,4 @@
-import {mainData, sidebarTree, themeTopics} from "../../types/mocks";
+import {mainData, sidebarTree, themeTopics} from "../../utils/mocks";
 
 export default defineEventHandler((event) => {
     const query = getQuery(event)

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {categoriesList} from "~/types/types";
+import {categoriesList} from "~/utils/types";
+import {routesMap} from "~/utils/routes";
 import {$fetch} from "ofetch";
 
 const props = defineProps({
@@ -24,7 +25,7 @@ function uploadFiles() {
         fd.append('files[]', f[i])
     }
 
-    $fetch('/api/upload', {
+    $fetch(routesMap['uploadFile'], {
         method: 'POST',
         body: fd
     }).catch((err) => {
