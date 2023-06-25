@@ -9,7 +9,7 @@
         <div class="flex-none">
           <div class="dropdown dropdown-end">
             <label tabIndex="0" class="btn btn-ghost btn-circle avatar placeholder">
-              <div class="w-10 rounded-full ring ring-neutral">
+              <div class="w-10 rounded-full ring ring-accent">
                 <span class="text-lg">USR</span>
               </div>
             </label>
@@ -28,13 +28,13 @@
       <div class="flex-1">
         <NuxtPage />
       </div>
-      <div :class="['lg:w-64', isSidebarVisible ? 'block' : 'hidden']">
+      <div :class="['lg:w-64 hidden lg:flex', isSidebarVisible ? 'hidden' : 'flex']">
         <SideBar />
       </div>
     </div>
     
     <div class="fixed bottom-4 right-4 lg:hidden z-50">
-      <button class="rounded-full bg-blue-500 text-white p-2" @click="toggleSidebar">
+      <button class="rounded-full bg-accent text-white p-2" @click="toggleSidebar">
         <svg
           class="h-6 w-6"
           viewBox="0 0 24 24"
@@ -50,9 +50,9 @@
       </button>
     </div>
     
-    <div :class="['fixed inset-0 z-10 bg-white bg-opacity-75 overflow-y-auto', isSidebarVisible ? 'block' : 'hidden', 'lg:hidden']">
+    <div :class="['fixed inset-0 z-10 bg-opacity-75 overflow-y-auto', isSidebarVisible ? 'block' : 'hidden', 'lg:hidden']">
       <div class="absolute inset-0 flex justify-end">
-        <button class="text-2xl px-4 py-2" @click="toggleSidebar">&times;</button>
+<!--        <button class="text-2xl px-4 py-2" @click="toggleSidebar">&times;</button>-->
       </div>
       <div class="flex h-full">
         <div class="w-full">

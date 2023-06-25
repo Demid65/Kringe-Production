@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
 
-const { data: cards, pending, error, refresh } = await useFetch(routesMap['mainData'], {
+const { data: cards, pending, error, refresh } = await useFetch('sus' + routesMap['mainData'], {
     query: {
         data: 'main'
-    }
+    },
+    server: false
 })
 
 </script>
