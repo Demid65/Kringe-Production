@@ -5,10 +5,16 @@ const { data: cards, pending, error, refresh } = await useFetch('/api/mocks', {
         data: 'theme'
     }
 })
+
 const uploadModalId = 'upload_modal'
 </script>
 
 <template>
+    <Head>
+        <Title>
+            {{ cards.title }}
+        </Title>
+    </Head>
     <UploadModal :id="uploadModalId"/>
     <div class="flex flex-col container mx-auto px-2 h-full">
         <div class="card bg-base-200 shadow-xl h-full">

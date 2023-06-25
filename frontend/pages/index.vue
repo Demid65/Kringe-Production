@@ -10,6 +10,12 @@ const { data: cards, pending, error, refresh } = await useFetch('/api/mocks', {
 </script>
 
 <template>
+    <Head>
+        <Title>
+            Kringe
+        </Title>
+    </Head>
+
     <div class="flex flex-col gap-8 container h-full mx-auto px-2 ">
 
         <FetchPlaceholder :pending="pending" :error="error" >

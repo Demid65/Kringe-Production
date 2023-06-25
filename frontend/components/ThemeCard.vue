@@ -24,9 +24,9 @@
         <div class="collapse-title min-h-0 p-1">
             <p class="pl-4">{{ capitalizeFirstLetter(props.title) }}</p>
         </div>
-        <div class="collapse-content">
-            <div v-for="file in props.files" class="flex gap-4">
-                <button class="btn" @click="getFile(file.id)">
+        <div class="collapse-content flex flex-row flex-wrap gap-2">
+            <div v-for="file in props.files" class="flex-none">
+                <button class="btn btn-neutral btn-outline" @click="getFile(file.id)">
                     {{ file.name }} ({{ file.type }})
                 </button>
             </div>
@@ -35,5 +35,10 @@
 </template>
 
 <style scoped>
-
+.collapse-content {
+    padding-bottom: 0;
+}
+.collapse-title:after {
+    left: 0
+}
 </style>

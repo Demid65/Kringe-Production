@@ -23,7 +23,7 @@ const props = defineProps({
     </div>
     <div v-else>
         <p class="p-1 pl-4">
-            <NuxtLink :to="`/${props.data.title}`">{{ props.data.title }}</NuxtLink>
+            <NuxtLink :to="`/theme/${props.data.title}`">{{ props.data.title }}</NuxtLink>
         </p>
     </div>
 </template>

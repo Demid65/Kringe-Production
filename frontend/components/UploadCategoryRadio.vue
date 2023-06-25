@@ -7,6 +7,10 @@ defineEmits(['update:modelValue'])
 const value = useState('value', () => categoriesList[0])
 const categories = categoriesList
 const radioName = 'category_radio'
+
+function capitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 </script>
 
 <template>
@@ -19,7 +23,7 @@ const radioName = 'category_radio'
                        @input="$emit('update:modelValue', $event.target.value)"
                        :name="radioName"
                        class="radio" />
-                <span class="label-text">{{ category }}</span>
+                <span class="label-text">{{ capitalizeFirstLetter(category) }}</span>
             </label>
         </div>
     </div>
