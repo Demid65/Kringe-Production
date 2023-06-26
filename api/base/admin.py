@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
-from base import models
+from .models import Course, File, Category
 
-admin.site.register(models.Course)
-admin.site.register(models.File)
-admin.site.register(models.Category)
+admin.site.register(Course)
+admin.site.register(File)
+admin.site.register(Category)
