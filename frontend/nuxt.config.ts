@@ -4,6 +4,6 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss'
     ],
     devtools: {
-        enabled: true
+        enabled: false
     }
 })

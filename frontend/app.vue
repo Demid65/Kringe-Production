@@ -1,3 +1,13 @@
+<script setup>
+const isSidebarVisible = useState('sidebarVisibility', () => false)
+function toggleSidebar() {
+    isSidebarVisible.value = !isSidebarVisible.value;
+}
+function toggleSidebarVisibility() {
+    isSidebarVisible.value = window.innerWidth >= 1024;
+}
+</script>
+
 <template>
     <div class="h-screen flex flex-col">
       <div class="navbar bg-base-100">
@@ -34,7 +44,7 @@
     </div>
     
     <div class="fixed bottom-4 right-4 lg:hidden z-50">
-      <button class="rounded-full bg-accent text-white p-2" @click="toggleSidebar">
+      <button class="rounded-full bg-accent text-white p-2" @click="toggleSidebar()">
         <svg
           class="h-6 w-6"
           viewBox="0 0 24 24"
@@ -62,31 +72,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      isSidebarVisible: false,
-    };
-  },
-  mounted() {
-    this.toggleSidebarVisibility();
-    window.addEventListener('resize', this.toggleSidebarVisibility);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.toggleSidebarVisibility);
-  },
-  methods: {
-    toggleSidebar() {
-      this.isSidebarVisible = !this.isSidebarVisible;
-    },
-    toggleSidebarVisibility() {
-      this.isSidebarVisible = window.innerWidth >= 1024;
-    },
-  },
-};
-</script>
   
 <style scoped>
     @media (min-width: 1024px) {

@@ -12,7 +12,7 @@ function handleFilesChange(event) {
         <input type="file"
                @change="handleFilesChange($event)"
                multiple="multiple"
-               class="file-input file-input-bordered w-full max-w-xs" />
+               class="file-input file-input-bordered w-full max-w" />
     </div>
 </template>
 

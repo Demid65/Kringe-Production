@@ -3,65 +3,54 @@ export const sidebarTree: TreeNode[] = [
         title: 'BS1',
         children: [
             {
-                title: 'SM1_BS1',
+                title: 'MA',
                 children: [
                     {
-                        title: 'SM1_SM1_BS1',
-                        id: 'sm1_sm1_bs1',
+                        title: 'MA1',
+                        id: 'BS1_MA1',
                         children: null
                     },
                     {
-                        title: 'SM2_SM1_BS1',
-                        id: 'sm2_sm1_bs1',
+                        title: 'MA2',
+                        id: 'BS1_MA2',
                         children: null
                     }
                 ]
             },
             {
-                title: 'SM2_BS1',
+                title: 'AGLA',
                 children: [
                     {
-                        title: 'SM1_SM2_BS1',
-                        id: 'sm1_sm2_bs1',
+                        title: 'AGLA1',
+                        id: 'BS1_AGLA1',
                         children: null
                     },
                     {
-                        title: 'SM2_SM2_BS1',
-                        id: 'sm2_sm2_bs1',
+                        title: 'AGLA2',
+                        id: 'BS1_AGLA2',
                         children: null
                     }
                 ]
             },
+            {
+                title: 'Philosophy 1',
+                id: 'BS1_PHIL1',
+                children: null
+            }
         ]
     },
     {
         title: 'BS2',
         children: [
             {
-                title: 'SM1_BS2',
-                children: [
-                    {
-                        title: 'SM1_SM1_BS2',
-                        children: null
-                    },
-                    {
-                        title: 'SM2_SM1_BS2',
-                        children: null
-                    }
-                ]
+                title: 'OS',
+                id: 'BS2_OS',
+                children: null
             },
             {
-                title: 'SM2_BS1',
-                children: [
-                    {
-                        title: 'SM1_SM2_BS2',
-                        children: null
-                    },
-                    {
-                        title: 'SM2_SM2_BS2',
-                        children: null
-                    }
-                ]
+                title: 'Philosophy 2',
+                id: 'BS2_PHIL2',
+                children: null
             },
         ]
     },

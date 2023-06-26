@@ -29,7 +29,7 @@ const uploadModalId = 'upload_modal'
                     <ThemeCard :title="topic" :files="cards[topic].files"/>
                 </div>
                 <div class="card-actions mt-auto justify-end">
-                    <button class="btn btn-sm btn-neutral" onclick='window.upload_modal.showModal()'>Upload Materials</button>
+                    <button class="btn btn-sm w-full btn-neutral" onclick='window.upload_modal.showModal()'>Upload Materials</button>
                 </div>
             </div>
         </div>
