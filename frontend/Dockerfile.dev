@@ -1,0 +1,11 @@
+FROM node:18-alpine
+
+WORKDIR /usr/src/app
+VOLUME . /usr/src/app
+VOLUME /usr/src/app/node_modules
+
+RUN npm install
+
+EXPOSE 3000
+
+ENTRYPOINT [ "npm", "run", "dev" ]

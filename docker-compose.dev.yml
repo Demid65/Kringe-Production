@@ -1,0 +1,35 @@
+services:
+  frontend:
+    image: node:18-alpine
+    volumes:
+      - ./frontend/:/usr/src/app/
+      - /usr/src/app/node_modules
+    working_dir: /usr/src/app
+    environment:
+      - HOST=frontend
+    ports:
+      - 3000:3000
+      - 24678:24678
+    command: >
+      sh -c "npm install &&
+             npm run dev"
+
+  backend:
+    image: python:3-alpine
+    volumes:
+      - ./api:/usr/src/app/
+    working_dir: /usr/src/app
+    ports:
+      - 8080:6080
+
+  rev_proxy:
+    image: nginx:1.24.0-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
