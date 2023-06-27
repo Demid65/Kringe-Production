@@ -14,13 +14,23 @@ services:
       sh -c "npm install &&
              npm run dev"
 
-  backend:
-    image: python:3-alpine
-    volumes:
-      - ./api:/usr/src/app/
-    working_dir: /usr/src/app
+  db:
+    image: postgres
     ports:
-      - 8080:6080
+      - 5432:5432
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  backend:
+    build:
+      context: ./api
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    restart: unless-stopped
 
   rev_proxy:
     image: nginx:1.24.0-alpine
@@ -32,4 +42,3 @@ services:
       - frontend
       - backend
     restart: unless-stopped
-
