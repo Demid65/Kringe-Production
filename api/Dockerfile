@@ -7,6 +7,11 @@ WORKDIR /usr/src/app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV DEBUG True
+ENV DJANGO_SUPERUSER_USERNAME admin
+ENV DJANGO_SUPERUSER_PASSWORD admin
+ENV DJANGO_SUPERUSER_EMAIL admin@admin.com
+ENV DATABASE_URL postgres://postgres:postgres@host.docker.internal:5432/postgres
 
 # install dependencies
 RUN pip install --upgrade pip
@@ -16,9 +21,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # copy project
 COPY . /usr/src/app
 
-# apply migrations
-RUN python manage.py migrate
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && (python manage.py createsuperuser --noinput || true) && python manage.py runserver 0.0.0.0:8000"]

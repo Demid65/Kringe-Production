@@ -2,3 +2,4 @@ Django~=4.2.2
 psycopg2-binary~=2.9.6
 djangorestframework~=3.14.0
 drf_yasg~=1.21.6
+django-environ~=0.10.0
