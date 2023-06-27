@@ -1,6 +1,6 @@
 from django.urls import path
 
-from base.views import CourseView, SingleCourseView, FileView, SingleFileView, SingleCategoryView, CategoryView
+from base.views import FileView, SingleFileView, SingleCategoryView, CategoryView
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -21,9 +21,6 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-
-    path('courses/', CourseView.as_view()),
-    path('courses/<int:pk>', SingleCourseView.as_view()),
 
     path('files/', FileView.as_view()),
     path('files/<int:pk>', SingleFileView.as_view()),

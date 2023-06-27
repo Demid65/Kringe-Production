@@ -1,12 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Course, File, Category
-
-
-class CourseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Course
-        fields = '__all__'
+from .models import File, CourseData
 
 
 class FileSerializer(serializers.ModelSerializer):
@@ -15,7 +9,7 @@ class FileSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CourseDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = CourseData
         fields = '__all__'
