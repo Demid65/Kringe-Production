@@ -1,13 +1,14 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView, \
+    DestroyAPIView, UpdateAPIView, CreateAPIView
 
-from base.models import File, CourseData
-from base.serializers import FileSerializer, CourseDataSerializer
+from base.models import File, Course
+from base.serializers import FileSerializer, CourseWithFilesSerializer, CourseSerializer
 
 
 # Create your views here
 
 
-class FileView(ListCreateAPIView):
+class ListFileView(ListCreateAPIView):
     queryset = File.objects.all()
     serializer_class = FileSerializer
 
@@ -17,11 +18,21 @@ class SingleFileView(RetrieveUpdateDestroyAPIView):
     serializer_class = FileSerializer
 
 
-class CategoryView(ListCreateAPIView):
-    queryset = CourseData.objects.all()
-    serializer_class = CourseDataSerializer
+class ListCourseView(ListCreateAPIView):
+    queryset = Course.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return CourseWithFilesSerializer
+        else:
+            return CourseSerializer
 
 
-class SingleCategoryView(RetrieveUpdateDestroyAPIView):
-    queryset = CourseData.objects.all()
-    serializer_class = CourseDataSerializer
+class SingleCourseView(RetrieveUpdateDestroyAPIView):
+    queryset = Course.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return CourseWithFilesSerializer
+        else:
+            return CourseSerializer

@@ -22,13 +22,13 @@ class File(models.Model):
     type = models.CharField(max_length=255)
     path = models.CharField(max_length=255)
     category = models.CharField(choices=Category.choices)
-    course = models.ForeignKey('base.CourseData', on_delete=models.CASCADE, null=False)
+    course = models.ForeignKey('base.Course', on_delete=models.CASCADE, null=False)
 
 
-class CourseData(models.Model):
+class Course(models.Model):
     class Meta:
-        verbose_name = "Course Data"
-        verbose_name_plural = "Course Data"
+        verbose_name = "Course"
+        verbose_name_plural = "Courses"
 
     id = models.AutoField(primary_key=True)
     title = models.TextField(blank=True, null=True)
