@@ -9,6 +9,10 @@ interface TreeNode {
     children: TreeNode[] | null
 }
 
+export enum loginModes {
+    login,
+    register
+}
 export const categoriesList = [
     'lectures',
     'tutorials',
