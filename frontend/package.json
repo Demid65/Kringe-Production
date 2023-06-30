@@ -12,6 +12,7 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.7.2",
+    "@sidebase/nuxt-auth": "^0.6.0-beta.3",
     "@types/node": "^18",
     "daisyui": "^3.1.0",
     "nuxt": "^3.5.2"

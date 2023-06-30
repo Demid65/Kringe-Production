@@ -1,7 +1,7 @@
 <script setup lang="ts">
-
 import {routesMap} from "~/utils/routes";
 
+const route = useRoute()
 const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseData'], {
     query: {
         data: 'theme'
@@ -23,7 +23,9 @@ const uploadModalId = 'upload_modal'
             <div class="card-body p-4 gap-0">
                 <div class="card-title rounded-lg bg-base-300 p-4">
                     <h1 class="text-2xl">{{ cards.title }}</h1>
-                    <button class="btn btn-sm btn-neutral ml-auto">Discussion</button>
+                    <NuxtLink :to="`${$route.params.id}/discussion`" class="ml-auto">
+                        <button class="btn btn-sm btn-neutral">Discussion</button>
+                    </NuxtLink>
                 </div>
                 <div v-for="topic in Object.keys(<Object>cards).slice(1)" class="flex p-2 flex-col">
                     <ThemeCard :title="topic" :files="cards[topic].files"/>

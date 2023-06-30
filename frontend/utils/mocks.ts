@@ -137,7 +137,6 @@ export const mainData: {
         }
     ]
 }
-
 export const themeTopics = {
     title: 'MA1',
     lectures: {
@@ -194,4 +193,90 @@ export const themeTopics = {
     info: {
         files: []
     }
+}
+export const discussionTopics = {
+    title: 'MA1',
+    topics: [
+        {
+            title: 'Why MA1?',
+            author: 'amogus',
+            id: 123
+        },
+        {
+            title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac.',
+            author: 'uwu',
+            id: 234
+        },
+        {
+            title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec mi aliquam, gravida ipsum at, tempus neque. Pellentesque sed placerat.',
+            author: 'nagibator2011',
+            id: 345
+        },
+        {
+            title: 'capstone omg capstone omg',
+            author: 'moofiy',
+            id: 456
+        },
+        {
+            title: 'Why MA1?',
+            author: 'amogus',
+            id: 123
+        },
+        {
+            title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac.',
+            author: 'uwu',
+            id: 234
+        },
+        {
+            title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec mi aliquam, gravida ipsum at, tempus neque. Pellentesque sed placerat.',
+            author: 'nagibator2011',
+            id: 345
+        },
+        {
+            title: 'capstone omg capstone omg',
+            author: 'moofiy',
+            id: 456
+        }
+    ]
+}
+
+export const discussionMessages = {
+    title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac.',
+    messages: [
+        {
+            authorId: 2,
+            authorName: 'owo',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus ante tellus, non dapibus augue posuere efficitur. Mauris ornare sem vel leo fringilla sodales. Nulla et urna at nisl pulvinar auctor. Vivamus et erat tincidunt, eleifend magna vitae, aliquet libero. Ut suscipit dui nec felis fringilla, quis congue tortor dignissim. Phasellus dignissim augue ut libero malesuada malesuada. Nam ut commodo tortor, bibendum ultricies risus.'
+        },
+        {
+            authorId: 3,
+            authorName: 'moofiy',
+            content: 'Etiam rutrum sed tortor sit amet condimentum.'
+        },
+        {
+            authorId: 2,
+            authorName: 'owo',
+            content: 'Vestibulum lectus sem, mollis non pharetra sed, volutpat a purus. Nam interdum laoreet elit eget semper.'
+        },
+        {
+            authorId: 1,
+            authorName: 'amogus',
+            content: 'Sed elementum eros nec justo ultricies, vitae convallis ex euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque lobortis tristique orci, nec convallis mi egestas ac. Nulla facilisi. Sed sed lectus imperdiet, elementum tortor a, commodo arcu.'
+        },
+        {
+            authorId: 3,
+            authorName: 'moofiy',
+            content: '??????????????'
+        },
+        {
+            authorId: 2,
+            authorName: 'owo',
+            content: 'Curabitur iaculis volutpat dui ac euismod. Duis sed erat mi. Integer odio sapien, consequat non pretium id, tincidunt eget orci.'
+        },
+        {
+            authorId: 1,
+            authorName: 'amogus',
+            content: 'Vestibulum nec dui lobortis, placerat erat vel, interdum purus.'
+        },
+    ]
 }

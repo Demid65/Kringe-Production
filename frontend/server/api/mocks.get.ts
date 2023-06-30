@@ -1,4 +1,4 @@
-import {mainData, sidebarTree, themeTopics} from "../../utils/mocks";
+import {discussionTopics, discussionMessages, mainData, sidebarTree, themeTopics} from "../../utils/mocks";
 
 export default defineEventHandler((event) => {
     const query = getQuery(event)
@@ -12,6 +12,12 @@ export default defineEventHandler((event) => {
             break
         case 'theme':
             returnData = themeTopics
+            break
+        case 'disc':
+            returnData = discussionTopics
+            break
+        case 'messages':
+            returnData = discussionMessages
             break
         default:
             throw createError({
