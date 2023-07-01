@@ -12,15 +12,32 @@ class FileSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = '__all__'
+        exclude = ('retrieve_count',)
+
+
+class CourseForMainPageSerializer(serializers.Serializer):
+    popular = serializers.SerializerMethodField()
+    new = serializers.SerializerMethodField()
+
+    class Meta:
+        fields = ('popular', 'new')
+
+    def __init__(self, *args, **kwargs):
+        self.search_result_size = kwargs['context'].pop('search_result_size', 5)
+        super().__init__(*args, **kwargs)
+
+    @swagger_serializer_method(CourseSerializer)
+    def get_new(self, obj):
+        new_courses = Course.objects.order_by('-created_time')[:self.search_result_size]
+        return CourseSerializer(new_courses, many=True).data
+
+    @swagger_serializer_method(CourseSerializer)
+    def get_popular(self, obj):
+        popular_courses = Course.objects.order_by('-retrieve_count')[:self.search_result_size]
+        return CourseSerializer(popular_courses, many=True).data
 
 
 class CourseWithFilesSerializer(serializers.ModelSerializer):
-    class CategorySerializer(serializers.Serializer):
-        files = FileSerializer(many=True)
-
-    title = serializers.CharField()
-
     lectures = serializers.SerializerMethodField()
     tutorials = serializers.SerializerMethodField()
     labs = serializers.SerializerMethodField()
@@ -28,6 +45,9 @@ class CourseWithFilesSerializer(serializers.ModelSerializer):
     exams = serializers.SerializerMethodField()
     additional = serializers.SerializerMethodField()
     info = serializers.SerializerMethodField()
+
+    class CategorySerializer(serializers.Serializer):
+        files = FileSerializer(many=True)
 
     class Meta:
         model = Course
