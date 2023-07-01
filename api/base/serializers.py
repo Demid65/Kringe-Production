@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
 from .models import File, Course, Category
 
@@ -15,41 +16,54 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class CourseWithFilesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Course
-        fields = ['title', 'lectures', 'tutorials', 'labs', 'shared', 'exams', 'additional', 'info']
-
-    class FileWithCategorySerializer(serializers.Serializer):
+    class CategorySerializer(serializers.Serializer):
         files = FileSerializer(many=True)
 
-    lectures = FileWithCategorySerializer(source='get_lectures', read_only=True)
-    tutorials = FileWithCategorySerializer(source='get_tutorials', read_only=True)
-    labs = FileWithCategorySerializer(source='get_labs', read_only=True)
-    shared = FileWithCategorySerializer(source='get_shared', read_only=True)
-    exams = FileWithCategorySerializer(source='get_exams', read_only=True)
-    additional = FileWithCategorySerializer(source='get_additional', read_only=True)
-    info = FileWithCategorySerializer(source='get_info', read_only=True)
+    title = serializers.CharField()
 
-    def get_category_files(self, category):
-        return File.objects.filter(course=self.instance, category=category)
+    lectures = serializers.SerializerMethodField()
+    tutorials = serializers.SerializerMethodField()
+    labs = serializers.SerializerMethodField()
+    shared = serializers.SerializerMethodField()
+    exams = serializers.SerializerMethodField()
+    additional = serializers.SerializerMethodField()
+    info = serializers.SerializerMethodField()
 
+    class Meta:
+        model = Course
+        fields = "__all__"
+
+    @swagger_serializer_method(CategorySerializer)
     def get_lectures(self, obj):
-        return {'files': self.get_category_files(Category.LECTURES)}
+        lectures_files = obj.file_set.filter(category=Category.LECTURES)
+        return {'files': FileSerializer(lectures_files, many=True).data}
 
+    @swagger_serializer_method(CategorySerializer)
     def get_tutorials(self, obj):
-        return {'files': self.get_category_files(Category.TUTORIALS)}
+        tutorials_files = obj.file_set.filter(category=Category.TUTORIALS)
+        return {'files': FileSerializer(tutorials_files, many=True).data}
 
+    @swagger_serializer_method(CategorySerializer)
     def get_labs(self, obj):
-        return {'files': self.get_category_files(Category.LABS)}
+        labs_files = obj.file_set.filter(category=Category.LABS)
+        return {'files': FileSerializer(labs_files, many=True).data}
 
+    @swagger_serializer_method(CategorySerializer)
     def get_shared(self, obj):
-        return {'files': self.get_category_files(Category.SHARED)}
+        shared_files = obj.file_set.filter(category=Category.SHARED)
+        return {'files': FileSerializer(shared_files, many=True).data}
 
+    @swagger_serializer_method(CategorySerializer)
     def get_exams(self, obj):
-        return {'files': self.get_category_files(Category.EXAMS)}
+        exams_files = obj.file_set.filter(category=Category.EXAMS)
+        return {'files': FileSerializer(exams_files, many=True).data}
 
+    @swagger_serializer_method(CategorySerializer)
     def get_additional(self, obj):
-        return {'files': self.get_category_files(Category.ADDITIONAL)}
+        additional_files = obj.file_set.filter(category=Category.ADDITIONAL)
+        return {'files': FileSerializer(additional_files, many=True).data}
 
+    @swagger_serializer_method(CategorySerializer)
     def get_info(self, obj):
-        return {'files': self.get_category_files(Category.INFO)}
+        info_files = obj.file_set.filter(category=Category.INFO)
+        return {'files': FileSerializer(info_files, many=True).data}
