@@ -2,8 +2,15 @@
 // @ts-ignore
 export default defineNuxtConfig({
     modules: [
-        '@nuxtjs/tailwindcss'
+        '@nuxtjs/tailwindcss',
+        '@sidebase/nuxt-auth'
     ],
+    auth: {
+        baseUrl: 'http://localhost:3000/api/auth',
+        provider: {
+            type: 'authjs'
+        }
+    },
     components: [
         {
             path: '~/components/main/',
@@ -11,10 +18,6 @@ export default defineNuxtConfig({
         },
         {
             path: '~/components/course/',
-            pathPrefix: false
-        },
-        {
-            path: '~/components/course/discussion/',
             pathPrefix: false
         },
         {

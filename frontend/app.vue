@@ -1,12 +1,16 @@
-<script setup>
+<script setup lang="ts">
 const isSidebarVisible = useState('sidebarVisibility', () => false)
+
+const { status, data, signOut } = useAuth()
+
+console.log(status.value, data.value)
 
 function toggleSidebar() {
     isSidebarVisible.value = !isSidebarVisible.value;
 }
 
-function toggleSidebarVisibility() {
-    isSidebarVisible.value = window.innerWidth >= 1024;
+function getPlaceholder(name: string) {
+    return name.slice(0, 3).toUpperCase()
 }
 
 const loginModalId = 'login_modal'
@@ -28,26 +32,27 @@ const loginModalId = 'login_modal'
                     </div>
                 </NuxtLink>
             </div>
-            <div class="flex-none">
+            <div v-if="status === 'authenticated'" class="flex-none">
+              <div class="dropdown dropdown-end">
+                <label tabIndex="0" class="btn btn-ghost btn-circle avatar placeholder">
+                  <div class="w-10 rounded-full ring ring-accent">
+                    <span class="text-lg">{{ data.username ? getPlaceholder(data.username) : 'SUS' }}</span>
+                  </div>
+                </label>
+                <ul tabIndex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                  <li>
+                    <NuxtLink :to="`/profile`">Profile</NuxtLink>
+                  </li>
+                  <li>
+                    <button @click="signOut({redirect: false})">Logout</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div v-if="status === 'unauthenticated'" class="flex-none">
                 <button class="btn btn-sm btn-accent" :onclick="`window.${loginModalId}.showModal()`">Login</button>
             </div>
-            <!--        <div class="flex-none">-->
-            <!--          <div class="dropdown dropdown-end">-->
-            <!--            <label tabIndex="0" class="btn btn-ghost btn-circle avatar placeholder">-->
-            <!--              <div class="w-10 rounded-full ring ring-accent">-->
-            <!--                <span class="text-lg">USR</span>-->
-            <!--              </div>-->
-            <!--            </label>-->
-            <!--            <ul tabIndex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">-->
-            <!--              <li>-->
-            <!--                <NuxtLink :to="`/profile`">Profile</NuxtLink>-->
-            <!--              </li>-->
-            <!--              <li>-->
-            <!--                <NuxtLink :to="`/logout`">Logout</NuxtLink>-->
-            <!--              </li>-->
-            <!--            </ul>-->
-            <!--          </div>-->
-            <!--        </div>-->
         </div>
         <div class="flex flex-row flex-1">
             <div class="flex-1">
