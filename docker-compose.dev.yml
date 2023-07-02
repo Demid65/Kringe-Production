@@ -5,6 +5,8 @@ services:
       - ./frontend/:/usr/src/app/
       - /usr/src/app/node_modules
     working_dir: /usr/src/app
+    env_file:
+      - ./frontend/.env
     environment:
       - HOST=frontend
     ports:
