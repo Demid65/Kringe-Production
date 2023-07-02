@@ -2,11 +2,7 @@
 import {routesMap} from "~/utils/routes";
 
 const route = useRoute()
-const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseData'], {
-    query: {
-        data: 'theme'
-    }
-})
+const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseData'] + route.params.id)
 
 const uploadModalId = 'upload_modal'
 </script>
