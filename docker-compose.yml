@@ -1,22 +1,20 @@
 services:
   frontend:
-    build:
-      context: ./frontend
-#    image: node:18-alpine
-#    volumes:
-#      - ./frontend/:/usr/src/app/
-#      - /usr/src/app/node_modules
+    image: node:18-alpine
+    volumes:
+      - ./frontend/:/usr/src/app/
+      - /usr/src/app/node_modules
     working_dir: /usr/src/app
+    env_file:
+      - ./frontend/.env
     environment:
-      - AUTH_ORIGIN=http://localhost
-      - PORT=3000
       - HOST=frontend
     ports:
       - 3000:3000
-#      - 24678:24678
-#    command: >
-#      sh -c "npm install &&
-#             npm run dev"
+      - 24678:24678
+    command: >
+      sh -c "npm install &&
+             npm run dev"
 
   db:
     image: postgres

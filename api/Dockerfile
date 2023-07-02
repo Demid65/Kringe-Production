@@ -11,7 +11,7 @@ ENV DEBUG True
 ENV DJANGO_SUPERUSER_USERNAME admin
 ENV DJANGO_SUPERUSER_PASSWORD admin
 ENV DJANGO_SUPERUSER_EMAIL admin@admin.com
-ENV DATABASE_URL postgres://postgres:postgres@host.docker.internal:5432/postgres
+ENV DATABASE_URL postgres://postgres:postgres@db:5432/postgres
 
 # install dependencies
 RUN pip install --upgrade pip
