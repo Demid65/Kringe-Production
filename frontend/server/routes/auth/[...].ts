@@ -9,15 +9,21 @@ export default NuxtAuthHandler({
     secret: 'amogus',
     callbacks: {
         session: async ({session, token}) => {
-            session.id = token.id;
-            session.username = token.username;
+            console.log(`session ${session} ${token}`)
+            session.user = {
+                id: token.id,
+                username: token.username
+            }
             return Promise.resolve(session);
         },
         jwt: async ({token, user}) => {
             const isSignIn = user ? true : false;
+            console.log(`session ${token} ${user}`)
             if (isSignIn) {
-                token.id = user ? user.id || '' : '';
-                token.username = user ? user.username || '' : '';
+                token.user = {
+                    id: user.id ? user.id : '',
+                    username: user.username ? user.username : ''
+                }
             }
             return Promise.resolve(token);
         },
@@ -36,14 +42,19 @@ export default NuxtAuthHandler({
             async authorize (credentials: any) {
                 console.log(credentials)
 
-                const prisma = new PrismaClient()
+                // const prisma = new PrismaClient()
 
-                const user = await prisma.user.findUnique({
-                    where: {
-                        username: credentials.username,
-                    }
-                })
+                // const user = await prisma.user.findUnique({
+                //     where: {
+                //         username: credentials.username,
+                //     }
+                // })
 
+                const user = {
+                    id: 1,
+                    username: 'susus',
+                    password: 'cumus'
+                }
 
                 if (credentials.register === 'false' &&
                     user !== null &&
@@ -58,12 +69,16 @@ export default NuxtAuthHandler({
                     }
                 } else if (credentials.register === 'true' && user === null) {
                     console.log(`register with ${credentials.username}`)
-                    const newUser = await prisma.user.create({
-                        data: {
-                            username: credentials.username,
-                            password: bcrypt.hashSync(credentials.password, 10)
-                        }
-                    })
+                    // const newUser = await prisma.user.create({
+                    //     data: {
+                    //         username: credentials.username,
+                    //         password: bcrypt.hashSync(credentials.password, 10)
+                    //     }
+                    // })
+                    const newUser = {
+                        id: 1,
+                        username: 'susus'
+                    }
 
                     return {
                         id: newUser.id,

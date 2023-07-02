@@ -6,10 +6,8 @@ export default defineNuxtConfig({
         '@sidebase/nuxt-auth'
     ],
     auth: {
-        baseUrl: 'http://localhost:3000/api/auth',
-        provider: {
-            type: 'authjs'
-        }
+        origin: process.env.AUTH_ORIGIN,
+        basePath: '/auth/'
     },
     components: [
         {
