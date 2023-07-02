@@ -42,13 +42,13 @@ export default NuxtAuthHandler({
             async authorize (credentials: any) {
                 console.log(credentials)
 
-                // const prisma = new PrismaClient()
+                const prisma = new PrismaClient()
 
-                // const user = await prisma.user.findUnique({
-                //     where: {
-                //         username: credentials.username,
-                //     }
-                // })
+                const user = await prisma.user.findUnique({
+                    where: {
+                        username: credentials.username,
+                    }
+                })
 
                 const user = {
                     id: 1,
