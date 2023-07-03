@@ -14,6 +14,7 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.7.2",
     "@sidebase/nuxt-auth": "0.5.0",
+    "@types/dompurify": "^3.0.2",
     "@types/node": "^18",
     "daisyui": "^3.1.0",
     "nuxt": "^3.5.2",
@@ -22,6 +23,8 @@
   "dependencies": {
     "@prisma/client": "^4.16.2",
     "bcrypt": "^5.1.0",
-    "jsonwebtoken": "^9.0.0"
+    "dompurify": "^3.0.4",
+    "jsonwebtoken": "^9.0.0",
+    "markdown-it": "^13.0.1"
   }
 }

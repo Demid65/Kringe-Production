@@ -8,6 +8,12 @@ export default defineNuxtConfig({
     auth: {
         basePath: '/auth'
     },
+    purgeCSS: {
+        enabled: false,
+        safelist: [
+            'article-block'
+        ]
+    },
     components: [
         {
             path: '~/components/main/',

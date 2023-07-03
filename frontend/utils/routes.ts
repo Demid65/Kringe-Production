@@ -3,6 +3,7 @@ export const routesMap = {
     mainData: '/api/courses/main-page',
     courseData: '/api/courses/',
     courseDiscussion: '/api/mocks',
-    getFile: '/api/getfile/',
-    uploadFile: '/api/uploadfile/'
+    getFile: '/api/getfile',
+    uploadFile: '/api/uploadfile',
+    getArticle: '/api/mocks/'
 }

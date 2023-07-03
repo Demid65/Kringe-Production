@@ -1,4 +1,5 @@
-import {discussionTopics, discussionMessages, mainData, sidebarTree, themeTopics} from "../../utils/mocks";
+import {discussionTopics, discussionMessages, mainData, sidebarTree, themeTopics, articleData} from "../../utils/mocks";
+import {readFile} from "fs";
 
 export default defineEventHandler((event) => {
     const query = getQuery(event)
@@ -18,6 +19,9 @@ export default defineEventHandler((event) => {
             break
         case 'messages':
             returnData = discussionMessages
+            break
+        case 'article':
+            returnData = articleData
             break
         default:
             throw createError({
