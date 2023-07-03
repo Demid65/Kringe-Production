@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "start": "node .output/server/index.mjs",
+    "start": "NODE_ENV=production node .output/server/index.mjs",
     "dev": "nuxt dev",
     "migrate": "",
     "generate": "nuxt generate",
