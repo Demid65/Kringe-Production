@@ -19,6 +19,9 @@ const initMessage = useState('newDiscussionInitMessage', () => ({
 
 const textRows = useState(() => countRows(initMessage.value.data))
 
+const { status, data } = useAuth()
+
+
 function countRows(text: string) {
     let rows = text.split(/\r\n|\r|\n/).length
     console.log(rows)
@@ -45,7 +48,20 @@ function createDiscussion() {
 
     const res = validateInput()
 
+    console.log(status.value, data.value.user)
+
+    if (status.value === 'unauthenticated') {
+        return
+    }
+
     if (res) {
+        console.log({
+            user: data.value.id,
+            courseId: route.params.id,
+            title: title.value.data,
+            initMessage: initMessage.value.data
+        })
+
         console.log(title.value.data, initMessage.value.data)
         title.value.data = ""
         title.value.isValid = true

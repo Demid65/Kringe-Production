@@ -10,20 +10,17 @@ export default NuxtAuthHandler({
     callbacks: {
         session: async ({session, token}) => {
             console.log(`session ${session} ${token}`)
-            session.user = {
-                id: token.id,
-                username: token.username
-            }
+            session.id = token.id
+            session.username = token.username
+
             return Promise.resolve(session);
         },
         jwt: async ({token, user}) => {
             const isSignIn = user ? true : false;
             console.log(`session ${token} ${user}`)
             if (isSignIn) {
-                token.user = {
-                    id: user.id ? user.id : '',
-                    username: user.username ? user.username : ''
-                }
+                token.id = user ? user.id || '' : ''
+                token.username = user ? user.username || '' : ''
             }
             return Promise.resolve(token);
         },
@@ -52,9 +49,10 @@ export default NuxtAuthHandler({
 
                 const user = {
                     id: 1,
-                    username: 'susus',
-                    password: 'cumus'
+                    username: 'susus'
                 }
+
+                return user
 
                 if (credentials.register === 'false' &&
                     user !== null &&

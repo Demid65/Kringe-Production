@@ -2,6 +2,8 @@
 import {routesMap} from "~/utils/routes";
 
 const route = useRoute()
+const { status, data } = useAuth()
+
 const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseData'], {
     query: {
         data: 'theme'
@@ -30,8 +32,13 @@ const uploadModalId = 'upload_modal'
                 <div v-for="topic in Object.keys(<Object>cards).slice(1)" class="flex p-2 flex-col">
                     <ThemeCard :title="topic" :files="cards[topic].files"/>
                 </div>
-                <div class="card-actions mt-auto justify-end">
-                    <button class="btn btn-sm w-full btn-neutral" :onclick='`window.${uploadModalId}.showModal()`'>Upload Materials</button>
+                <div
+                    :class="`card-actions mt-auto ${status !== 'authenticated' ? 'tooltip tooltip-top' : '' }`"
+                    :data-tip="status !== 'authenticated' ? 'Log in to use it' : ''"
+                >
+                    <button
+                        :class="`btn btn-sm w-full btn-neutral ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
+                        :onclick='`window.${uploadModalId}.showModal()`'>Upload Materials</button>
                 </div>
             </div>
         </div>

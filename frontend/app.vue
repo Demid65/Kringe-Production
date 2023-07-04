@@ -34,7 +34,7 @@ const loginModalId = 'login_modal'
               <div class="dropdown dropdown-end">
                 <label tabIndex="0" class="btn btn-ghost btn-circle avatar placeholder">
                   <div class="w-10 rounded-full ring ring-accent">
-                    <span class="text-lg">{{ data.username ? getPlaceholder(data.username) : 'SUS' }}</span>
+                    <span class="text-lg">{{ data.username ? getPlaceholder(data.username) : 'OIO' }}</span>
                   </div>
                 </label>
                 <ul tabIndex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -80,8 +80,8 @@ const loginModalId = 'login_modal'
 
         <div
             :class="['fixed inset-0 z-10 bg-opacity-75 overflow-y-auto', isSidebarVisible ? 'block' : 'hidden', 'lg:hidden']">
-            <div class="absolute inset-0 flex justify-end">
-            </div>
+<!--            <div class="absolute inset-0 flex justify-end">-->
+<!--            </div>-->
             <div class="flex h-full">
                 <div class="w-full">
                     <SideBar/>

@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import {PropType} from "@vue/runtime-core";
 
-const props = defineProps({
-    data: {
-        type: Object as PropType<TreeNode>,
-        required: true
-    }
-})
+const props = defineProps(['data', 'isOpen'])
+defineEmits(['update:isOpen'])
+
 </script>
 
 <template>
     <div v-if="props.data?.children !== null" class="collapse bg-base-200 collapse-arrow">
-        <input type="checkbox" class="min-h-0" />
+        <input type="checkbox" v-model="props.isOpen" :value="props.isOpen" @input="$emit('update:isOpen', $event.target.value)" class="min-h-0" />
         <div class="collapse-title min-h-0 p-1">
             <p class="pl-4 text-xl">{{ props.data.title }}</p>
         </div>

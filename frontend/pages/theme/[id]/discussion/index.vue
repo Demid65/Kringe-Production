@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
 
+const { status, data } = useAuth()
+
 const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseDiscussion'], {
     query: {
         data: 'disc'
@@ -22,7 +24,12 @@ const newDiscussionModalId = 'new_discussion_modal'
             <div class="card-body p-4 gap-0">
                 <div class="card-title rounded-lg bg-base-300 p-4">
                     <h1 class="text-2xl">{{ cards.title }} - Discussion</h1>
-                    <button class="btn btn-sm btn-neutral ml-auto" :onclick="`window.${newDiscussionModalId}.showModal()`">New discussion</button>
+                    <div :class="`ml-auto ${status !== 'authenticated' ? 'tooltip tooltip-top' : '' }`" :data-tip="status !== 'authenticated' ? 'Log in to use it' : ''">
+                        <button
+                            :class="`btn btn-sm btn-neutral ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
+                            :onclick="`window.${newDiscussionModalId}.showModal()`"
+                        >New</button>
+                    </div>
                 </div>
                 <div class="flex flex-col gap-2 py-2">
                     <template v-for="topic in cards.topics">

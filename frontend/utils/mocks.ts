@@ -3,34 +3,24 @@ export const sidebarTree: TreeNode[] = [
         title: 'BS1',
         children: [
             {
-                title: 'MA',
-                children: [
-                    {
-                        title: 'MA1',
-                        id: 'BS1_MA1',
-                        children: null
-                    },
-                    {
-                        title: 'MA2',
-                        id: 'BS1_MA2',
-                        children: null
-                    }
-                ]
+                title: 'MA1',
+                id: 'BS1_MA1',
+                children: null
             },
             {
-                title: 'AGLA',
-                children: [
-                    {
-                        title: 'AGLA1',
-                        id: 'BS1_AGLA1',
-                        children: null
-                    },
-                    {
-                        title: 'AGLA2',
-                        id: 'BS1_AGLA2',
-                        children: null
-                    }
-                ]
+                title: 'MA2',
+                id: 'BS1_MA2',
+                children: null
+            },
+            {
+                title: 'AGLA1',
+                id: 'BS1_AGLA1',
+                children: null
+            },
+            {
+                title: 'AGLA2',
+                id: 'BS1_AGLA2',
+                children: null
             },
             {
                 title: 'Philosophy 1',
@@ -59,48 +49,33 @@ export const sidebarTree: TreeNode[] = [
         children: [
             {
                 title: 'SM1_BS3',
-                children: []
+                children: null
             },
             {
-                title: 'SM2_BS3',
-                children: [
-                    {
-                        title: 'SM1_SM2_BS3',
-                        children: null
-                    },
-                    {
-                        title: 'SM2_SM2_BS3',
-                        children: null
-                    }
-                ]
+                title: 'SM1_SM2_BS3',
+                children: null
             },
+            {
+                title: 'SM2_SM2_BS3',
+                children: null
+            }
         ]
     },
     {
         title: 'BS4',
         children: [
             {
-                title: 'SM1_BS4',
-                children: [
-                    {
-                        title: 'SM1_SM1_BS4',
-                        children: null
-                    },
-                    {
-                        title: 'SM2_SM1_BS4',
-                        children: null
-                    }
-                ]
+                title: 'SM1_SM1_BS4',
+                children: null
             },
             {
-                title: 'SM2_BS4',
-                children: [
-                    {
-                        title: 'SM1_SM2_BS4',
-                        children: null
-                    }
-                ]
+                title: 'SM2_SM1_BS4',
+                children: null
             },
+            {
+                title: 'SM1_SM2_BS4',
+                children: null
+            }
         ]
     }
 ]

@@ -7,15 +7,53 @@ const { data: tree, pending, error, refresh } = await useFetch(routesMap['sideba
     }
 })
 
+const treeState = useState('tree', () => Array.from(tree.value, (x) => false))
+const searchString = useState('searchstring', () => "")
+
+function debounce(callee: () => void, timeoutMs: number) {
+    return function perform(...args: any[]) {
+        let previousCall = this.lastCall
+        this.lastCall = Date.now()
+        if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+            clearTimeout(this.lastCallTimer)
+        }
+        this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
+
+        }
+}
+
+const debouncedSearch = debounce(search, 300)
+
+function search() {
+    for (let i = 0; i < treeState.value.length; i++) {
+        treeState.value[i] = false
+    }
+
+    if (searchString.value === "") {
+        return
+    }
+
+    for (let i = 0; i < tree.value.length; i++){
+        let bs = tree.value[i];
+        for (let j = 0; j < bs.children.length; j++) {
+            let child = bs.children[j]
+            if (child.title.toLowerCase().includes(searchString.value.toLowerCase())) {
+                treeState.value[i] = true
+            }
+        }
+    }
+
+}
+
 </script>
 
 <template>
     <div class=" flex flex-col flex-none bg-base-200 p-4 h-full rounded-xl shadow-xl">
-        <input type="text" class="input bg-base-300 mb-2" placeholder="search...">
+        <input type="text" class="input bg-base-300 mb-2" @input="debouncedSearch()" v-model="searchString" placeholder="search...">
 
         <FetchPlaceholder :pending="pending" :error="error" >
-            <div v-for="node in tree" class="flex flex-col">
-                <TreeNode :data="node"/>
+            <div v-for="(node, i) in tree" class="flex flex-col">
+                <TreeNode :data="node" v-model:isOpen="treeState[i]" />
             </div>
         </FetchPlaceholder>
 
