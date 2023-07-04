@@ -2,18 +2,42 @@
     import {routesMap} from "~/utils/routes";
     import MarkdownIt from "markdown-it";
     import DOMPurify from "dompurify";
+    import {$fetch} from "ofetch";
 
     const route = useRoute()
 
-    const { data: article, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
-        query: {
-            data: 'article'
-        },
+    // const { data: article, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
+    //     query: {
+    //         data: 'article'
+    //     },
+    //     server: false,
+    //     lazy: true
+    // })
+
+    const { data: article, pending, error, refresh } = await useAsyncData(async () => {
+        const articleData = await $fetch(routesMap['getArticle'], {
+            query: {
+                data: 'article'
+            }
+        })
+        console.log(articleData)
+        const articleContent = await $fetch(`/${articleData.name}`)
+
+        console.log(typeof articleContent)
+
+        return {
+            title: articleData.title,
+            content: articleContent
+        }
+    }, {
         server: false,
         lazy: true
     })
 
-    function parseMarkdown(content: string) {
+    console.log(article)
+
+    function parseMarkdown(content: any) {
+        console.log(content, typeof content)
         const md = new MarkdownIt({
             html: true
         })
@@ -40,20 +64,20 @@
                     </div>
                 </div>
 
-                <div class="collapse collapse-arrow bg-base-300 w-full">
-                    <input type="checkbox" />
-                    <div class="collapse-title text-lg font-medium">
-                        Write
-                    </div>
-                    <div class="collapse-content">
-                        <textarea
-                            class="textarea textarea-accent resize-none w-full"
-                            :rows="10"
-                            @input=""
-                            v-model="article.content"
-                            placeholder="Your message" />
-                    </div>
-                </div>
+<!--                <div class="collapse collapse-arrow bg-base-300 w-full">-->
+<!--                    <input type="checkbox" />-->
+<!--                    <div class="collapse-title text-lg font-medium">-->
+<!--                        Write-->
+<!--                    </div>-->
+<!--                    <div class="collapse-content">-->
+<!--                        <textarea-->
+<!--                            class="textarea textarea-accent resize-none w-full"-->
+<!--                            :rows="10"-->
+<!--                            @input=""-->
+<!--                            v-model="article.content"-->
+<!--                            placeholder="Your message" />-->
+<!--                    </div>-->
+<!--                </div>-->
             </FetchPlaceholder>
         </div>
     </div>
