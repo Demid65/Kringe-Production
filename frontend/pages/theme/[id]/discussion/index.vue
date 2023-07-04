@@ -6,6 +6,8 @@ const { data: cards, pending, error, refresh } = await useFetch(routesMap['cours
         data: 'disc'
     }
 })
+
+const newDiscussionModalId = 'new_discussion_modal'
 </script>
 
 <template>
@@ -14,11 +16,13 @@ const { data: cards, pending, error, refresh } = await useFetch(routesMap['cours
             {{ cards.title }} - Discussion
         </Title>
     </Head>
+    <NewDiscussionModal :id="newDiscussionModalId" />
     <div class="flex flex-col container mx-auto px-2 h-full">
         <div class="card bg-base-200 shadow-xl h-full">
             <div class="card-body p-4 gap-0">
                 <div class="card-title rounded-lg bg-base-300 p-4">
                     <h1 class="text-2xl">{{ cards.title }} - Discussion</h1>
+                    <button class="btn btn-sm btn-neutral ml-auto" :onclick="`window.${newDiscussionModalId}.showModal()`">New discussion</button>
                 </div>
                 <div class="flex flex-col gap-2 py-2">
                     <template v-for="topic in cards.topics">

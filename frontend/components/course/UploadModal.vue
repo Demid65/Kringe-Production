@@ -45,7 +45,7 @@ function uploadFiles() {
             <DnDFIleInput v-model="files" />
 
             <div class="modal-action">
-                <button class="btn btn-neutral" @click="uploadFiles()">Upload</button>
+                <button class="btn btn-accent" @click="uploadFiles()">Upload</button>
             </div>
         </form>
         <form method="dialog" class="modal-backdrop">

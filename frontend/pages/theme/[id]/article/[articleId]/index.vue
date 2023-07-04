@@ -58,6 +58,9 @@
                 <div class="card-body p-4 gap-0">
                     <div class="card-title rounded-lg bg-base-300 p-4">
                         <h1 class="text-lg">{{ article.title }}</h1>
+                        <NuxtLink :to="`${$route.params.id}/`" class="ml-auto">
+                            <button class="btn btn-sm btn-neutral">Go back</button>
+                        </NuxtLink>
                     </div>
                     <div class="article-block break-words flex flex-col max-w-100 p-2" v-html="parseMarkdown(article.content)">
 

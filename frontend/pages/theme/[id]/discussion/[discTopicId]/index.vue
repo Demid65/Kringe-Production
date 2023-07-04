@@ -13,7 +13,7 @@ const textRows = useState(() => countRows(messageInput.value))
 function countRows(text: string) {
     let rows = text.split(/\r\n|\r|\n/).length
     console.log(rows)
-    textRows.value = rows
+    return rows
 }
 const userId = 1
 
@@ -81,7 +81,7 @@ function sendMessage() {
                         <textarea
                             class="textarea textarea-accent resize-none w-full"
                             :rows="textRows"
-                            @input="countRows(messageInput)"
+                            @input="() => {textRows = countRows(messageInput)}"
                             v-model="messageInput"
                             placeholder="Your message" />
                         <div class="flex flex-row justify-end">

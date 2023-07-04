@@ -3,8 +3,6 @@ const isSidebarVisible = useState('sidebarVisibility', () => false)
 
 const { status, data, signOut } = useAuth()
 
-console.log(status.value, data.value)
-
 function toggleSidebar() {
     isSidebarVisible.value = !isSidebarVisible.value;
 }
