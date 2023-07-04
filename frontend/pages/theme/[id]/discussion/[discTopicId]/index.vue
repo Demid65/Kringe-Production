@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
 
+const { status, data } = useAuth()
+
 const { data: topic, pending, error, refresh } = await useFetch(routesMap['courseDiscussion'], {
     query: {
         data: 'messages'
@@ -72,10 +74,10 @@ function sendMessage() {
                     </template>
                 </div>
 
-                <div class="collapse collapse-arrow bg-base-300 w-full">
+                <div :class="`collapse collapse-arrow bg-base-300 w-full ${status !== 'authenticated' ? 'collapse-close' : '' }`">
                     <input type="checkbox" />
                     <div class="collapse-title text-lg font-medium">
-                        Write
+                        Write {{ status !== 'authenticated' ? '(Log in to use it)' : '' }}
                     </div>
                     <div class="collapse-content">
                         <textarea
@@ -83,6 +85,7 @@ function sendMessage() {
                             :rows="textRows"
                             @input="() => {textRows = countRows(messageInput)}"
                             v-model="messageInput"
+                            :disabled="status !== 'authenticated'"
                             placeholder="Your message" />
                         <div class="flex flex-row justify-end">
                             <button @click="sendMessage()" class="btn btn-sm btn-accent">Send</button>
