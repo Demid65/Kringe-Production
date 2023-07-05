@@ -1,9 +1,9 @@
 export const routesMap = {
-    sidebarData: '/api/mocks/',
-    mainData: '/api/mocks/',
-    courseData: '/api/mocks/',
+    sidebarData: '/api/data/sidebar',
+    mainData: '/api/data/main',
+    courseData: '/api/data/course',
     courseDiscussion: '/api/mocks',
     getFile: '/api/getfile',
-    uploadFile: '/api/uploadfile',
-    getArticle: '/api/mocks/'
+    uploadFile: '/api/uploadFile',
+    getArticle: '/api/mocks'
 }

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
+import {FileCategory} from "@prisma/client";
 
 const route = useRoute()
 const { status, data } = useAuth()
 
 const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseData'], {
     query: {
-        data: 'theme'
+        courseId: route.params.id
     }
 })
 
@@ -29,8 +30,8 @@ const uploadModalId = 'upload_modal'
                         <button class="btn btn-sm btn-neutral">Discussion</button>
                     </NuxtLink>
                 </div>
-                <div v-for="topic in Object.keys(<Object>cards).slice(1)" class="flex p-2 flex-col">
-                    <ThemeCard :title="topic" :files="cards[topic].files"/>
+                <div v-for="category in Object.values(FileCategory)" class="flex p-2 flex-col">
+                    <ThemeCard :title="category" :files="cards.files.filter((el) => el.category === category)"/>
                 </div>
                 <div
                     :class="`card-actions mt-auto ${status !== 'authenticated' ? 'tooltip tooltip-top' : '' }`"

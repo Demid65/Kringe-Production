@@ -10,8 +10,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
+enum FileCategory {
+  LECTURES
+  TUTORIALS
+  LABS
+  SHARED
+  EXAMS
+  ADDITIONAL
+  INFO
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  username  String @unique
+  id       Int    @id @default(autoincrement())
+  username String @unique
   password String
+  role     Role   @default(USER)
+}
+
+model Course {
+  id    Int    @id @default(autoincrement())
+  title String @unique
+  year Years @relation(fields: [yearId], references: [id])
+  yearId Int
+  files File[]
+}
+
+model Years {
+  id   Int    @id @default(autoincrement())
+  title String
+  courses Course[]
+}
+
+model File {
+  id     Int    @id @default(autoincrement())
+  title   String
+  course Course @relation(fields: [courseId], references: [id])
+  courseId Int
+  path String @default("/")
+  type String @default("FILE")
+  category FileCategory @default(SHARED)
 }

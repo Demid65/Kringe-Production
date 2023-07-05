@@ -35,8 +35,8 @@ function search() {
 
     for (let i = 0; i < tree.value.length; i++){
         let bs = tree.value[i];
-        for (let j = 0; j < bs.children.length; j++) {
-            let child = bs.children[j]
+        for (let j = 0; j < bs.courses.length; j++) {
+            let child = bs.courses[j]
             if (child.title.toLowerCase().includes(searchString.value.toLowerCase())) {
                 treeState.value[i] = true
             }

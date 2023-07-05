@@ -31,28 +31,16 @@ export default NuxtAuthHandler({
 
             name: 'credentials',
 
-            credentials: {
-                username: { label: "username", type: "text" },
-                password: { label: "password", type: "password" }
-            },
-
             async authorize (credentials: any) {
                 console.log(credentials)
 
-                // const prisma = new PrismaClient()
-                //
-                // const user = await prisma.user.findUnique({
-                //     where: {
-                //         username: credentials.username,
-                //     }
-                // })
+                const prisma = new PrismaClient()
 
-                const user = {
-                    id: 1,
-                    username: 'susus'
-                }
-
-                return user
+                const user = await prisma.user.findUnique({
+                    where: {
+                        username: credentials.username,
+                    }
+                })
 
                 if (credentials.register === 'false' &&
                     user !== null &&
@@ -67,16 +55,12 @@ export default NuxtAuthHandler({
                     }
                 } else if (credentials.register === 'true' && user === null) {
                     console.log(`register with ${credentials.username}`)
-                    // const newUser = await prisma.user.create({
-                    //     data: {
-                    //         username: credentials.username,
-                    //         password: bcrypt.hashSync(credentials.password, 10)
-                    //     }
-                    // })
-                    const newUser = {
-                        id: 1,
-                        username: 'susus'
-                    }
+                    const newUser = await prisma.user.create({
+                        data: {
+                            username: credentials.username,
+                            password: bcrypt.hashSync(credentials.password, 10)
+                        }
+                    })
 
                     return {
                         id: newUser.id,

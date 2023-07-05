@@ -5,6 +5,12 @@
 .cache
 dist
 
+# Migrations
+prisma/migrations
+
+# Userfiles
+public/userfiles/*
+
 # Node dependencies
 node_modules
 

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {categoriesList} from "~/utils/types";
+
+import {FileCategory} from "@prisma/client";
 
 defineProps(['modelValue'])
 defineEmits(['update:modelValue'])
 
-const value = useState('value', () => categoriesList[0])
-const categories = categoriesList
+const value = useState('value', () => FileCategory.SHARED)
+const categories = FileCategory
 const radioName = 'category_radio'
 
 function capitalizeFirstLetter(str: string) {

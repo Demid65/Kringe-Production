@@ -11,7 +11,6 @@ function handleFilesChange(event) {
     <div class="mt-4">
         <input type="file"
                @change="handleFilesChange($event)"
-               multiple="multiple"
                class="file-input file-input-bordered w-full max-w" />
     </div>
 </template>

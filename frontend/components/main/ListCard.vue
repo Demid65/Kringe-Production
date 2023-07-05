@@ -22,7 +22,7 @@
                         <div class="ml-4 p-2 bg-base-300 rounded-lg flex flex-row items-center gap-x-4">
                             <div class="badge badge-accent badge-sm"></div>
                             <h2>
-                                {{ theme.title }}
+                                {{ theme.year.title }} - {{ theme.title }}
                             </h2>
                         </div>
                     </NuxtLink>
