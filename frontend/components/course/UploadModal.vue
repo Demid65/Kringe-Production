@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
 import {$fetch} from "ofetch";
-import {FileCategory} from "@prisma/client";
-import {constants} from "os";
-import errno = module
+
+import {FileCategoryTypes} from "~/utils/fileCategoryTypes";
 
 const props = defineProps({
     id: String
@@ -11,7 +10,7 @@ const props = defineProps({
 
 const { status, data } = useAuth()
 const route = useRoute()
-const categoryValue = useState('categoryValue', () => FileCategory.SHARED)
+const categoryValue = useState('categoryValue', () => FileCategoryTypes.SHARED)
 const file = useState('file', () => ({
     file: null,
     error: false

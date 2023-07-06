@@ -30,6 +30,7 @@ interface MainCardLink {
     target?: Categories
 }
 
+
 type CourseData = {
     [key in Categories]: {
         text?: string,

@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
+enum UserRole {
   USER
   ADMIN
 }
@@ -29,10 +29,10 @@ model User {
   id       Int    @id @default(autoincrement())
   username String @unique
   password String
-  role     Role   @default(USER)
+  role     UserRole   @default(USER)
 
-  files File[]
-  themes DiscussionTheme[]
+  files    File[]
+  themes   DiscussionTheme[]
   messages DiscussionMessage[]
 }
 
@@ -40,7 +40,7 @@ model Course {
   id    Int    @id @default(autoincrement())
   title String @unique
 
-  year Years @relation(fields: [yearId], references: [id])
+  year   Years @relation(fields: [yearId], references: [id])
   yearId Int
 
   files File[]
@@ -49,20 +49,20 @@ model Course {
 }
 
 model Years {
-  id   Int    @id @default(autoincrement())
+  id    Int    @id @default(autoincrement())
   title String
 
   courses Course[]
 }
 
 model File {
-  id     Int    @id @default(autoincrement())
-  title   String
+  id    Int    @id @default(autoincrement())
+  title String
 
-  author User @relation(fields: [authorId], references: [id])
+  author   User @relation(fields: [authorId], references: [id])
   authorId Int
 
-  course Course @relation(fields: [courseId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id])
   courseId Int
 
   category FileCategory @default(SHARED)
@@ -72,25 +72,25 @@ model File {
 }
 
 model DiscussionTheme {
-  id Int @id @default(autoincrement())
+  id    Int    @id @default(autoincrement())
   title String
 
-  author User @relation(fields: [authorId], references: [id])
+  author   User @relation(fields: [authorId], references: [id])
   authorId Int
 
-  course Course @relation(fields: [courseId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id])
   courseId Int
 
   messages DiscussionMessage[]
 }
 
 model DiscussionMessage {
-  id Int @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   content String
 
-  theme DiscussionTheme @relation(fields: [themeId], references: [id])
+  theme   DiscussionTheme @relation(fields: [themeId], references: [id])
   themeId Int
 
-  author User @relation(fields: [authorId], references: [id])
+  author   User @relation(fields: [authorId], references: [id])
   authorId Int
 }

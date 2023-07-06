@@ -1,7 +1,5 @@
-import {FileCategory, PrismaClient} from "@prisma/client"
-import * as fs from "fs";
 import {getServerSession} from "#auth";
-import {usePrisma} from "../../utils/usePrisma";
+import {usePrisma} from "../utils/usePrisma";
 
 export default defineEventHandler(async (event) => {
 

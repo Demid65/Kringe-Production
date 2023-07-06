@@ -1,8 +1,8 @@
 // file: ~/server/api/auth/[...].ts
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { NuxtAuthHandler } from '#auth'
-import {PrismaClient} from "@prisma/client";
 import bcrypt from 'bcrypt'
+import {usePrisma} from "../../utils/usePrisma";
 
 export default NuxtAuthHandler({
     // A secret string you define, to ensure correct encryption
@@ -34,7 +34,7 @@ export default NuxtAuthHandler({
             async authorize (credentials: any) {
                 console.log(credentials)
 
-                const prisma = new PrismaClient()
+                const prisma = usePrisma()
 
                 const user = await prisma.user.findUnique({
                     where: {

@@ -1,18 +1,7 @@
 <script setup lang="ts">
-    import {$fetch} from "ofetch";
     import {routesMap} from "~/utils/routes";
 
     const props = defineProps(['title', 'files'])
-
-    function getFile(fileId: string) {
-        $fetch(routesMap['getFile'], {
-            query: {
-                id: fileId
-            }
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
 
     function capitalizeFirstLetter(str: string) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -27,7 +16,7 @@
         </div>
         <div class="collapse-content flex flex-row flex-wrap gap-2">
             <div v-for="file in props.files" class="flex-none">
-                <a :href="`/${file.path}`" download>
+                <a :href="`${routesMap['getFile']}?fileId=${file.id}`" :download="`${file.title}.${file.type}`">
                     <button class="btn btn-neutral btn-outline">
                         {{ file.title }} ({{ file.type }})
                     </button>

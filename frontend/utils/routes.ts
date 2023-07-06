@@ -6,7 +6,7 @@ export const routesMap = {
     discussionMessages: '/api/data/messages',
     createDiscussion: '/api/createDiscussion',
     createMessage: '/api/createMessage',
-    getFile: '/api/getfile',
+    getFile: '/api/getFile',
     uploadFile: '/api/uploadFile',
     getArticle: '/api/mocks'
 }

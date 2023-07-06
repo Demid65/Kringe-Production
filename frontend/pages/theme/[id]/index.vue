@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
-import {FileCategory} from "@prisma/client";
+
+import {FileCategoryTypes} from "~/utils/fileCategoryTypes";
 
 const route = useRoute()
 const { status, data } = useAuth()
@@ -30,7 +31,7 @@ const uploadModalId = 'upload_modal'
                         <button class="btn btn-sm btn-neutral">Discussion</button>
                     </NuxtLink>
                 </div>
-                <div v-for="category in Object.values(FileCategory)" class="flex p-2 flex-col">
+                <div v-for="category in Object.values(FileCategoryTypes)" class="flex p-2 flex-col">
                     <ThemeCard :title="category" :files="cards.files.filter((el) => el.category === category)"/>
                 </div>
                 <div

@@ -1,8 +1,7 @@
-import {FileCategory, PrismaClient} from "@prisma/client"
-import * as fs from "fs";
 import { v4 as uuidv4 } from 'uuid';
 import {getServerSession} from "#auth";
-import {usePrisma} from "../../utils/usePrisma";
+import {usePrisma} from "../utils/usePrisma";
+import {useFileStorage} from "../utils/useFileStorage";
 
 export default defineEventHandler(async (event) => {
 
@@ -10,6 +9,7 @@ export default defineEventHandler(async (event) => {
     const session = await getServerSession(event)
 
     const prisma = usePrisma()
+    const storage = useFileStorage()
 
     if (data === undefined) {
         throw createError({
@@ -60,8 +60,9 @@ export default defineEventHandler(async (event) => {
 
             const path = newFilename + '.' + ext
 
-            fs.writeFileSync(`public/userfiles/${path}`, datum.data)
-            parsedData.path = `userfiles/${path}`
+            await storage.setItemRaw(`${path}`, datum.data)
+
+            parsedData.path = `${path}`
             parsedData.type = ext
             parsedData.title = name
 
