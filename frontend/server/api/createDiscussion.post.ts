@@ -23,8 +23,6 @@ export default defineEventHandler(async (event) => {
     }
 
 
-    console.log(session)
-
     const prisma = usePrisma()
 
     const theme = await prisma.discussionTheme.create({
@@ -42,7 +40,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(theme, message)
+    console.log(`create Discussion ${theme.id} ${message}`)
 
     return theme
 

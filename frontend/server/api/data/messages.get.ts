@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
         messages: messages
     }
 
-    console.log(data)
+    console.log(`get messages ${data}`)
 
     return data
 

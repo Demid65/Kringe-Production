@@ -88,8 +88,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(parsedData)
-    console.log(file)
+    console.log(`upload file ${file}`)
 
     return file
 

@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(message)
+    console.log(`create message ${message}`)
 
     return message
 

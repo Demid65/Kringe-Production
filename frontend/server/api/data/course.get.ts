@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
         files: files
     }
 
-    console.log(data)
+    console.log(`get courses ${title} ${data}`)
 
     return data
 
