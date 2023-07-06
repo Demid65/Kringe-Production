@@ -19,19 +19,28 @@ export default defineEventHandler(async (event) => {
     if (title === null) {
         throw createError({
             statusCode: 404,
-            statusMessage: 'Course does not exist'
+            statusMessage: 'Discussion does not exist'
         })
     }
 
-    const files = await prisma.file.findMany({
+    const themes = await prisma.discussionTheme.findMany({
         where: {
             courseId: Number.parseInt(query.courseId)
+        },
+        select: {
+            id: true,
+            title: true,
+            author: {
+                select: {
+                    username: true
+                }
+            }
         }
     })
 
     const data = {
         title: title.title,
-        files: files
+        topics: themes
     }
 
     console.log(data)

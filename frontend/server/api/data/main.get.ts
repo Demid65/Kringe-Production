@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client"
+import {usePrisma} from "../../../utils/usePrisma";
 
 export default defineEventHandler(async (event) => {
 
-    const prisma = new PrismaClient()
+    const prisma = usePrisma()
 
     const newCourses = await prisma.course.findMany({
         select: {

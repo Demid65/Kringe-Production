@@ -16,6 +16,11 @@ const initMessage = useState('newDiscussionInitMessage', () => ({
     data: "",
     isValid: true
 }))
+const fetchState = useState(() => ({
+    pending: false,
+    error: false,
+    errorMessage: ''
+}))
 
 const textRows = useState(() => countRows(initMessage.value.data))
 
@@ -50,7 +55,9 @@ function createDiscussion() {
 
     console.log(status.value, data.value.user)
 
-    if (status.value === 'unauthenticated') {
+    if (status.value !== 'authenticated') {
+        console.log('What are you doing without account???????????????')
+        window[props.id].close()
         return
     }
 
@@ -62,14 +69,33 @@ function createDiscussion() {
             initMessage: initMessage.value.data
         })
 
+        $fetch(routesMap['createDiscussion'], {
+            method: 'POST',
+            body: {
+                title: title.value.data,
+                courseId: route.params.id,
+                message: initMessage.value.data
+            }
+        }).then((val) => {
+            fetchState.value.pending = false
+            window[props.id].close()
+
+            title.value.data = ""
+            title.value.isValid = true
+
+            initMessage.value.data = ""
+            initMessage.value.isValid = true
+
+            textRows.value = countRows(initMessage.value.data)
+        }, (err) => {
+            fetchState.value.pending = false
+            fetchState.value.error = true
+            fetchState.value.errorMessage = err.data.statusMessage
+            console.log(err)
+        })
+
         console.log(title.value.data, initMessage.value.data)
-        title.value.data = ""
-        title.value.isValid = true
 
-        initMessage.value.data = ""
-        initMessage.value.isValid = true
-
-        textRows.value = countRows(initMessage.value.data)
     }
 }
 
@@ -80,6 +106,11 @@ function createDiscussion() {
             <div class="modal-box flex flex-col gap-4">
                 <div class="flex flex-row">
                     <h3 class="font-bold text-lg mb-4">New discussion</h3>
+                </div>
+
+                <div v-if="fetchState.error" class="alert alert-error mb-4 flex flex-row">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{{ fetchState.errorMessage }}</span>
                 </div>
 
                 <div>
@@ -102,7 +133,10 @@ function createDiscussion() {
                 </div>
 
                 <div class="modal-action">
-                    <button class="btn btn-accent" @click="createDiscussion()">Create</button>
+                    <button class="btn btn-accent" @click="createDiscussion()">
+                        <span v-if="fetchState.pending" class="loading loading-spinner loading-lg"></span>
+                        <span v-else>Create</span>
+                    </button>
                 </div>
             </div>
 

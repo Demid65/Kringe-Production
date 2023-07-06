@@ -2,10 +2,11 @@
 import {routesMap} from "~/utils/routes";
 
 const { status, data } = useAuth()
+const route = useRoute()
 
 const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseDiscussion'], {
     query: {
-        data: 'disc'
+        courseId: route.params.id
     }
 })
 
@@ -37,7 +38,7 @@ const newDiscussionModalId = 'new_discussion_modal'
                             <div class="card bg-base-300 border border-base-300 hover:border-accent shadow-xl">
                                 <div class="card-body p-6">
                                     <h2 class="card-title text-lg">{{ topic.title }}</h2>
-                                    <p>by {{ topic.author }}</p>
+                                    <p>by {{ topic.author.username }}</p>
 
                                 </div>
                             </div>

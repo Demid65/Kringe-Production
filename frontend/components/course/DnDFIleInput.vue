@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps(['modelValue'])
+const props = defineProps(['error', 'modelValue'])
 const emit = defineEmits(['update:modelValue'])
 
 function handleFilesChange(event) {
@@ -11,7 +11,7 @@ function handleFilesChange(event) {
     <div class="mt-4">
         <input type="file"
                @change="handleFilesChange($event)"
-               class="file-input file-input-bordered w-full max-w" />
+               :class="`file-input file-input-bordered w-full max-w ${props.error ? 'file-input-error' : ''} `" />
     </div>
 </template>
 

@@ -30,28 +30,67 @@ model User {
   username String @unique
   password String
   role     Role   @default(USER)
+
+  files File[]
+  themes DiscussionTheme[]
+  messages DiscussionMessage[]
 }
 
 model Course {
   id    Int    @id @default(autoincrement())
   title String @unique
+
   year Years @relation(fields: [yearId], references: [id])
   yearId Int
+
   files File[]
+
+  themes DiscussionTheme[]
 }
 
 model Years {
   id   Int    @id @default(autoincrement())
   title String
+
   courses Course[]
 }
 
 model File {
   id     Int    @id @default(autoincrement())
   title   String
+
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+
   course Course @relation(fields: [courseId], references: [id])
   courseId Int
-  path String @default("/")
-  type String @default("FILE")
+
   category FileCategory @default(SHARED)
+
+  path String
+  type String @default("FILE")
+}
+
+model DiscussionTheme {
+  id Int @id @default(autoincrement())
+  title String
+
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  course Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  messages DiscussionMessage[]
+}
+
+model DiscussionMessage {
+  id Int @id @default(autoincrement())
+  content String
+
+  theme DiscussionTheme @relation(fields: [themeId], references: [id])
+  themeId Int
+
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
 }

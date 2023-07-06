@@ -12,7 +12,10 @@ const props = defineProps({
 const { status, data } = useAuth()
 const route = useRoute()
 const categoryValue = useState('categoryValue', () => FileCategory.SHARED)
-const file = useState('files', () => null)
+const file = useState('file', () => ({
+    file: null,
+    error: false
+}))
 const fetchState = useState(() => ({
     pending: false,
     error: false,
@@ -29,8 +32,14 @@ function uploadFiles() {
 
     const id = route.params.id
     const cat = categoryValue.value
-    const f = file.value
+    const f = file.value.file
+    file.value.error = false
     console.log(f)
+
+    if (f === null) {
+        file.value.error = true
+        return
+    }
 
     const fd = new FormData()
     fd.append('id', id)
@@ -45,14 +54,14 @@ function uploadFiles() {
     $fetch(routesMap['uploadFile'], {
         method: 'POST',
         body: fd,
-    }).catch((err) => {
+    }).then((val) => {
+        fetchState.value.pending = false
+        window[props.id].close()
+    }, (err) => {
         fetchState.value.pending = false
         fetchState.value.error = true
         fetchState.value.errorMessage = err.data.statusMessage
         console.log(err)
-    }).then(() => {
-        fetchState.value.pending = false
-        // window[props.id].close()
     })
 
     console.log(fd)
@@ -71,7 +80,7 @@ function uploadFiles() {
             </div>
 
             <UploadCategoryRadio v-model="categoryValue" />
-            <DnDFIleInput v-model="file" />
+            <DnDFIleInput v-model="file.file" :error="file.error" />
 
             <div class="modal-action">
                 <button class="btn btn-accent" @click="uploadFiles()">
