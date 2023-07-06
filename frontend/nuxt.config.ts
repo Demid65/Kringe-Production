@@ -37,5 +37,15 @@ export default defineNuxtConfig({
     },
     nitro: {
         preset: 'node-cluster'
+    },
+    app: {
+        head: {
+            htmlAttrs: {
+                lang: 'en'
+            },
+            noscript: [
+                { children: 'JavaScript is required' }
+            ]
+        }
     }
 })

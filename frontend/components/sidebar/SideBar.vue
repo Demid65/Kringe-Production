@@ -11,13 +11,15 @@ const treeState = useState('tree', () => Array.from(tree.value, (x) => false))
 const searchString = useState('searchstring', () => "")
 
 function debounce(callee: () => void, timeoutMs: number) {
+    let lastCall = null
+    let lastCallTimer = null
     return function perform(...args: any[]) {
-        let previousCall = this.lastCall
-        this.lastCall = Date.now()
-        if (previousCall && this.lastCall - previousCall <= timeoutMs) {
-            clearTimeout(this.lastCallTimer)
+        let previousCall = lastCall
+        lastCall = Date.now()
+        if (previousCall && lastCall - previousCall <= timeoutMs) {
+            clearTimeout(lastCallTimer)
         }
-        this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
+        lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
 
         }
 }

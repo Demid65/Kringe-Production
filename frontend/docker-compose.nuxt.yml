@@ -18,7 +18,7 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/unihub
     ports:
       - "3000:3000"
-      - "5000:5555"
+      - "5555:5555"
 
   db:
     image: postgres
@@ -27,6 +27,7 @@ services:
     restart: unless-stopped
     volumes:
       - db_data:/var/lib/postgresql/data/pgdata
+      - ./postgresql.conf:/var/lib/postgresql/data/pgdata/postgresql.conf
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_USER=postgres
