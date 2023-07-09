@@ -78,7 +78,7 @@ function validateInput(inputMode: loginModes) {
             <template v-if="mode === loginModes.login">
                 <div class="flex flex-row">
                     <h3 class="font-bold text-lg mb-4">Log in</h3>
-                    <button class="btn btn-sm btn-neutral ml-auto" @click="toggleMode(loginModes.register)">Register</button>
+                    <button class="btn btn-sm btn-outline ml-auto" @click="toggleMode(loginModes.register)">Register</button>
                 </div>
 
                 <div v-if="!authResult.ok" class="alert alert-error flex flex-row">
@@ -111,7 +111,7 @@ function validateInput(inputMode: loginModes) {
             <template v-else-if="mode === loginModes.register">
                 <div class="flex flex-row">
                     <h3 class="font-bold text-lg mb-4">Register</h3>
-                    <button class="btn btn-sm btn-neutral ml-auto" @click="toggleMode(loginModes.login)">
+                    <button class="btn btn-sm btn-outline ml-auto" @click="toggleMode(loginModes.login)">
                         Log in
                     </button>
                 </div>

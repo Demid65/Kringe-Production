@@ -28,7 +28,7 @@ const uploadModalId = 'upload_modal'
                 <div class="card-title rounded-lg bg-base-300 p-4">
                     <h1 class="text-2xl">{{ cards.title }}</h1>
                     <NuxtLink :to="`${$route.params.id}/discussion`" class="ml-auto">
-                        <button class="btn btn-sm btn-neutral">Discussion</button>
+                        <button class="btn btn-sm btn-outline">Discussion</button>
                     </NuxtLink>
                 </div>
                 <div v-for="category in Object.values(FileCategoryTypes)" class="flex p-2 flex-col">
@@ -39,7 +39,7 @@ const uploadModalId = 'upload_modal'
                     :data-tip="status !== 'authenticated' ? 'Log in to use it' : ''"
                 >
                     <button
-                        :class="`btn btn-sm w-full btn-neutral ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
+                        :class="`btn btn-sm w-full btn-outline ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
                         :onclick='`window.${uploadModalId}.showModal()`'>Upload Materials</button>
                 </div>
             </div>
