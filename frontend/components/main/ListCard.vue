@@ -19,7 +19,7 @@
             <template v-else>
                 <div v-for="theme in props.content" class="flex flex-col">
                     <NuxtLink :to="`/theme/${theme.id}`">
-                        <div class="ml-4 p-2 bg-base-300 rounded-lg flex flex-row items-center gap-x-4">
+                        <div class="ml-4 p-2 bg-base-300 border border-base-300 rounded-lg flex flex-row hover:border-accent items-center gap-x-4">
                             <div class="badge badge-accent badge-sm"></div>
                             <h2>
                                 {{ theme.title }}

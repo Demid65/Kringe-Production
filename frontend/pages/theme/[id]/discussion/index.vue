@@ -26,7 +26,7 @@ const newDiscussionModalId = 'new_discussion_modal'
                     <h1 class="text-2xl">{{ cards.title }} - Discussion</h1>
                     <div :class="`ml-auto ${status !== 'authenticated' ? 'tooltip tooltip-top' : '' }`" :data-tip="status !== 'authenticated' ? 'Log in to use it' : ''">
                         <button
-                            :class="`btn btn-sm btn-neutral ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
+                            :class="`btn btn-sm btn-outline ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
                             :onclick="`window.${newDiscussionModalId}.showModal()`"
                         >New</button>
                     </div>
@@ -44,10 +44,6 @@ const newDiscussionModalId = 'new_discussion_modal'
                         </NuxtLink>
                     </template>
                 </div>
-
-<!--                <div class="card-actions mt-auto justify-end">-->
-<!--                    <button class="btn btn-sm w-full btn-neutral" :onclick='`window.${uploadModalId}.showModal()`'>Upload Materials</button>-->
-<!--                </div>-->
             </div>
         </div>
     </div>
