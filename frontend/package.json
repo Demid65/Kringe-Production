@@ -21,6 +21,7 @@
     "prisma": "^4.16.2"
   },
   "dependencies": {
+    "@nuxtjs/color-mode": "^3.3.0",
     "@prisma/client": "^4.16.2",
     "bcrypt": "^5.1.0",
     "dompurify": "^3.0.4",

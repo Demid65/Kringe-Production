@@ -9,14 +9,8 @@ export default defineNuxtConfig({
     auth: {
         basePath: '/auth'
     },
-    purgeCSS: {
-        enabled: false,
-        safelist: [
-            'article-block'
-        ]
-    },
     colorMode: {
-        classSuffix: ''
+        dataValue: 'theme'
     },
     components: [
         {
