@@ -17,7 +17,7 @@
         <div class="collapse-content flex flex-row flex-wrap gap-2">
             <div v-for="file in props.files" class="flex-none">
                 <a :href="`${routesMap['getFile']}?fileId=${file.id}`" :download="`${file.title}.${file.type}`">
-                    <button class="btn btn-neutral btn-outline">
+                    <button class="btn btn-outline">
                         {{ file.title }} ({{ file.type }})
                     </button>
                 </a>
