@@ -3,16 +3,14 @@
 export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
-        '@sidebase/nuxt-auth'
+        '@sidebase/nuxt-auth',
+        '@nuxtjs/color-mode'
     ],
     auth: {
         basePath: '/auth'
     },
-    purgeCSS: {
-        enabled: false,
-        safelist: [
-            'article-block'
-        ]
+    colorMode: {
+        dataValue: 'theme'
     },
     components: [
         {
