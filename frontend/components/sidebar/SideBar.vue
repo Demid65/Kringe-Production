@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
+import {debounce} from "~/utils/debounce";
 
 const { data: tree, pending, error, refresh } = await useFetch(routesMap['sidebarData'], {
     query: {
@@ -9,20 +10,6 @@ const { data: tree, pending, error, refresh } = await useFetch(routesMap['sideba
 
 const treeState = useState('tree', () => Array.from(tree.value, (x) => false))
 const searchString = useState('searchstring', () => "")
-
-function debounce(callee: () => void, timeoutMs: number) {
-    let lastCall = null
-    let lastCallTimer = null
-    return function perform(...args: any[]) {
-        let previousCall = lastCall
-        lastCall = Date.now()
-        if (previousCall && lastCall - previousCall <= timeoutMs) {
-            clearTimeout(lastCallTimer)
-        }
-        lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
-
-        }
-}
 
 const debouncedSearch = debounce(search, 300)
 

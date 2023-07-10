@@ -8,5 +8,6 @@ export const routesMap = {
     createMessage: '/api/createMessage',
     getFile: '/api/getFile',
     uploadFile: '/api/uploadFile',
-    getArticle: '/api/mocks'
+    uploadArticle: '/api/uploadArticle',
+    getArticle: '/api/getArticle'
 }

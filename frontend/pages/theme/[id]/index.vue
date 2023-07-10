@@ -4,9 +4,9 @@ import {routesMap} from "~/utils/routes";
 import {FileCategoryTypes} from "~/utils/fileCategoryTypes";
 
 const route = useRoute()
-const { status, data } = useAuth()
+const {status, data} = useAuth()
 
-const { data: cards, pending, error, refresh } = await useFetch(routesMap['courseData'], {
+const {data: cards, pending, error, refresh} = await useFetch(routesMap['courseData'], {
     query: {
         courseId: route.params.id
     }
@@ -35,12 +35,20 @@ const uploadModalId = 'upload_modal'
                     <ThemeCard :title="category" :files="cards.files.filter((el) => el.category === category)"/>
                 </div>
                 <div
-                    :class="`card-actions mt-auto ${status !== 'authenticated' ? 'tooltip tooltip-top' : '' }`"
+                    :class="`card-actions mt-auto flex flex-nowrap flex-col sm:flex-row ${status !== 'authenticated' ? 'tooltip tooltip-top' : '' }`"
                     :data-tip="status !== 'authenticated' ? 'Log in to use it' : ''"
                 >
+                    <NuxtLink :to="`${$route.params.id}/article/create`" class="w-full block shrink">
+                        <button
+                            :class="`btn btn-sm w-full btn-outline ${status !== 'authenticated' ? 'btn-disabled' : '' }`">
+                            Create article
+                        </button>
+                    </NuxtLink>
                     <button
-                        :class="`btn btn-sm w-full btn-outline ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
-                        :onclick='`window.${uploadModalId}.showModal()`'>Upload Materials</button>
+                        :class="`btn btn-sm shrink w-full btn-outline ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
+                        :onclick='`window.${uploadModalId}.showModal()`'>
+                        Upload Materials
+                    </button>
                 </div>
             </div>
         </div>
