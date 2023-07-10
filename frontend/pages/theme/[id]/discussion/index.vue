@@ -34,7 +34,7 @@ const newDiscussionModalId = 'new_discussion_modal'
                 </div>
                 <div class="flex flex-col gap-2 py-2">
                     <template v-for="topic in cards.topics">
-                        <NuxtLink :to="`discussion/${topic.id}`">
+                        <NuxtLink :to="`/theme/${route.params.id}/discussion/${topic.id}`">
                             <div class="card bg-base-300 border border-base-300 hover:border-accent shadow-xl">
                                 <div class="card-body p-6">
                                     <h2 class="card-title text-lg">{{ topic.title }}</h2>

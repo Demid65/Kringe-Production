@@ -26,12 +26,13 @@ enum FileCategory {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  username String @unique
+  id       Int      @id @default(autoincrement())
+  username String   @unique
   password String
-  role     UserRole   @default(USER)
+  role     UserRole @default(USER)
 
   files    File[]
+  article  Article[]
   themes   DiscussionTheme[]
   messages DiscussionMessage[]
 }
@@ -43,7 +44,8 @@ model Course {
   year   Years @relation(fields: [yearId], references: [id])
   yearId Int
 
-  files File[]
+  files    File[]
+  articles Article[]
 
   themes DiscussionTheme[]
 }
@@ -93,4 +95,17 @@ model DiscussionMessage {
 
   author   User @relation(fields: [authorId], references: [id])
   authorId Int
+}
+
+model Article {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  path String
 }

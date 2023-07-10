@@ -81,7 +81,12 @@ function publishArticle() {
         }
     }).then((val) => {
         fetchState.value.pending = false
-        navigateTo(val)
+
+        proxyContent.value.content = ""
+        proxyContent.value.title = ""
+        update()
+
+        navigateTo(val.url)
     }, (err) => {
         fetchState.value.pending = false
         fetchState.value.error = true

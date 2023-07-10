@@ -6,35 +6,13 @@
 
     const route = useRoute()
 
-    // const { data: article, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
-    //     query: {
-    //         data: 'article'
-    //     },
-    //     server: false,
-    //     lazy: true
-    // })
-
-    const { data: article, pending, error, refresh } = await useAsyncData(async () => {
-        const articleData = await $fetch(routesMap['getArticle'], {
-            query: {
-                data: 'article'
-            }
-        })
-        console.log(articleData)
-        const articleContent = await $fetch(`/${articleData.name}`)
-
-        console.log(typeof articleContent)
-
-        return {
-            title: articleData.title,
-            content: articleContent
-        }
-    }, {
+    const { data: article, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
+        query: {
+            articleId: route.params.articleId
+        },
         server: false,
         lazy: true
     })
-
-    console.log(article)
 
     function parseMarkdown(content: any) {
         console.log(content, typeof content)
@@ -53,34 +31,19 @@
         </Title>
     </Head>
     <div class="flex flex-col container mx-auto px-2 h-full">
-        <div class="card bg-base-200 shadow-xl h-full">
+        <div class="card bg-base-200 shadow-xl h-full w-0 min-w-full">
             <FetchPlaceholder :pending="pending" :error="error">
                 <div class="card-body p-4 gap-0">
                     <div class="card-title rounded-lg bg-base-300 p-4">
-                        <h1 class="text-lg">{{ article.title }}</h1>
-                        <NuxtLink :to="`${$route.params.id}/`" class="ml-auto">
-                            <button class="btn btn-sm btn-outline">Go back</button>
+                        <h1 class="text-lg break-words">{{ article.title }}</h1>
+                        <NuxtLink :to="`/theme/${$route.params.id}/`" class="ml-auto flex-none min-w-max">
+                            <button class="btn btn-sm btn-outline flex-none">Go back</button>
                         </NuxtLink>
                     </div>
-                    <div class="article-block break-words flex flex-col max-w-100 p-2" v-html="parseMarkdown(article.content)">
-
+                    <div class="article-block break-words flex flex-col max-w-100 p-2"
+                         v-html="parseMarkdown(article.content)">
                     </div>
                 </div>
-
-<!--                <div class="collapse collapse-arrow bg-base-300 w-full">-->
-<!--                    <input type="checkbox" />-->
-<!--                    <div class="collapse-title text-lg font-medium">-->
-<!--                        Write-->
-<!--                    </div>-->
-<!--                    <div class="collapse-content">-->
-<!--                        <textarea-->
-<!--                            class="textarea textarea-accent resize-none w-full"-->
-<!--                            :rows="10"-->
-<!--                            @input=""-->
-<!--                            v-model="article.content"-->
-<!--                            placeholder="Your message" />-->
-<!--                    </div>-->
-<!--                </div>-->
             </FetchPlaceholder>
         </div>
     </div>

@@ -22,18 +22,36 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const files = await prisma.file.findMany({
+    const files = prisma.file.findMany({
         where: {
             courseId: Number.parseInt(query.courseId)
         }
     })
 
+    const articles = prisma.article.findMany({
+        where: {
+            courseId: Number.parseInt(query.courseId)
+        },
+        select: {
+            title: true,
+            id: true,
+            author: {
+                select: {
+                    username: true
+                }
+            }
+        }
+    })
+
+
+
     const data = {
         title: title.title,
-        files: files
+        files: await files,
+        articles: await articles
     }
 
-    console.log(`get courses ${title} ${data}`)
+    console.log(`get course ${query.courseId}`)
 
     return data
 
