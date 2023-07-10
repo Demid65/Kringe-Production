@@ -13,7 +13,7 @@ const { data: cards, pending, error, refresh } = await useFetch(routesMap['mainD
 <template>
     <Head>
         <Title>
-            Kringe
+            UniHub
         </Title>
     </Head>
 
