@@ -17,7 +17,7 @@ const loginModalId = 'login_modal'
 const colorMode = useColorMode()
 
 function toggleMode() {
-  colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark';
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
   console.log(colorMode.preference)
 }
 </script>
