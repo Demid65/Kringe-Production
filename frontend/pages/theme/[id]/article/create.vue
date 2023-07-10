@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
 import MarkdownIt from "markdown-it";
-import DOMPurify from "dompurify";
 import {$fetch} from "ofetch";
 import {debounce} from "~/utils/debounce";
 
@@ -31,11 +30,10 @@ const fetchState = useState(() => ({
 }))
 
 function parseMarkdown(content: any) {
-    console.log(content, typeof content)
     const md = new MarkdownIt({
         html: true
     })
-    return DOMPurify.sanitize(md.render(content))
+    return md.render(content)
 
 }
 

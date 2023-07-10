@@ -1,26 +1,18 @@
 <script setup lang="ts">
     import {routesMap} from "~/utils/routes";
     import MarkdownIt from "markdown-it";
-    import DOMPurify from "dompurify";
-    import {$fetch} from "ofetch";
 
     const route = useRoute()
 
     const { data: article, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
         query: {
             articleId: route.params.articleId
-        },
-        server: false,
-        lazy: true
+        }
     })
 
     function parseMarkdown(content: any) {
-        console.log(content, typeof content)
-        const md = new MarkdownIt({
-            html: true
-        })
-        return DOMPurify.sanitize(md.render(content))
-
+        const md = new MarkdownIt()
+        return md.render(content)
     }
 </script>
 
