@@ -30,9 +30,7 @@ const fetchState = useState(() => ({
 }))
 
 function parseMarkdown(content: any) {
-    const md = new MarkdownIt({
-        html: true
-    })
+    const md = new MarkdownIt()
     return md.render(content)
 
 }
