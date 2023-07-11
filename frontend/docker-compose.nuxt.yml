@@ -17,6 +17,7 @@ services:
       - HOST=0.0.0.0
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/unihub
       - DOMAIN=http://kringeproduction.duckdns.org
+      - YAGPT_TOKEN=y0_AgAAAAAc1G31AAoX4wAAAADmctffcScP51EtS9m8zUfU3nXR6Kolnyc
     ports:
       - "3000:3000"
       - "5555:5555"

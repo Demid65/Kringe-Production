@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
     console.log(`upload file ${path} by ${session.id}`)
 
     const yaGPTurl = 'https://300.ya.ru/api/sharing-url'
-    const token = 'y0_AgAAAAAc1G31AAoX4wAAAADmctffcScP51EtS9m8zUfU3nXR6Kolnyc'
+    const token = process.env.YAGPT_TOKEN || ''
 
     const host = process.env.DOMAIN || 'https://capstone.innopolis.university/docs/weekly-tasks/weekly-tasks/week_1/'
     const url = `/theme/${data.courseId}/article/${file.id}`
