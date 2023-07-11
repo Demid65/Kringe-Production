@@ -52,6 +52,7 @@ export default defineEventHandler(async (event) => {
     const yaGPTurl = 'https://300.ya.ru/api/sharing-url'
     const token = 'y0_AgAAAAAc1G31AAoX4wAAAADmctffcScP51EtS9m8zUfU3nXR6Kolnyc'
 
+    const host = process.env.DOMAIN || 'https://capstone.innopolis.university/docs/weekly-tasks/weekly-tasks/week_1/'
     const url = `/theme/${data.courseId}/article/${file.id}`
 
     let isOk = true
@@ -59,7 +60,7 @@ export default defineEventHandler(async (event) => {
     const res = await $fetch(yaGPTurl, {
         method: 'POST',
         body: {
-            'article_url': 'https://capstone.innopolis.university/docs/weekly-tasks/weekly-tasks/week_1/'
+            'article_url': host + url
         },
         headers: {
             'Authorization': `OAuth ${token}`

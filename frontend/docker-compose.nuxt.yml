@@ -16,6 +16,7 @@ services:
       - PORT=3000
       - HOST=0.0.0.0
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/unihub
+      - DOMAIN=http://kringeproduction.duckdns.org
     ports:
       - "3000:3000"
       - "5555:5555"
