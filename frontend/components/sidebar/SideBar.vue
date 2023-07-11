@@ -8,6 +8,8 @@ const { data: tree, pending, error, refresh } = await useFetch(routesMap['sideba
     }
 })
 
+const props = defineProps(['idPrefix'])
+
 const treeState = useState('tree', () => Array.from(tree.value, (x) => false))
 const searchString = useState('searchstring', () => "")
 
@@ -42,7 +44,7 @@ function search() {
 
         <FetchPlaceholder :pending="pending" :error="error" >
             <div v-for="(node, i) in tree" class="flex flex-col">
-                <TreeNode :data="node" v-model:isOpen="treeState[i]" />
+                <TreeNode :idPrefix="props.idPrefix" :data="node" v-model:isOpen="treeState[i]" />
             </div>
         </FetchPlaceholder>
 

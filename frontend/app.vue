@@ -76,7 +76,7 @@ function toggleMode() {
                 <NuxtPage/>
             </div>
             <div :class="['lg:w-64 hidden lg:flex', isSidebarVisible ? 'hidden' : 'flex']">
-                <SideBar/>
+                <SideBar :idPrefix="'main'"/>
             </div>
         </div>
 
@@ -103,7 +103,7 @@ function toggleMode() {
 <!--            </div>-->
             <div class="flex h-full">
                 <div class="w-full">
-                    <SideBar/>
+                    <SideBar :idPrefix="'mobile'"/>
                 </div>
             </div>
         </div>
