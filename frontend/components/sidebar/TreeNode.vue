@@ -7,7 +7,12 @@ defineEmits(['update:isOpen'])
 
 <template>
     <div v-if="props.data?.courses" class="collapse bg-base-200 collapse-arrow">
-        <input type="checkbox" :id="`sidebar-${props.data.title}`" v-model="props.isOpen" :value="props.isOpen" @input="$emit('update:isOpen', $event.target.value === 'true')" class="min-h-0" />
+        <input type="checkbox"
+               :id="`sidebar-${props.data.title}`"
+               :aria-label="props.data.title"
+               v-model="props.isOpen"
+               :value="props.isOpen"
+               @input="$emit('update:isOpen', $event.target.value === 'true')" class="min-h-0" />
         <div class="collapse-title min-h-0 p-1">
             <label :for="`sibebar-${props.data.title}`" class="pl-4 text-xl">{{ props.data.title }}</label>
         </div>
