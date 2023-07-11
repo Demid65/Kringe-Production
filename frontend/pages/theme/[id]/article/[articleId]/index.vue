@@ -32,9 +32,9 @@
                             <button class="btn btn-sm btn-outline flex-none">Go back</button>
                         </NuxtLink>
                     </div>
-                    <div class="article-block break-words flex flex-col max-w-100 p-2"
+                    <article class="article-block break-words flex flex-col max-w-100 p-2"
                          v-html="parseMarkdown(article.content)">
-                    </div>
+                    </article>
                 </div>
             </FetchPlaceholder>
         </div>
