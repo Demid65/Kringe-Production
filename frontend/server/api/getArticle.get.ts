@@ -37,13 +37,15 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const value = await storage.getItem(`${file.path}`)
+    const value = await storage.getItem(`${file.path}/content.md`)
+    const para = await storage.getItem(`${file.path}/para.json`)
 
     if (value) {
         return {
             title: file.title,
             authorName: file.author.username,
-            content: value
+            content: value,
+            para: para
         }
     }
 
@@ -51,6 +53,4 @@ export default defineEventHandler(async (event) => {
         statusCode: 500,
         statusMessage: 'Article is somehow unavailable'
     })
-
-
 })

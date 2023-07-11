@@ -26,11 +26,24 @@
         <div class="card bg-base-200 shadow-xl h-full w-0 min-w-full">
             <FetchPlaceholder :pending="pending" :error="error">
                 <div class="card-body p-4 gap-0">
-                    <div class="card-title rounded-lg bg-base-300 p-4">
+                    <div class="card-title rounded-lg bg-base-300 p-4 mb-2">
                         <h1 class="text-lg break-words">{{ article.title }}</h1>
                         <NuxtLink :to="`/theme/${$route.params.id}/`" class="ml-auto flex-none min-w-max">
                             <button class="btn btn-sm btn-outline flex-none">Go back</button>
                         </NuxtLink>
+                    </div>
+                    <div v-if="article.para" class="collapse collapse-arrow bg-base-300">
+                        <input type="checkbox" />
+                        <div class="collapse-title text-xl font-medium">
+                            Click me to show/hide content
+                        </div>
+                        <div class="collapse-content">
+                            <ul class="list-disc pl-4">
+                                <li v-for="point in article.para">
+                                    {{ point }}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <article class="article-block break-words flex flex-col max-w-100 p-2"
                          v-html="parseMarkdown(article.content)">

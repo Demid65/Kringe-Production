@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import {getServerSession} from "#auth";
+import { JSDOM } from "jsdom";
 import {usePrisma} from "../utils/usePrisma";
 import {useFileStorage} from "../utils/useFileStorage";
 
@@ -33,9 +34,9 @@ export default defineEventHandler(async (event) => {
     }
 
     const newFilename = uuidv4()
-    const path = `/articles/${newFilename}.md`
+    const path = `/articles/${newFilename}`
 
-    await storage.setItem(`/${path}`, data.content)
+    await storage.setItem(`/${path}/content.md`, data.content)
 
     const file = await prisma.article.create({
         data: {
@@ -48,8 +49,46 @@ export default defineEventHandler(async (event) => {
 
     console.log(`upload file ${path} by ${session.id}`)
 
+    const yaGPTurl = 'https://300.ya.ru/api/sharing-url'
+    const token = 'y0_AgAAAAAc1G31AAoX4wAAAADmctffcScP51EtS9m8zUfU3nXR6Kolnyc'
+
+    const url = `/theme/${data.courseId}/article/${file.id}`
+
+    let isOk = true
+
+    const res = await $fetch(yaGPTurl, {
+        method: 'POST',
+        body: {
+            'article_url': 'https://capstone.innopolis.university/docs/weekly-tasks/weekly-tasks/week_1/'
+        },
+        headers: {
+            'Authorization': `OAuth ${token}`
+        }
+    }).catch((err) => {
+        isOk = false
+        console.log('err ', err)
+    })
+
+    if (isOk && res) {
+
+        await JSDOM.fromURL(res['sharing_url']).then(async (dom) => {
+            const document = dom.window.document
+            const points = []
+
+            for (let elementsByTagNameElement of document.getElementsByTagName('li')) {
+                points.push(elementsByTagNameElement.innerHTML)
+            }
+
+            // console.log('points ', points)
+
+            await storage.setItem(`/${path}/para.json`, points)
+        }, (err) => {
+            console.log('err jsdom', err)
+        })
+    }
+
     return {
-        url: `/theme/${data.courseId}/article/${file.id}`
+        url: url
     }
 
 })

@@ -23,6 +23,7 @@
     "@nuxtjs/color-mode": "^3.3.0",
     "@prisma/client": "^4.16.2",
     "bcrypt": "^5.1.0",
+    "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.0",
     "markdown-it": "^13.0.1",
     "uuid": "^9.0.0"
