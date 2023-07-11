@@ -34,7 +34,8 @@ export default defineNuxtConfig({
         enabled: true
     },
     nitro: {
-        preset: 'node-cluster'
+        preset: 'node-cluster',
+        compressPublicAssets: true
     },
     app: {
         head: {
