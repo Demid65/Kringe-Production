@@ -51,8 +51,6 @@ export default defineEventHandler(async (event) => {
         articles: await articles
     }
 
-    console.log(`get course ${query.courseId}`)
-
     return data
 
 })

@@ -37,7 +37,6 @@ async function tryAuth(inputMode: loginModes) {
             password: creds.value.password
         })
         loading.value = false
-        console.log(data.value)
 
         console.log(res)
 

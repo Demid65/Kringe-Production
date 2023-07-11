@@ -29,7 +29,6 @@ const { status, data } = useAuth()
 
 function countRows(text: string) {
     let rows = text.split(/\r\n|\r|\n/).length
-    console.log(rows)
     return rows
 }
 
@@ -52,8 +51,6 @@ function validateInput() {
 function createDiscussion() {
 
     const res = validateInput()
-
-    console.log(status.value, data.value.user)
 
     if (status.value !== 'authenticated') {
         console.log('What are you doing without account???????????????')
@@ -93,8 +90,6 @@ function createDiscussion() {
             fetchState.value.errorMessage = err.data.statusMessage
             console.log(err)
         })
-
-        console.log(title.value.data, initMessage.value.data)
 
     }
 }

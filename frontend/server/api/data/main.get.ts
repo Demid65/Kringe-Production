@@ -21,8 +21,6 @@ export default defineEventHandler(async (event) => {
         popular: newCourses
     }
 
-    console.log(`get main ${data}`)
-
     return data
 
 })

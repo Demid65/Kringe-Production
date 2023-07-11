@@ -20,9 +20,6 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-
-    console.log(session)
-
     const prisma = usePrisma()
 
     const message = await prisma.discussionMessage.create({

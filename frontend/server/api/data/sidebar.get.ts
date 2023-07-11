@@ -12,8 +12,6 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(`get sidebar ${data}`)
-
     return data
 
 })

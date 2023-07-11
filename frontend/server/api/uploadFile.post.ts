@@ -25,8 +25,6 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    console.log(session)
-
     const parsedData = {
         id: 0,
         category: '',

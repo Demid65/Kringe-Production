@@ -96,7 +96,7 @@
     }
 
     a {
-        @apply link;
+        @apply link hover:text-accent;
     }
 
     p {

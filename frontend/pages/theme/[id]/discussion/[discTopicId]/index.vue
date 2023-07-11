@@ -27,7 +27,6 @@ const fetchState = useState(() => ({
 
 function countRows(text: string) {
     let rows = text.split(/\r\n|\r|\n/).length
-    console.log(rows)
     return rows
 }
 
@@ -49,8 +48,6 @@ function validateInput() {
 function sendMessage() {
 
     const res = validateInput()
-
-    console.log(status.value, data.value.id)
 
     if (status.value !== 'authenticated') {
         console.log('What are you doing without account???????????????')
@@ -98,7 +95,6 @@ function updateMessages() {
             themeId: route.params.discTopicId
         }
     }).then((val) => {
-        console.log('updating', val)
         topic.value = val
     }, (err) => {
         console.log(err)

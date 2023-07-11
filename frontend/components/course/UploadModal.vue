@@ -33,7 +33,6 @@ function uploadFiles() {
     const cat = categoryValue.value
     const f = file.value.file
     file.value.error = false
-    console.log(f)
 
     if (f === null) {
         file.value.error = true

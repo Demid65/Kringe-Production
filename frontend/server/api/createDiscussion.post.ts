@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(`create Discussion ${theme.id} ${message}`)
+    console.log(`create discussion ${theme.id} ${message}`)
 
     return theme
 

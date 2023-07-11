@@ -1,6 +1,6 @@
 // file: ~/server/api/auth/[...].ts
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { NuxtAuthHandler } from '#auth'
+import {NuxtAuthHandler} from '#auth'
 import bcrypt from 'bcrypt'
 import {usePrisma} from "../../utils/usePrisma";
 
@@ -9,7 +9,6 @@ export default NuxtAuthHandler({
     secret: 'amogus',
     callbacks: {
         session: async ({session, token}) => {
-            console.log(`session ${session} ${token}`)
             session.id = token.id
             session.username = token.username
 
@@ -17,7 +16,6 @@ export default NuxtAuthHandler({
         },
         jwt: async ({token, user}) => {
             const isSignIn = user ? true : false;
-            console.log(`session ${token} ${user}`)
             if (isSignIn) {
                 token.id = user ? user.id || '' : ''
                 token.username = user ? user.username || '' : ''
@@ -31,8 +29,7 @@ export default NuxtAuthHandler({
 
             name: 'credentials',
 
-            async authorize (credentials: any) {
-                console.log(credentials)
+            async authorize(credentials: any) {
 
                 const prisma = usePrisma()
 
@@ -47,14 +44,13 @@ export default NuxtAuthHandler({
                     credentials.username == user.username &&
                     bcrypt.compareSync(credentials.password, user.password)) {
 
-                    console.log(`login with ${credentials.username}`)
+                    console.log(`login with ${user.username} (id: ${user.id})`)
 
                     return {
                         id: user.id,
                         username: user.username
                     }
                 } else if (credentials.register === 'true' && user === null) {
-                    console.log(`register with ${credentials.username}`)
                     const newUser = await prisma.user.create({
                         data: {
                             username: credentials.username,
@@ -62,12 +58,14 @@ export default NuxtAuthHandler({
                         }
                     })
 
+                    console.log(`register with ${newUser.username} (id: ${newUser.id})`)
+
                     return {
                         id: newUser.id,
                         username: newUser.username
                     }
                 } else {
-                    console.error('Warning: Malicious login attempt registered, bad credentials provided')
+                    console.error(`login failed (id: ${user.id})`)
                     throw createError({
                         statusCode: 400,
                         statusMessage: 'Invalid credentials'

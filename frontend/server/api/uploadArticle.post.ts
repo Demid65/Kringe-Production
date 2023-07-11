@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
         }
     }).catch((err) => {
         isOk = false
-        console.log('err ', err)
+        console.log('err fetching yagpt', err)
     })
 
     if (isOk && res) {

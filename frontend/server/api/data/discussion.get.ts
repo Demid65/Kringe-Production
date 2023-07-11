@@ -42,8 +42,6 @@ export default defineEventHandler(async (event) => {
         topics: themes
     }
 
-    console.log(`get discussion ${data}`)
-
     return data
 
 })
