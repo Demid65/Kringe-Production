@@ -1,8 +1,10 @@
 <script setup lang="ts">
     import {routesMap} from "~/utils/routes";
-    import MarkdownIt from "markdown-it";
+    import {useMarkdown} from "~/utils/useMarkdown";
 
+    const colorMode = useColorMode()
     const route = useRoute()
+    const md = useMarkdown()
 
     const { data: article, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
         query: {
@@ -11,7 +13,6 @@
     })
 
     function parseMarkdown(content: any) {
-        const md = new MarkdownIt()
         return md.render(content)
     }
 </script>
@@ -21,6 +22,8 @@
         <Title>
             {{ article?.title ? article.title : 'Wait' }}
         </Title>
+        <Link v-if="colorMode.value === 'dark'" rel="stylesheet" href="/css/atom-one-dark.css" crossorigin=""/>
+        <Link v-else rel="stylesheet" href="/css/atom-one-light.css" crossorigin="" />
     </Head>
     <div class="flex flex-col container mx-auto px-2 h-full">
         <div class="card bg-base-200 shadow-xl h-full w-0 min-w-full">
@@ -56,57 +59,8 @@
 
 <style>
 /* purgecss start ignore */
-.article-block {
-    h1 {
-        @apply mt-4 text-3xl;
-    }
 
-    h2 {
-        @apply mt-2 text-2xl;
-    }
+@import "assets/css";
 
-    h3 {
-        @apply mt-2 text-xl;
-    }
-    h4, h5, h6 {
-        @apply mt-2 text-lg;
-    }
-
-    code {
-        @apply bg-base-100 rounded p-1;
-    }
-
-    pre {
-        @apply bg-base-100 p-2 rounded-lg my-2;
-        code {
-            @apply p-0;
-        }
-    }
-
-    ul {
-        @apply list-disc ml-6;
-    }
-
-    ol {
-        @apply list-decimal ml-6;
-    }
-
-    blockquote {
-        @apply bg-base-100 p-4 rounded-lg;
-    }
-
-    a {
-        @apply link hover:text-accent;
-    }
-
-    p {
-        @apply my-1;
-    }
-
-    img {
-        @apply rounded-lg;
-    }
-
-}
 /* purgecss end ignore */
 </style>

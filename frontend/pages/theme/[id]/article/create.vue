@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import {routesMap} from "~/utils/routes";
-import MarkdownIt from "markdown-it";
 import {$fetch} from "ofetch";
 import {debounce} from "~/utils/debounce";
+import {useMarkdown} from "~/utils/useMarkdown";
 
+const colorMode = useColorMode()
 const route = useRoute()
 const {status, data} = useAuth()
+const md = useMarkdown()
 
 if (status.value !== 'authenticated') {
     navigateTo('/')
@@ -30,7 +32,6 @@ const fetchState = useState(() => ({
 }))
 
 function parseMarkdown(content: any) {
-    const md = new MarkdownIt()
     return md.render(content)
 
 }
@@ -46,11 +47,11 @@ function validateInput() {
     article.value.isContentValid = true
     article.value.isTitleValid = true
 
-    if(article.value.title.length < 10) {
+    if (article.value.title.length < 10) {
         article.value.isTitleValid = false
         return false
     }
-    if(article.value.content.length < 100) {
+    if (article.value.content.length < 100) {
         article.value.isContentValid = false
         return false
     }
@@ -97,6 +98,8 @@ function publishArticle() {
         <Title>
             New article
         </Title>
+        <Link v-if="colorMode.value === 'dark'" rel="stylesheet" href="/css/atom-one-dark.css" crossorigin=""/>
+        <Link v-else rel="stylesheet" href="/css/atom-one-light.css" crossorigin=""/>
     </Head>
     <div class="flex flex-col container mx-auto px-2 h-full">
         <div class="card bg-base-200 shadow-xl h-full w-0 min-w-full">
@@ -108,7 +111,9 @@ function publishArticle() {
                     </div>
                 </div>
                 <div class="card-title rounded-lg bg-base-300 p-4">
-                    <h1 class="text-lg break-all">{{ article.title.length > 0 ? article.title : 'Title will be here' }}</h1>
+                    <h1 class="text-lg break-all">{{
+                            article.title.length > 0 ? article.title : 'Title will be here'
+                        }}</h1>
                     <NuxtLink :to="`/theme/${$route.params.id}`" class="ml-auto">
                         <button class="btn btn-sm btn-outline">Go back</button>
                     </NuxtLink>
@@ -134,7 +139,11 @@ function publishArticle() {
                 </div>
 
                 <div v-if="fetchState.error" class="alert alert-error mb-4 flex flex-row">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
                     <span>{{ fetchState.errorMessage }}</span>
                 </div>
 
@@ -179,60 +188,8 @@ function publishArticle() {
 
 <style>
 /* purgecss start ignore */
-.article-block {
-    h1 {
-        @apply mt-4 text-3xl;
-    }
 
-    h2 {
-        @apply mt-2 text-2xl;
-    }
-
-    h3 {
-        @apply mt-2 text-xl;
-    }
-
-    h4, h5, h6 {
-        @apply mt-2 text-lg;
-    }
-
-    code {
-        @apply bg-base-100 rounded p-1;
-    }
-
-    pre {
-        @apply bg-base-100 p-2 rounded-lg my-2;
-
-        code {
-            @apply p-0;
-        }
-    }
-
-    ul {
-        @apply list-disc ml-6;
-    }
-
-    ol {
-        @apply list-decimal ml-6;
-    }
-
-    blockquote {
-        @apply bg-base-100 p-4 rounded-lg;
-    }
-
-    a {
-        @apply link;
-    }
-
-    p {
-        @apply my-1;
-    }
-
-    img {
-        @apply rounded-lg;
-    }
-
-}
+@import "assets/css/article.css";
 
 /* purgecss end ignore */
 </style>

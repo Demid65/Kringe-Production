@@ -33,6 +33,9 @@ export default defineNuxtConfig({
     devtools: {
         enabled: true
     },
+    purgeCSS: {
+        enabled: true,
+    },
     nitro: {
         preset: 'node-cluster',
         compressPublicAssets: true
