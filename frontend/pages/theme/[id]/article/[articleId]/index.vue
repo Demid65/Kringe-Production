@@ -35,7 +35,7 @@
                             <button class="btn btn-sm btn-outline flex-none">Go back</button>
                         </NuxtLink>
                     </div>
-                    <div v-if="article.para?.points" class="collapse collapse-arrow bg-base-300">
+                    <div v-if="article.para !== null && article.para.points.length > 0" class="collapse collapse-arrow bg-base-300">
                         <input type="checkbox" />
                         <div class="collapse-title text-xl font-medium">
                             Summary by YandexGPT <div class="badge badge-accent badge-outline">RU</div>
