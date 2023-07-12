@@ -29,12 +29,13 @@ services:
     restart: unless-stopped
     volumes:
       - db_data:/var/lib/postgresql/data/pgdata
-      - ./postgresql.conf:/var/lib/postgresql/data/pgdata/postgresql.conf
+      - ./postgresql.conf:/var/lib/postgresql/data/postgresql.conf
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - PGDATA=/var/lib/postgresql/data/pgdata
+    command: "postgres -c 'config_file=/var/lib/postgresql/data/postgresql.conf'"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
