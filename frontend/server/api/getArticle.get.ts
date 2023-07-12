@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
         }
     }
 
-    console.log(`500 create message (article: ${data.articleId}, path: ${file.path})`)
+    console.log(`500 create article (article: ${data.articleId}, path: ${file.path})`)
     throw createError({
         statusCode: 500,
         statusMessage: 'Article is somehow unavailable'

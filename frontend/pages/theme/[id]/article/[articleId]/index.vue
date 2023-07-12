@@ -12,16 +12,6 @@
         }
     })
 
-    const para = {
-        source: 'https://300.ya.ru/NJPY3jfr',
-        points: [
-            "Яндекс представил новую языковую модель YandexGPT (YaLM 2.0), которая может кратко пересказывать текст.",
-            "Модель работает в режиме тестирования на сервисе 300.ya.ru.",
-            "Нейросеть выделяет главное в русскоязычных текстах длиной до 30 тысяч знаков.",
-            "Сервис также предоставляет API для разработчиков, который позволяет получить ссылку на сокращенную версию статьи без использования веб-интерфейса."
-        ]
-    }
-
     function parseMarkdown(content: any) {
         return md.render(content)
     }
@@ -45,7 +35,7 @@
                             <button class="btn btn-sm btn-outline flex-none">Go back</button>
                         </NuxtLink>
                     </div>
-                    <div v-if="para.points" class="collapse collapse-arrow bg-base-300">
+                    <div v-if="article.para.points" class="collapse collapse-arrow bg-base-300">
                         <input type="checkbox" />
                         <div class="collapse-title text-xl font-medium">
                             Summary by YandexGPT <div class="badge badge-accent badge-outline">RU</div>
@@ -56,12 +46,12 @@
                                 <span>The summary may contain errors and inaccuracies</span>
                             </div>
                             <ul class="list-disc pl-4">
-                                <li v-for="point in para.points">
+                                <li v-for="point in article.para.points">
                                     {{ point }}
                                 </li>
                             </ul>
                             <div class="flex flex-row">
-                                <a class="link ml-auto" :href="para.source" target="_blank">
+                                <a class="link ml-auto" :href="article.para.source" target="_blank">
                                     <button class="btn btn-ghost">
                                         Source
                                     </button>
