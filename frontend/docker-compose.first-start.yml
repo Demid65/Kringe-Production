@@ -1,0 +1,67 @@
+version: '2.1'
+
+services:
+  frontend0:
+    build:
+      context: ./frontend
+    working_dir: /usr/src/app
+    restart: unless-stopped
+    volumes:
+      - /usr/src/app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - AUTH_ORIGIN=http://localhost
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/unihub
+      - DOMAIN=http://kringeproduction.duckdns.org
+      - YAGPT_TOKEN=y0_AgAAAAAc1G31AAoX4wAAAADmctffcScP51EtS9m8zUfU3nXR6Kolnyc
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data/pgdata
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  rev_proxy:
+    image: nginx:1.24.0-alpine
+    volumes:
+      - ./nginx.first-start.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 30d & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NGINX_DOMAIN=kringeproduction.duckdns.org
+    depends_on:
+      - frontend0
+    restart: unless-stopped
+
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 30d & wait $${!}; done;'"
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+
+volumes:
+  db_data:
