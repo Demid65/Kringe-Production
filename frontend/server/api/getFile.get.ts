@@ -1,6 +1,5 @@
 import {usePrisma} from "../utils/usePrisma";
 import {useFileStorage} from "../utils/useFileStorage";
-import * as fs from "fs";
 import {Readable} from "stream";
 
 export default defineEventHandler(async (event) => {
@@ -8,6 +7,7 @@ export default defineEventHandler(async (event) => {
     const data = await getQuery(event)
 
     if (!data.fileId) {
+        console.log(`400 get file (file: ${data.fileId})`)
         throw createError({
             statusCode: 400,
             statusMessage: 'FileID required'
@@ -24,6 +24,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!file) {
+        console.log(`404 get file (file: ${data.fileId})`)
         throw createError({
             statusCode: 404,
             statusMessage: 'File not found'
@@ -35,9 +36,10 @@ export default defineEventHandler(async (event) => {
     if (value) {
         return sendStream(event, Readable.from(value))
     } else {
+        console.log(`403 get file (file: ${data.fileId}, path: ${file.path})`)
         throw createError({
-            statusCode: 418,
-            statusMessage: 'Sus'
+            statusCode: 500,
+            statusMessage: 'File is somehow unavailable'
         })
     }
 

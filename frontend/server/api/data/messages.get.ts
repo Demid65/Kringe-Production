@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (theme === null) {
+        console.log(`404 discussion (course: ${query.courseId}) (disc: ${query.themeId})`)
         throw createError({
             statusCode: 404,
             statusMessage: 'Discussion does not exist'

@@ -11,7 +11,7 @@
 </script>
 
 <template>
-    <div class="card bg-base-200 shadow-xl">
+    <div class="card bg-base-200">
         <div class="card-body p-4">
             <h1 class="card-title rounded-lg bg-base-300 p-2">{{ props.header }}</h1>
             <h1 v-if="props.pending">Fetching...</h1>

@@ -118,11 +118,14 @@ onUnmounted(() => {
         </Title>
     </Head>
     <div class="flex flex-col container mx-auto px-2 h-full">
-        <div class="card bg-base-200 shadow-xl h-full">
+        <div class="card bg-base-200 h-full w-0 min-w-full h-0 min-h-full overflow-y-auto scrollbar">
             <div class="card-body p-4 gap-0">
                 <FetchPlaceholder :pending="pending" :error="error">
                     <div class="card-title rounded-lg bg-base-300 p-4">
-                        <h1 class="text-lg">{{ topic.title }}</h1>
+                        <h1 class="text-lg break-all">{{ topic.title }}</h1>
+                        <NuxtLink :to="`/theme/${$route.params.id}/discussion`" class="ml-auto flex-none min-w-max">
+                            <button class="btn btn-sm btn-outline flex-none">Go back</button>
+                        </NuxtLink>
                     </div>
                     <div class="flex flex-col gap-6 py-2">
 
@@ -193,5 +196,5 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-
+@import "assets/css/common.css";
 </style>

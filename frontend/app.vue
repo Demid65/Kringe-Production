@@ -110,10 +110,12 @@ function toggleMode() {
     </div>
 </template>
 
-<style scoped>
+<style>
 @media (min-width: 1024px) {
     .flex-1 {
         flex: 1;
     }
 }
+
+@import "assets/css/common.css";
 </style>

@@ -39,7 +39,7 @@ function search() {
 </script>
 
 <template>
-    <div class=" flex flex-col flex-none bg-base-200 p-4 h-full rounded-xl shadow-xl">
+    <div class=" flex flex-col flex-none bg-base-200 p-4 h-full rounded-xl">
         <input type="text" class="input bg-base-300 mb-2" @input="debouncedSearch()" v-model="searchString" placeholder="search...">
 
         <FetchPlaceholder :pending="pending" :error="error" >

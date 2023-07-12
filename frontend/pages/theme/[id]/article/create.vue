@@ -102,7 +102,7 @@ function publishArticle() {
         <Link v-else rel="stylesheet" href="/css/atom-one-light.css" crossorigin=""/>
     </Head>
     <div class="flex flex-col container mx-auto px-2 h-full">
-        <div class="card bg-base-200 shadow-xl h-full w-0 min-w-full">
+        <div class="card bg-base-200 h-full w-0 min-w-full">
             <div class="card-body p-4 gap-0">
                 <div v-if="isWarningVisible" class="alert border-accent sm:hidden flex flex-row mb-2">
                     <span>Consider switching to a desktop version</span>

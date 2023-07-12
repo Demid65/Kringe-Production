@@ -16,7 +16,7 @@ const { data: cards, pending, error, refresh } = await useFetch(routesMap['mainD
         </Title>
     </Head>
 
-    <div class="flex flex-col gap-8 container h-full mx-auto px-2 ">
+    <div class="flex flex-col gap-8 container h-full mx-auto px-2  h-0 min-h-full overflow-y-auto scrollbar">
 
         <FetchPlaceholder :pending="pending" :error="error" >
             <ListCard :content="cards.popular" :pending="pending" :error="error" header="Popular" />

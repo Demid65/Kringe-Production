@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
     const storage = useFileStorage()
 
     if (data === undefined) {
+        console.log(`400 upload article (course: ${data?.courseId})`)
         throw createError({
             statusCode: 400,
             statusMessage: 'Invalid payload'
@@ -20,6 +21,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (!(data.title && data.courseId && data.content)) {
+        console.log(`400 upload article (course: ${data.courseId})`)
         throw createError({
             statusCode: 400,
             statusMessage: 'Invalid payload'
@@ -27,6 +29,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (!session) {
+        console.log(`403 upload article (course: ${data.courseId})`)
         throw createError({
             statusCode: 403,
             statusMessage: 'Unauthenticated'
@@ -47,7 +50,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(`upload file ${path} by ${session.id}`)
+    console.log(`upload article ${path} to ${file.path} by ${session.id}`)
 
     const yaGPTurl = 'https://300.ya.ru/api/sharing-url'
     const token = process.env.YAGPT_TOKEN || ''
@@ -80,9 +83,12 @@ export default defineEventHandler(async (event) => {
                 points.push(elementsByTagNameElement.innerHTML)
             }
 
-            // console.log('points ', points)
+            const data = {
+                source: res['sharing_url'],
+                points: points
+            }
 
-            await storage.setItem(`/${path}/para.json`, points)
+            await storage.setItem(`/${path}/para.json`, data)
         }, (err) => {
             console.log('err jsdom', err)
         })

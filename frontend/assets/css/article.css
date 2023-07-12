@@ -29,11 +29,14 @@
     }
 
     ul {
-        @apply list-disc ml-6;
+        @apply list-disc ml-4;
     }
 
     ol {
-        @apply list-decimal ml-6;
+        @apply list-decimal ml-4;
+    }
+    li {
+        @apply ml-4;
     }
 
     blockquote {
@@ -53,11 +56,11 @@
     }
 
     table {
-        @apply border border-collapse;
+        @apply table overflow-x-auto;
 
-        td, th {
-            @apply border p-2;
-        }
+        /*td, th {*/
+        /*    @apply border p-2;*/
+        /*}*/
 
     }
 

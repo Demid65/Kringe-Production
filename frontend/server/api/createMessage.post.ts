@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     const session = await getServerSession(event)
 
     if (data === undefined) {
+        console.log(`400 create message (course: ${data.courseId})`)
         throw createError({
             statusCode: 400,
             statusMessage: 'Invalid payload'
@@ -14,6 +15,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (!session) {
+        console.log(`403 create message (course: ${data.courseId})`)
         throw createError({
             statusCode: 403,
             statusMessage: 'Unauthenticated'

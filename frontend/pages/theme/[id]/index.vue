@@ -24,18 +24,18 @@ const uploadModalId = 'upload_modal'
         </Title>
     </Head>
     <UploadModal :id="uploadModalId"/>
-    <div class="flex flex-col container mx-auto px-2 h-full">
-        <div class="card bg-base-200 shadow-xl h-full w-0 min-w-full">
-            <div class="card-body p-4 gap-0">
+    <div class="flex flex-col container mx-auto px-2 h-0 min-h-full">
+        <div class="card bg-base-200 h-full w-0 min-w-full">
+            <div class="card-body p-4 gap-0 h-0 min-h-full overflow-y-auto scrollbar">
                 <div class="card-title rounded-lg bg-base-300 p-4">
-                    <h1 class="text-2xl">{{ cards.title }}</h1>
-                    <NuxtLink :to="`${$route.params.id}/discussion`" class="ml-auto">
+                    <h1 class="text-2xl break-all">{{ cards.title }}</h1>
+                    <NuxtLink :to="`/theme/${$route.params.id}/discussion`" class="ml-auto">
                         <button class="btn btn-sm btn-outline">Discussion</button>
                     </NuxtLink>
                 </div>
-                <div v-for="category in Object.values(FileCategoryTypes)" class="flex p-2 flex-col">
+                <template v-for="category in Object.values(FileCategoryTypes)">
                     <ThemeFiles :title="category" :files="cards.files.filter((el) => el.category === category)"/>
-                </div>
+                </template>
                 <div class="flex p-2 flex-col">
                   <ThemeArticles :title="`ARTICLES`" :articles="cards.articles"/>
                 </div>
@@ -50,7 +50,7 @@ const uploadModalId = 'upload_modal'
                         </button>
                     </NuxtLink>
                     <button
-                        :class="`btn btn-sm shrink w-full btn-outline ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
+                        :class="`btn btn-sm shrink w-full btn-outline hover:border-accent hover:bg-accent ${status !== 'authenticated' ? 'btn-disabled' : '' }`"
                         :onclick='`window.${uploadModalId}.showModal()`'>
                         Upload Materials
                     </button>

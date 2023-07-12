@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
     const storage = useFileStorage()
 
     if (data === undefined) {
+        console.log(`400 upload file ()`)
         throw createError({
             statusCode: 400,
             statusMessage: 'Invalid payload'
@@ -19,6 +20,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (!session) {
+        console.log(`403 upload file ()`)
         throw createError({
             statusCode: 403,
             statusMessage: 'Unauthenticated'
@@ -70,6 +72,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (!(validation.hasFile && validation.hasCategory && validation.hasCourse)) {
+        console.log(`400 upload file (payload: ${data})`)
         throw createError({
             statusCode: 400,
             statusMessage: 'Invalid payload'
@@ -87,7 +90,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(`upload file ${file}`)
+    console.log(`upload file ${file} to ${file.path} by ${session.id}`)
 
     return file
 

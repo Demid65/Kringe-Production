@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
     const data = await getQuery(event)
 
     if (!data.articleId) {
+        console.log(`400 create message (course: ${data.articleId})`)
         throw createError({
             statusCode: 400,
             statusMessage: 'ArticleID required'
@@ -31,6 +32,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!file) {
+        console.log(`404 get article (course: ${data.articleId})`)
         throw createError({
             statusCode: 404,
             statusMessage: 'File not found'
@@ -49,6 +51,7 @@ export default defineEventHandler(async (event) => {
         }
     }
 
+    console.log(`500 create message (article: ${data.articleId}, path: ${file.path})`)
     throw createError({
         statusCode: 500,
         statusMessage: 'Article is somehow unavailable'
