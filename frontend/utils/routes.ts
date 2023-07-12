@@ -4,10 +4,12 @@ export const routesMap = {
     courseData: '/api/data/course',
     courseDiscussion: '/api/data/discussion',
     discussionMessages: '/api/data/messages',
-    createDiscussion: '/api/createDiscussion',
-    createMessage: '/api/createMessage',
-    getFile: '/api/getFile',
-    uploadFile: '/api/uploadFile',
-    uploadArticle: '/api/uploadArticle',
-    getArticle: '/api/getArticle'
+    createDiscussion: '/api/discussion', // POST
+    createMessage: '/api/discussion', // PUT
+    getFile: '/api/file', // GET
+    uploadFile: '/api/file', // POST
+    uploadArticle: '/api/article', // POST
+    deleteArticle: '/api/article',
+    getArticle: '/api/article', // GET
+    adminPanel: '/api/data/admin' // GET
 }

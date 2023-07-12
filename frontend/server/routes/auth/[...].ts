@@ -9,7 +9,8 @@ export default NuxtAuthHandler({
     secret: 'amogus',
     callbacks: {
         session: async ({session, token}) => {
-            session.id = token.id
+            session.id = token.id,
+            session.role = token.role,
             session.username = token.username
 
             return Promise.resolve(session);
@@ -17,7 +18,8 @@ export default NuxtAuthHandler({
         jwt: async ({token, user}) => {
             const isSignIn = user ? true : false;
             if (isSignIn) {
-                token.id = user ? user.id || '' : ''
+                token.id = user ? user.id || '' : '',
+                token.role = user? user.role || '' : '',
                 token.username = user ? user.username || '' : ''
             }
             return Promise.resolve(token);
@@ -48,6 +50,7 @@ export default NuxtAuthHandler({
 
                     return {
                         id: user.id,
+                        role: user.role,
                         username: user.username
                     }
                 } else if (credentials.register === 'true' && user === null) {
@@ -62,6 +65,7 @@ export default NuxtAuthHandler({
 
                     return {
                         id: newUser.id,
+                        role: newUser.role,
                         username: newUser.username
                     }
                 } else {

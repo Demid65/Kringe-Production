@@ -65,7 +65,7 @@ function sendMessage() {
         message: messageInput.value.data
     })
     $fetch(routesMap['createMessage'], {
-        method: 'POST',
+        method: 'PUT',
         body: {
             themeId: route.params.discTopicId,
             message: messageInput.value.data

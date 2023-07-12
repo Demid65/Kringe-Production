@@ -1,5 +1,5 @@
 .scrollbar::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-transparent bg-opacity-50 border border-accent;
+    @apply rounded-full bg-accent bg-opacity-30;
 }
 .scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-accent;
