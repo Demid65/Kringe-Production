@@ -35,7 +35,7 @@
                             <button class="btn btn-sm btn-outline flex-none">Go back</button>
                         </NuxtLink>
                     </div>
-                    <div v-if="article.para.points" class="collapse collapse-arrow bg-base-300">
+                    <div v-if="article.para?.points" class="collapse collapse-arrow bg-base-300">
                         <input type="checkbox" />
                         <div class="collapse-title text-xl font-medium">
                             Summary by YandexGPT <div class="badge badge-accent badge-outline">RU</div>
@@ -46,12 +46,12 @@
                                 <span>The summary may contain errors and inaccuracies</span>
                             </div>
                             <ul class="list-disc pl-4">
-                                <li v-for="point in article.para.points">
+                                <li v-for="point in article.para?.points">
                                     {{ point }}
                                 </li>
                             </ul>
                             <div class="flex flex-row">
-                                <a class="link ml-auto" :href="article.para.source" target="_blank">
+                                <a class="link ml-auto" :href="article.para?.source" target="_blank">
                                     <button class="btn btn-ghost">
                                         Source
                                     </button>
