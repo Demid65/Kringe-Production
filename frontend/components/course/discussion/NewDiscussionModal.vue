@@ -3,9 +3,7 @@ import {categoriesList, loginModes} from "~/utils/types";
 import {routesMap} from "~/utils/routes";
 import {$fetch} from "ofetch";
 
-const props = defineProps({
-    id: String
-})
+const props = defineProps(['id', 'refresh'])
 
 const route = useRoute()
 const title = useState('newDiscussionTitle', () => ({
@@ -75,6 +73,7 @@ function createDiscussion() {
             }
         }).then((val) => {
             fetchState.value.pending = false
+            props.refresh()
             window[props.id].close()
 
             title.value.data = ""

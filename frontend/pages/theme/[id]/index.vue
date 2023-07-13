@@ -23,7 +23,7 @@ const uploadModalId = 'upload_modal'
             {{ cards.title }}
         </Title>
     </Head>
-    <UploadModal :id="uploadModalId"/>
+    <UploadModal :id="uploadModalId" :refresh="refresh"/>
     <div class="flex flex-col container mx-auto px-2 h-0 min-h-full">
         <div class="card bg-base-200 h-full w-0 min-w-full">
             <div class="card-body p-4 gap-0 h-0 min-h-full overflow-y-auto scrollbar">

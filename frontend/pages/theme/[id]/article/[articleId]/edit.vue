@@ -6,11 +6,12 @@ import {useMarkdown} from "~/utils/useMarkdown";
 
 const colorMode = useColorMode()
 const route = useRoute()
+const router = useRouter()
 const {status, data} = useAuth()
 const md = useMarkdown()
 
 if (status.value !== 'authenticated') {
-    navigateTo('/')
+    await navigateTo(`/theme/${route.params.id}/article/${route.params.articleId}`)
 }
 
 const { data: origArticle, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
@@ -118,9 +119,7 @@ function updateArticle() {
                     </div>
                 </div>
                 <div class="card-title rounded-lg bg-base-300 p-4">
-                    <h1 class="text-lg break-all">{{
-                            article.title.length > 0 ? article.title : 'Title will be here'
-                        }}</h1>
+                    <h1 class="text-lg break-all">{{ article.title.length > 0 ? article.title : 'Title will be here' }}</h1>
                     <NuxtLink :to="`/theme/${$route.params.id}`" class="ml-auto">
                         <button class="btn btn-sm btn-outline">Go back</button>
                     </NuxtLink>

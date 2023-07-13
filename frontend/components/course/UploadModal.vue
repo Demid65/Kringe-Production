@@ -4,9 +4,7 @@ import {$fetch} from "ofetch";
 
 import {FileCategoryTypes} from "~/utils/fileCategoryTypes";
 
-const props = defineProps({
-    id: String
-})
+const props = defineProps(['id', 'refresh'])
 
 const { status, data } = useAuth()
 const route = useRoute()
@@ -54,6 +52,7 @@ function uploadFiles() {
         body: fd,
     }).then((val) => {
         fetchState.value.pending = false
+        props.refresh()
         window[props.id].close()
     }, (err) => {
         fetchState.value.pending = false

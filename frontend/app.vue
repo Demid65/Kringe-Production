@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import Admin from "~/pages/admin.vue";
-
 useSeoMeta({
     title: 'UniHub',
     ogTitle: 'UniHub',
@@ -10,6 +8,9 @@ useSeoMeta({
 })
 
 const isSidebarVisible = useState('sidebarVisibility', () => false)
+
+const route = useRoute()
+const router = useRouter()
 
 const {status, data, signOut} = useAuth()
 
@@ -28,6 +29,13 @@ const colorMode = useColorMode()
 function toggleMode() {
     colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
     console.log(colorMode.preference)
+}
+
+function trySignOut() {
+    signOut({ redirect: false }).then(async () => {
+        console.log('sign out', route.fullPath)
+        location.reload()
+    })
 }
 </script>
 
@@ -76,7 +84,7 @@ function toggleMode() {
                             <NuxtLink :to="`/admin`">Admin</NuxtLink>
                         </li>
                         <li>
-                            <button @click="signOut({redirect: false})">Logout</button>
+                            <button @click="trySignOut()">Logout</button>
                         </li>
                     </ul>
                 </div>

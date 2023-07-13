@@ -19,7 +19,7 @@ const newDiscussionModalId = 'new_discussion_modal'
             {{ cards.title }} - Discussion
         </Title>
     </Head>
-    <NewDiscussionModal :id="newDiscussionModalId" />
+    <NewDiscussionModal :id="newDiscussionModalId" :refresh="refresh" />
     <div class="flex flex-col container mx-auto px-2 h-full">
         <div class="card bg-base-200 w-0 min-w-full h-0 min-h-full overflow-y-auto scrollbar">
             <div class="card-body p-4 gap-0">

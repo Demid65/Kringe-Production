@@ -17,6 +17,7 @@ const creds = useState('creds', () => ({
     repeatPasswordValid: true
 }))
 
+const route = useRoute()
 const { data, signIn } = useAuth()
 
 function toggleMode(inputMode: loginModes) {
@@ -34,7 +35,7 @@ async function tryAuth(inputMode: loginModes) {
             redirect: false,
             register: inputMode === loginModes.register,
             username: creds.value.username,
-            password: creds.value.password
+            password: creds.value.password,
         })
         loading.value = false
 
@@ -45,6 +46,8 @@ async function tryAuth(inputMode: loginModes) {
             authResult.value.error = res.error
         } else {
             window[props.id].close()
+            console.log('sign in', route.fullPath)
+            location.reload()
         }
     }
 }

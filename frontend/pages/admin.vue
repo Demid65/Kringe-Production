@@ -2,15 +2,14 @@
 import {routesMap} from "~/utils/routes";
 import {$fetch} from "ofetch";
 import {debounce} from "~/utils/debounce";
-import Index from "~/pages/theme/[id]/discussion/index.vue";
 
 const route = useRoute()
 const {status, data} = useAuth()
 
 console.log(data.value)
 
-if (data.value.role !== 'ADMIN') {
-    navigateTo('/')
+if (status.value !== 'authenticated' || data.value.role !== 'ADMIN') {
+    await navigateTo('/')
 }
 
 const manageCategories = [
@@ -19,7 +18,10 @@ const manageCategories = [
     'FILES'
 ]
 
-const {data: adminData, pending, error, refresh} = await useFetch(routesMap['adminPanel'])
+const {data: adminData, pending, error, refresh} = useFetch(routesMap['adminPanel'], {
+    server: false,
+    lazy: true
+})
 
 const category = useState(() => manageCategories[1])
 const searchString = useState(() => ({
@@ -67,55 +69,57 @@ const debouncedSearch = debounce(search, 300)
                             @click="category = _category"
                     >{{ _category }}</button>
                 </div>
-                <template v-if="category === 'USERS'">
-                    <div class="hero min-h-full bg-base-200">
-                        <div class="hero-content text-center">
-                            <div class="max-w-md">
-                                <h1 class="text-5xl font-bold">There will be admin tools for users</h1>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-
-                <template v-if="category === 'ARTICLES'">
-                    <input type="text" class="input bg-base-300 my-2 border border-accent flex-none" @input="debouncedSearch()" v-model="searchString.proxy" placeholder="search...">
-
-                    <div class="flex flex-col gap-2 h-0 min-h-full">
-                        <template v-for="article in adminData.articles.filter((el) => el.title.toLowerCase().includes(searchString.search))">
-                            <div class="card bg-base-300 border border-base-300 break-words hover:border-accent w-0 min-w-full">
-                                <div class="card-body p-6">
-                                    <h2 class="card-title text-lg break-all w-0 min-w-full">{{ article.title }}</h2>
-                                    <p>by {{ article.author.username }}</p>
-                                    <div class="card-actions justify-end">
-                                        <NuxtLink :to="`/theme/${article.courseId}/article/${article.id}`">
-                                            <button class="btn btn-sm btn-outline">Open</button>
-                                        </NuxtLink>
-                                        <button class="btn btn-sm btn-error" @click="deleteArticle(article.id)">Delete</button>
-                                    </div>
+                <FetchPlaceholder :pending="pending" :error="error">
+                    <template v-if="category === 'USERS'">
+                        <div class="hero min-h-full bg-base-200">
+                            <div class="hero-content text-center">
+                                <div class="max-w-md">
+                                    <h1 class="text-5xl font-bold">There will be admin tools for users</h1>
                                 </div>
                             </div>
-                        </template>
-                        <template v-if="adminData.articles.length === 0">
-                            <div class="hero min-h-full bg-base-200">
-                                <div class="hero-content text-center">
-                                    <div class="max-w-md">
-                                        <h1 class="text-5xl font-bold">No articles</h1>
+                        </div>
+                    </template>
+
+                    <template v-if="category === 'ARTICLES'">
+                        <input type="text" class="input bg-base-300 my-2 border border-accent flex-none" @input="debouncedSearch()" v-model="searchString.proxy" placeholder="search...">
+
+                        <div class="flex flex-col gap-2 h-0 min-h-full">
+                            <template v-for="article in adminData.articles.filter((el) => el.title.toLowerCase().includes(searchString.search))">
+                                <div class="card bg-base-300 border border-base-300 break-words hover:border-accent w-0 min-w-full">
+                                    <div class="card-body p-6">
+                                        <h2 class="card-title text-lg break-all w-0 min-w-full">{{ article.title }}</h2>
+                                        <p>by {{ article.author.username }}</p>
+                                        <div class="card-actions justify-end">
+                                            <NuxtLink :to="`/theme/${article.courseId}/article/${article.id}`">
+                                                <button class="btn btn-sm btn-outline">Open</button>
+                                            </NuxtLink>
+                                            <button class="btn btn-sm btn-error" @click="deleteArticle(article.id)">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </template>
-                    </div>
-                </template>
+                            </template>
+                            <template v-if="adminData.articles.length === 0">
+                                <div class="hero min-h-full bg-base-200">
+                                    <div class="hero-content text-center">
+                                        <div class="max-w-md">
+                                            <h1 class="text-5xl font-bold">No articles</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
 
-                <template v-if="category === 'FILES'">
-                    <div class="hero min-h-full bg-base-200">
-                        <div class="hero-content text-center">
-                            <div class="max-w-md">
-                                <h1 class="text-5xl font-bold">There will be admin tools for files</h1>
+                    <template v-if="category === 'FILES'">
+                        <div class="hero min-h-full bg-base-200">
+                            <div class="hero-content text-center">
+                                <div class="max-w-md">
+                                    <h1 class="text-5xl font-bold">There will be admin tools for files</h1>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </FetchPlaceholder>
             </div>
         </div>
     </div>
