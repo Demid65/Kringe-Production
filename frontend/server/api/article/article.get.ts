@@ -1,5 +1,5 @@
-import {usePrisma} from "../utils/usePrisma";
-import {useFileStorage} from "../utils/useFileStorage";
+import {usePrisma} from "../../utils/usePrisma";
+import {useFileStorage} from "../../utils/useFileStorage";
 
 export default defineEventHandler(async (event) => {
 

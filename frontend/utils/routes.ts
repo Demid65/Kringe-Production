@@ -1,17 +1,19 @@
 export const routesMap = {
-    sidebarData: '/api/data/sidebar',
-    mainData: '/api/data/main',
-    courseData: '/api/data/course',
-    courseDiscussion: '/api/data/discussion',
-    discussionMessages: '/api/data/messages',
-    createDiscussion: '/api/discussion', // POST
-    createMessage: '/api/discussion', // PUT
-    getFile: '/api/file', // GET
-    uploadFile: '/api/file', // POST
-    uploadArticle: '/api/article', // POST
-    deleteArticle: '/api/article', // DELETE
-    updateArticle: '/api/article', // PUT
-    getArticle: '/api/article', // GET
-    adminPanel: '/api/data/admin', // GET
-    profile: '/api/data/profile' // GET
+    sidebarData: '/api/data/sidebar', // GET
+    mainData: '/api/data/main', // MAIN
+    courseData: '/api/course/course', // GET
+    courseDiscussion: '/api/discussion/discussion', // GET
+    discussionMessages: '/api/discussion/messages', // GET
+    createDiscussion: '/api/discussion/discussion', // POST
+    createMessage: '/api/discussion/discussion', // PUT
+    getFile: '/api/file/file', // GET
+    uploadFile: '/api/file/file', // POST
+    uploadArticle: '/api/article/article', // POST
+    deleteArticle: '/api/article/article', // DELETE
+    updateArticle: '/api/article/article', // PUT
+    getArticle: '/api/article/article', // GET
+    adminPanel: '/api/admin/admin', // GET
+    profile: '/api/data/profile', // GET
+    editCourses: '/api/course/course', // POST DELETE
+    editYears: '/api/year/year' // POST DELETE
 }

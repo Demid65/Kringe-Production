@@ -1,5 +1,5 @@
 import {getServerSession} from "#auth";
-import {usePrisma} from "../utils/usePrisma";
+import {usePrisma} from "../../utils/usePrisma";
 
 export default defineEventHandler(async (event) => {
 

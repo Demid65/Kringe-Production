@@ -1,7 +1,7 @@
 import {getServerSession} from "#auth";
 import { JSDOM } from "jsdom";
-import {usePrisma} from "../utils/usePrisma";
-import {useFileStorage} from "../utils/useFileStorage";
+import {usePrisma} from "../../utils/usePrisma";
+import {useFileStorage} from "../../utils/useFileStorage";
 
 export default defineEventHandler(async (event) => {
 
@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
     const token = process.env.YAGPT_TOKEN || ''
 
     const host = process.env.DOMAIN || 'https://capstone.innopolis.university/docs/weekly-tasks/weekly-tasks/week_1/'
-    const url = `/theme/${data.courseId}/article/${file.id}`
+    const url = `/theme/${file.courseId}/article/${file.id}`
 
     let isOk = true
 

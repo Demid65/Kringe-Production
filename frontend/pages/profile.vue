@@ -35,7 +35,7 @@ const searchString = useState(() => ({
 function deleteArticle(id) {
     $fetch(routesMap['deleteArticle'], {
         method: 'DELETE',
-        query: {
+        body: {
             articleId: id
         }
     }).then((val) => {
@@ -67,7 +67,7 @@ const debouncedSearch = debounce(search, 300)
                 <div class="card-title rounded-lg bg-base-300 p-4">
                     <h1 class="text-2xl break-all">{{ data?.username ? data.username : 'User' }} - Profile</h1>
                 </div>
-                <div class="join justify-center my-2">
+                <div class="join justify-center my-2 flex-wrap">
                     <button v-for="_category in manageCategories"
                             :class="`join-item btn ${category === _category ? 'btn-accent' : ''}`"
                             @click="category = _category"

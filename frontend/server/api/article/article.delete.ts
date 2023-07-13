@@ -1,16 +1,16 @@
-import {usePrisma} from "../utils/usePrisma";
+import {usePrisma} from "../../utils/usePrisma";
 import {getServerSession} from "#auth";
 import {useFileStorage} from "~/server/utils/useFileStorage";
 import * as fs from "fs";
 
 export default defineEventHandler(async (event) => {
 
-    const query = getQuery(event)
+    const body = await readBody(event)
     const session = await getServerSession(event)
 
     const storage = useFileStorage()
 
-    if (!query.articleId) {
+    if (!body.articleId) {
         console.log(`400 delete article (user: ${session.id})`)
         throw createError({
             statusCode: 400,
@@ -22,12 +22,12 @@ export default defineEventHandler(async (event) => {
 
     const article = await prisma.article.findUnique({
         where: {
-            id: Number.parseInt(query.articleId)
+            id: Number.parseInt(body.articleId)
         }
     })
 
     if (!article) {
-        console.log(`404 delete article (article: ${query.articleId}) (user: ${session?.id || 'none'})`)
+        console.log(`404 delete article (article: ${body.articleId}) (user: ${session?.id || 'none'})`)
         throw createError({
             statusCode: 404,
             statusMessage: 'Article not found'
@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
 
     const deletedArticle = await prisma.article.delete({
         where: {
-            id: Number.parseInt(query.articleId)
+            id: Number.parseInt(body.articleId)
         }
     })
 

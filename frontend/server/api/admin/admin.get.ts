@@ -3,6 +3,7 @@ import {getServerSession} from "#auth";
 
 export default defineEventHandler(async (event) => {
 
+    const query = getQuery(event)
     const session = await getServerSession(event)
 
     console.log(session)
@@ -16,6 +17,33 @@ export default defineEventHandler(async (event) => {
     }
 
     const prisma = usePrisma()
+
+    if (query.data === 'courses') {
+        const years = prisma.years.findMany({
+            select: {
+                id: true,
+                title: true
+            }
+        })
+
+        const courses = prisma.course.findMany({
+            select: {
+                id: true,
+                title: true,
+                year: {
+                    select: {
+                        title: true,
+                        id: true
+                    }
+                }
+            }
+        })
+
+        return {
+            years: await years,
+            courses: await courses
+        }
+    }
 
     const files = prisma.file.findMany({
         select: {

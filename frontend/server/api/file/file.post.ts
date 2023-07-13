@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import {getServerSession} from "#auth";
-import {usePrisma} from "../utils/usePrisma";
-import {useFileStorage} from "../utils/useFileStorage";
+import {usePrisma} from "../../utils/usePrisma";
+import {useFileStorage} from "../../utils/useFileStorage";
 
 export default defineEventHandler(async (event) => {
 
