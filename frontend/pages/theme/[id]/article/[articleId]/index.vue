@@ -4,6 +4,7 @@
 
     const colorMode = useColorMode()
     const route = useRoute()
+    const { status, data } = useAuth()
     const md = useMarkdown()
 
     const { data: article, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
@@ -31,7 +32,7 @@
                 <div class="card-body p-4 gap-0">
                     <div class="card-title rounded-lg bg-base-300 p-4 mb-2">
                         <h1 class="text-lg break-all">{{ article.title }}</h1>
-                        <NuxtLink :to="`/theme/${$route.params.id}/`" class="ml-auto flex-none min-w-max">
+                        <NuxtLink :to="`/theme/${route.params.id}/`" class="ml-auto flex-none min-w-max">
                             <button class="btn btn-sm btn-outline flex-none">Go back</button>
                         </NuxtLink>
                     </div>
@@ -62,6 +63,11 @@
                     <article class="article-block break-words flex flex-col max-w-100 p-2"
                          v-html="parseMarkdown(article.content)">
                     </article>
+                    <div v-if="status === 'authenticated' && data.id === article.author.id" :class="`card-actions mt-auto flex flex-nowrap flex-col sm:flex-row`">
+                        <NuxtLink :to="`/theme/${route.params.id}/article/${route.params.articleId}/edit`" class="w-full flex-none min-w-max">
+                            <button class="btn btn-sm btn-outline w-full flex-none">Edit</button>
+                        </NuxtLink>
+                    </div>
                 </div>
             </FetchPlaceholder>
         </div>

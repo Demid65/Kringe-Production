@@ -13,15 +13,21 @@ if (status.value !== 'authenticated') {
     navigateTo('/')
 }
 
+const { data: origArticle, pending, error, refresh } = await useFetch(routesMap['getArticle'], {
+    query: {
+        articleId: route.params.articleId
+    }
+})
+
 const article = useState(() => ({
-    title: "",
-    content: "",
+    title: origArticle.value.title,
+    content: origArticle.value.content,
     isTitleValid: true,
     isContentValid: true
 }))
 const proxyContent = useState(() => ({
-    title: "",
-    content: ""
+    title: origArticle.value.title,
+    content: origArticle.value.content
 }))
 
 const isWarningVisible = useState(() => true)
@@ -59,7 +65,7 @@ function validateInput() {
     return true
 }
 
-function publishArticle() {
+function updateArticle() {
     update()
 
 
@@ -70,7 +76,7 @@ function publishArticle() {
     }
     fetchState.value.pending = true
 
-    $fetch(routesMap['uploadArticle'], {
+    $fetch(routesMap['updateArticle'], {
         method: 'POST',
         body: {
             courseId: route.params.id,
@@ -179,9 +185,9 @@ function publishArticle() {
                     </div>
 
                     <div class="flex flex-row justify-end">
-                        <button @click="publishArticle()" class="btn btn-sm btn-accent">
+                        <button @click="updateArticle()" class="btn btn-sm btn-accent">
                             <span v-if="fetchState.pending" class="loading loading-spinner loading-md"></span>
-                            <span v-else>Publish</span>
+                            <span v-else>Save</span>
                         </button>
                     </div>
                 </div>

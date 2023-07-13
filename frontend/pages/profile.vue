@@ -2,14 +2,13 @@
 import {routesMap} from "~/utils/routes";
 import {$fetch} from "ofetch";
 import {debounce} from "~/utils/debounce";
-import Index from "~/pages/theme/[id]/discussion/index.vue";
 
 const route = useRoute()
 const {status, data} = useAuth()
 
 console.log(data.value)
 
-if (data.value.role !== 'ADMIN') {
+if (status.value !== 'authenticated') {
     navigateTo('/')
 }
 
@@ -19,7 +18,11 @@ const manageCategories = [
     'FILES'
 ]
 
-const {data: adminData, pending, error, refresh} = await useFetch(routesMap['adminPanel'])
+const {data: adminData, pending, error, refresh} = await useFetch(routesMap['profile'], {
+    query: {
+        userId: data.value.id
+    }
+})
 
 const category = useState(() => manageCategories[1])
 const searchString = useState(() => ({
@@ -52,14 +55,14 @@ const debouncedSearch = debounce(search, 300)
 <template>
     <Head>
         <Title>
-            Admin
+            {{ data.username ? data.username : 'User' }}
         </Title>
     </Head>
     <div class="flex flex-col container mx-auto px-2 h-0 min-h-full">
         <div class="card bg-base-200 h-full w-0 min-w-full">
             <div class="card-body p-4 gap-0 h-0 min-h-full overflow-y-auto scrollbar">
                 <div class="card-title rounded-lg bg-base-300 p-4">
-                    <h1 class="text-2xl break-all">Admin</h1>
+                    <h1 class="text-2xl break-all">{{ data.username ? data.username : 'User' }} - Profile</h1>
                 </div>
                 <div class="join justify-center my-2">
                     <button v-for="_category in manageCategories"
@@ -71,7 +74,7 @@ const debouncedSearch = debounce(search, 300)
                     <div class="hero min-h-full bg-base-200">
                         <div class="hero-content text-center">
                             <div class="max-w-md">
-                                <h1 class="text-5xl font-bold">There will be admin tools for users</h1>
+                                <h1 class="text-5xl font-bold">There will be tools for users</h1>
                             </div>
                         </div>
                     </div>
@@ -89,6 +92,9 @@ const debouncedSearch = debounce(search, 300)
                                     <div class="card-actions justify-end">
                                         <NuxtLink :to="`/theme/${article.courseId}/article/${article.id}`">
                                             <button class="btn btn-sm btn-outline">Open</button>
+                                        </NuxtLink>
+                                        <NuxtLink :to="`/theme/${article.courseId}/article/${article.id}/edit`">
+                                            <button class="btn btn-sm btn-accent">Edit</button>
                                         </NuxtLink>
                                         <button class="btn btn-sm btn-error" @click="deleteArticle(article.id)">Delete</button>
                                     </div>
@@ -111,7 +117,7 @@ const debouncedSearch = debounce(search, 300)
                     <div class="hero min-h-full bg-base-200">
                         <div class="hero-content text-center">
                             <div class="max-w-md">
-                                <h1 class="text-5xl font-bold">There will be admin tools for files</h1>
+                                <h1 class="text-5xl font-bold">There will be tools for files</h1>
                             </div>
                         </div>
                     </div>

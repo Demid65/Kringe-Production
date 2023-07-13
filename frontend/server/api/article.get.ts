@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
             title: true,
             author: {
                 select: {
-                    username: true
+                    username: true,
+                    id: true
                 }
             }
         }
@@ -45,7 +46,7 @@ export default defineEventHandler(async (event) => {
     if (value) {
         return {
             title: file.title,
-            authorName: file.author.username,
+            author: file.author,
             content: value,
             para: para
         }
