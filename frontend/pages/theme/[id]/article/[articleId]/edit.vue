@@ -77,9 +77,9 @@ function updateArticle() {
     fetchState.value.pending = true
 
     $fetch(routesMap['updateArticle'], {
-        method: 'POST',
+        method: 'PUT',
         body: {
-            courseId: route.params.id,
+            articleId: route.params.articleId,
             title: article.value.title,
             content: article.value.content
         }

@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import {getServerSession} from "#auth";
 import { JSDOM } from "jsdom";
 import {usePrisma} from "../utils/usePrisma";
@@ -20,7 +19,7 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    if (!(data.title && data.courseId && data.content)) {
+    if (!(data.title && data.articleId && data.content)) {
         console.log(`400 update article (article: ${data.articleId})`)
         throw createError({
             statusCode: 400,
@@ -49,6 +48,15 @@ export default defineEventHandler(async (event) => {
             statusMessage: 'Article not found'
         })
     }
+
+    const updatedFile = await prisma.article.update({
+        where: {
+            id: Number.parseInt(data.articleId)
+        },
+        data: {
+            title: data.title
+        }
+    })
 
     await storage.setItem(`/${file.path}/content.md`, data.content)
 
