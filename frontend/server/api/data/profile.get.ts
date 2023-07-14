@@ -15,31 +15,51 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const files = prisma.file.findMany({
-        where: {
-            authorId: session.id
-        },
-        select: {
-            id: true,
-            title: true,
-            author: true,
-            course: true,
-            path: true,
-            type: true,
-        }
-    })
+    let files
+    try {
+        files = prisma.file.findMany({
+            where: {
+                authorId: session.id
+            },
+            select: {
+                id: true,
+                title: true,
+                author: true,
+                course: true,
+                path: true,
+                type: true,
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
-    const articles = prisma.article.findMany({
-        where: {
-            authorId: session.id
-        },
-        select: {
-            id: true,
-            title: true,
-            author: true,
-            courseId: true
-        }
-    })
+
+
+    let articles
+    try {
+        articles = prisma.article.findMany({
+            where: {
+                authorId: session.id
+            },
+            select: {
+                id: true,
+                title: true,
+                author: true,
+                courseId: true
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     const data = {
         files: await files,

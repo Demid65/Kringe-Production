@@ -79,16 +79,27 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const file = await prisma.file.create({
-        data: {
-            title: parsedData.title,
-            courseId: parsedData.id,
-            path: parsedData.path,
-            type: parsedData.type,
-            category: parsedData.category,
-            authorId: session.id
-        }
-    })
+
+
+    let file;
+    try {
+        file = await prisma.file.create({
+            data: {
+                title: parsedData.title,
+                courseId: parsedData.id,
+                path: parsedData.path,
+                type: parsedData.type,
+                category: parsedData.category,
+                authorId: session.id
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     console.log(`upload file ${file} to ${file.path} by ${session.id}`)
 

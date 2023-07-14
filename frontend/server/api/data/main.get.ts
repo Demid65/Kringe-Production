@@ -4,43 +4,61 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const popularCourses = await prisma.course.findMany({
-        select: {
-            id: true,
-            title: true,
-            year: {
-                select: {
-                    title: true
+    let popularCourses
+    try {
+        popularCourses = prisma.course.findMany({
+            select: {
+                id: true,
+                title: true,
+                year: {
+                    select: {
+                        title: true
+                    }
                 }
-            }
-        },
-        orderBy: {
-            articles: {
-                _count: 'desc'
-            }
-        },
-        take: 5
-    })
+            },
+            orderBy: {
+                articles: {
+                    _count: 'desc'
+                }
+            },
+            take: 5
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
-    const newCourses = await prisma.course.findMany({
-        select: {
-            id: true,
-            title: true,
-            year: {
-                select: {
-                    title: true
+    let newCourses
+    try {
+        newCourses = prisma.course.findMany({
+            select: {
+                id: true,
+                title: true,
+                year: {
+                    select: {
+                        title: true
+                    }
                 }
-            }
-        },
-        orderBy: {
-            id: 'desc'
-        },
-        take: 5
-    })
+            },
+            orderBy: {
+                id: 'desc'
+            },
+            take: 5
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     const data = {
-        new: newCourses,
-        popular: popularCourses
+        new: await newCourses,
+        popular: await popularCourses
     }
 
     return data

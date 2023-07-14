@@ -17,11 +17,22 @@ export default defineEventHandler(async (event) => {
     const prisma = usePrisma()
     const storage = useFileStorage()
 
-    const file = await prisma.file.findFirst({
-        where: {
-            id: Number.parseInt(data.fileId)
-        }
-    })
+
+
+    let file;
+    try {
+        file = await prisma.file.findFirst({
+            where: {
+                id: Number.parseInt(data.fileId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     if (!file) {
         console.log(`404 get file (file: ${data.fileId})`)

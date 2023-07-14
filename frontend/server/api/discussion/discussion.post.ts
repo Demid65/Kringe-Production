@@ -25,20 +25,41 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const theme = await prisma.discussionTheme.create({
-        data: {
-            title: data.title,
-            courseId: Number.parseInt(data.courseId),
-            authorId: Number.parseInt(session.id)
-        }
-    })
-    const message = await prisma.discussionMessage.create({
-        data: {
-            themeId: theme.id,
-            authorId: Number.parseInt(session.id),
-            content: data.message
-        }
-    })
+    let theme
+    try {
+        theme = await prisma.discussionTheme.create({
+            data: {
+                title: data.title,
+                courseId: Number.parseInt(data.courseId),
+                authorId: Number.parseInt(session.id)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
+
+    let message
+    try {
+        message = await prisma.discussionMessage.create({
+            data: {
+                themeId: theme.id,
+                authorId: Number.parseInt(session.id),
+                content: data.message
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
+
+
 
     console.log(`create discussion ${theme.id} ${message}`)
 

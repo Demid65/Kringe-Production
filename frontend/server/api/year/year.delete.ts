@@ -17,11 +17,20 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const years = await prisma.years.findUnique({
-        where: {
-            id: Number.parseInt(body.yearId)
-        }
-    })
+    let years;
+    try {
+        years = await prisma.years.findUnique({
+            where: {
+                id: Number.parseInt(body.yearId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong at deleting'
+        })
+    }
 
     if (!years) {
         console.log(`404 delete year (year: ${body.yearId}) (user: ${session?.id || 'none'})`)
@@ -39,11 +48,20 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const deletedYear = await prisma.years.delete({
-        where: {
-            id: Number.parseInt(body.yearId)
-        }
-    })
+    let deletedYear;
+    try {
+        deletedYear = await prisma.years.delete({
+            where: {
+                id: Number.parseInt(body.yearId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     console.log(`delete year ${deletedYear.id} (${deletedYear.title}) by ${session.id} (role: ${session.role})`)
 

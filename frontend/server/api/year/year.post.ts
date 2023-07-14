@@ -26,12 +26,22 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const year = await prisma.years.create({
-        data: {
-            title: body.title,
-        }
-    })
 
+
+    let year;
+    try {
+        year = await prisma.years.create({
+            data: {
+                title: body.title,
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     console.log(`create year ${year.id} (${year.title}) by ${session.id} (role: ${session.role})`)
 

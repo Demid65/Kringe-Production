@@ -6,14 +6,23 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const title = await prisma.course.findUnique({
-        where: {
-            id: Number.parseInt(query.courseId)
-        },
-        select: {
-            title: true
-        }
-    })
+    let title
+    try {
+        title = await prisma.course.findUnique({
+            where: {
+                id: Number.parseInt(query.courseId)
+            },
+            select: {
+                title: true
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     if (title === null) {
         console.log(`404 discussion (course: ${query.courseId})`)
@@ -23,20 +32,29 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const themes = await prisma.discussionTheme.findMany({
-        where: {
-            courseId: Number.parseInt(query.courseId)
-        },
-        select: {
-            id: true,
-            title: true,
-            author: {
-                select: {
-                    username: true
+    let themes
+    try {
+        themes = await prisma.discussionTheme.findMany({
+            where: {
+                courseId: Number.parseInt(query.courseId)
+            },
+            select: {
+                id: true,
+                title: true,
+                author: {
+                    select: {
+                        username: true
+                    }
                 }
             }
-        }
-    })
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     const data = {
         title: title.title,

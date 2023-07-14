@@ -41,14 +41,31 @@ export default defineEventHandler(async (event) => {
 
     await storage.setItem(`/${path}/content.md`, data.content)
 
-    const file = await prisma.article.create({
-        data: {
-            title: data.title,
-            courseId: Number.parseInt(data.courseId),
-            path: path,
-            authorId: Number.parseInt(session.id)
-        }
-    })
+    let file
+    try {
+        file = await prisma.article.create({
+            data: {
+                title: data.title,
+                courseId: Number.parseInt(data.courseId),
+                path: path,
+                authorId: Number.parseInt(session.id)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
+
+    if (!file) {
+        console.log(`404 update article (article: ${data.articleId})`)
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Article not found'
+        })
+    }
 
     console.log(`upload article ${path} to ${file.path} by ${session.id}`)
 

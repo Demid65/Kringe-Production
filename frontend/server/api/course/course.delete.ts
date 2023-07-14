@@ -19,11 +19,22 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const course = await prisma.course.findUnique({
-        where: {
-            id: Number.parseInt(body.courseId)
-        }
-    })
+
+
+    let course
+    try {
+        course = await prisma.course.findUnique({
+            where: {
+                id: Number.parseInt(body.courseId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     if (!course) {
         console.log(`404 delete course (course: ${body.courseId}) (user: ${session?.id || 'none'})`)
@@ -41,11 +52,22 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const deletedCourse = await prisma.course.delete({
-        where: {
-            id: Number.parseInt(body.courseId)
-        }
-    })
+
+
+    let deletedCourse
+    try {
+        deletedCourse = await prisma.course.delete({
+            where: {
+                id: Number.parseInt(body.courseId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     console.log(`delete course ${deletedCourse.id} (${deletedCourse.title} - ${deletedCourse.yearId}) by ${session.id} (role: ${session.role})`)
 

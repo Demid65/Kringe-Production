@@ -24,13 +24,24 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const message = await prisma.discussionMessage.create({
-        data: {
-            themeId: Number.parseInt(data.themeId),
-            authorId: session.id,
-            content: data.message
-        }
-    })
+
+
+    let message
+    try {
+        message = await prisma.discussionMessage.create({
+            data: {
+                themeId: Number.parseInt(data.themeId),
+                authorId: session.id,
+                content: data.message
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     console.log(`create message ${message}`)
 

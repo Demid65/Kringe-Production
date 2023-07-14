@@ -26,12 +26,21 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const course = await prisma.course.create({
-        data: {
-            title: body.title,
-            yearId: Number.parseInt(body.year)
-        }
-    })
+    let course
+    try {
+        course = await prisma.course.create({
+            data: {
+                title: body.title,
+                yearId: Number.parseInt(body.year)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
 
     console.log(`delete article ${course.id} (${course.title} ${course.yearId}) by ${session.id} (role: ${session.role})`)

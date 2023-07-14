@@ -35,11 +35,22 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const file = await prisma.article.findUnique({
-        where: {
-            id: Number.parseInt(data.articleId)
-        }
-    })
+
+
+    let file
+    try {
+        file = await prisma.article.findUnique({
+            where: {
+                id: Number.parseInt(data.articleId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     if (!file) {
         console.log(`404 update article (article: ${data.articleId})`)
@@ -49,14 +60,25 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const updatedFile = await prisma.article.update({
-        where: {
-            id: Number.parseInt(data.articleId)
-        },
-        data: {
-            title: data.title
-        }
-    })
+
+
+    let updatedFile
+    try {
+        updatedFile = await prisma.article.update({
+            where: {
+                id: Number.parseInt(data.articleId)
+            },
+            data: {
+                title: data.title
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     await storage.setItem(`/${file.path}/content.md`, data.content)
 
@@ -67,8 +89,8 @@ export default defineEventHandler(async (event) => {
     const yaGPTurl = 'https://300.ya.ru/api/sharing-url'
     const token = process.env.YAGPT_TOKEN || ''
 
-    const host = process.env.DOMAIN || 'https://capstone.innopolis.university/docs/weekly-tasks/weekly-tasks/week_1/'
-    const url = `/theme/${file.courseId}/article/${file.id}`
+    const host = process.env.DOMAIN || ''
+    const url = `/theme/${updatedFile.courseId}/article/${updatedFile.id}`
 
     let isOk = true
 

@@ -16,21 +16,30 @@ export default defineEventHandler(async (event) => {
     const prisma = usePrisma()
     const storage = useFileStorage()
 
-    const file = await prisma.article.findFirst({
-        where: {
-            id: Number.parseInt(data.articleId)
-        },
-        select: {
-            path: true,
-            title: true,
-            author: {
-                select: {
-                    username: true,
-                    id: true
+    let file
+    try {
+        file = await prisma.article.findFirst({
+            where: {
+                id: Number.parseInt(data.articleId)
+            },
+            select: {
+                path: true,
+                title: true,
+                author: {
+                    select: {
+                        username: true,
+                        id: true
+                    }
                 }
             }
-        }
-    })
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     if (!file) {
         console.log(`404 get article (course: ${data.articleId})`)

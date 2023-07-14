@@ -20,11 +20,22 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-    const article = await prisma.article.findUnique({
-        where: {
-            id: Number.parseInt(body.articleId)
-        }
-    })
+
+
+    let article
+    try {
+        article = await prisma.article.findUnique({
+            where: {
+                id: Number.parseInt(body.articleId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     if (!article) {
         console.log(`404 delete article (article: ${body.articleId}) (user: ${session?.id || 'none'})`)
@@ -42,11 +53,22 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const deletedArticle = await prisma.article.delete({
-        where: {
-            id: Number.parseInt(body.articleId)
-        }
-    })
+
+
+    let deletedArticle
+    try {
+        deletedArticle = await prisma.article.delete({
+            where: {
+                id: Number.parseInt(body.articleId)
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
     storage.removeItem(`${deletedArticle.path}/content.md`).catch((err) => console.log(`could not remove content ${deletedArticle.path} (${err})`))
     storage.removeItem(`${deletedArticle.path}/para.json`).catch((err) => console.log(`could not remove para ${deletedArticle.path} (${err})`))
