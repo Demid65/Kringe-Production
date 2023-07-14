@@ -6,11 +6,17 @@ import {debounce} from "~/utils/debounce";
 const route = useRoute()
 const {status, data} = useAuth()
 
-console.log(data.value)
 
 if (status.value !== 'authenticated') {
     await navigateTo('/')
 }
+
+watch(status, async (newStatus) => {
+    console.log(newStatus)
+    if (newStatus !== 'authenticated') {
+        await navigateTo('/')
+    }
+})
 
 const manageCategories = [
     'USERS',

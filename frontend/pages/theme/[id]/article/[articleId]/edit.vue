@@ -20,6 +20,13 @@ const { data: origArticle, pending, error, refresh } = await useFetch(routesMap[
     }
 })
 
+watch(status, async (newStatus) => {
+    console.log(newStatus, data)
+    if (newStatus !== 'authenticated' || data.value.id !== origArticle.value.author.id) {
+        await navigateTo(`/theme/${route.params.id}/article/${route.params.articleId}`)
+    }
+})
+
 const article = useState(() => ({
     title: origArticle.value.title,
     content: origArticle.value.content,

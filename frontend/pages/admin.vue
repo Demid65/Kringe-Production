@@ -18,6 +18,13 @@ const manageCategories = [
     'YEARS'
 ]
 
+watch(status, async (newStatus) => {
+    console.log(newStatus)
+    if (newStatus !== 'authenticated') {
+        await navigateTo('/')
+    }
+})
+
 const {
     data: articlesData,
     pending: articlesPending,

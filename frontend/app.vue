@@ -34,7 +34,7 @@ function toggleMode() {
 function trySignOut() {
     signOut({ redirect: false }).then(async () => {
         console.log('sign out', route.fullPath)
-        location.reload()
+        // location.reload()
     })
 }
 </script>
