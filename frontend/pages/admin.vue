@@ -18,7 +18,12 @@ const manageCategories = [
     'YEARS'
 ]
 
-const {data: articlesData, pending: articlesPending, error: articlesError, refresh: articlesRefresh} = useFetch(routesMap['adminPanel'], {
+const {
+    data: articlesData,
+    pending: articlesPending,
+    error: articlesError,
+    refresh: articlesRefresh
+} = useFetch(routesMap['adminPanel'], {
     query: {
         data: 'articles'
     },
@@ -26,12 +31,22 @@ const {data: articlesData, pending: articlesPending, error: articlesError, refre
     lazy: true
 })
 
-const { data: coursesData, pending: coursesPending, error: coursesError, refresh: coursesRefresh } = useFetch(routesMap['adminPanel'], {
+const {
+    data: coursesData,
+    pending: coursesPending,
+    error: coursesError,
+    refresh: coursesRefresh
+} = useFetch(routesMap['adminPanel'], {
     query: {
         data: 'courses'
     },
     server: false,
     lazy: true
+})
+
+watch(coursesData, (newData) => {
+    yearsState.value = newData.years
+    coursesState.value = newData.courses
 })
 
 const category = useState(() => manageCategories[1])
@@ -43,7 +58,12 @@ const newCourse = useState(() => ({
     title: "",
     year: 0
 }))
-const newYear = useState(() => "")
+const newYear = useState(() => ({
+    title: "",
+    priority: 0
+}))
+const yearsState = useState(() => [])
+const coursesState = useState(() => [])
 
 function deleteArticle(id) {
     $fetch(routesMap['deleteArticle'], {
@@ -94,6 +114,20 @@ function createCourse() {
     })
 }
 
+function updateCourse() {
+    $fetch(routesMap['editCourses'], {
+        method: 'PUT',
+        body: {
+            courses: coursesState.value
+        }
+    }).then((val) => {
+        console.log(`updated courses ${val}`)
+        coursesRefresh()
+    }, (err) => {
+        console.log(err.data)
+    })
+}
+
 function deleteYear(id) {
     $fetch(routesMap['editYears'], {
         method: 'DELETE',
@@ -116,11 +150,28 @@ function createYear() {
     $fetch(routesMap['editYears'], {
         method: 'POST',
         body: {
-            title: newYear.value
+            title: newYear.value.title,
+            priority: newYear.value.priority
         }
     }).then((val) => {
-        newYear.value = ""
+        newYear.value.title = ""
+        newYear.value.priority = 0
+
         console.log(`created year ${val}`)
+        coursesRefresh()
+    }, (err) => {
+        console.log(err.data)
+    })
+}
+
+function updateYear() {
+    $fetch(routesMap['editYears'], {
+        method: 'PUT',
+        body: {
+            years: yearsState.value
+        }
+    }).then((val) => {
+        console.log(`updated years ${val}`)
         coursesRefresh()
     }, (err) => {
         console.log(err.data)
@@ -151,7 +202,8 @@ const debouncedSearch = debounce(search, 300)
                     <button v-for="_category in manageCategories"
                             :class="`join-item btn ${category === _category ? 'btn-accent' : ''}`"
                             @click="category = _category"
-                    >{{ _category }}</button>
+                    >{{ _category }}
+                    </button>
                 </div>
 
                 <template v-if="category === 'USERS'">
@@ -167,11 +219,14 @@ const debouncedSearch = debounce(search, 300)
 
                 <template v-if="category === 'ARTICLES'">
                     <FetchPlaceholder :pending="articlesPending" :error="articlesError">
-                        <input type="text" class="input bg-base-300 my-2 border border-accent flex-none" @input="debouncedSearch()" v-model="searchString.proxy" placeholder="search...">
+                        <input type="text" class="input bg-base-300 my-2 border border-accent flex-none"
+                               @input="debouncedSearch()" v-model="searchString.proxy" placeholder="search...">
 
                         <div class="flex flex-col gap-2 h-0 min-h-full">
-                            <template v-for="article in articlesData.articles.filter((el) => el.title.toLowerCase().includes(searchString.search))">
-                                <div class="card bg-base-300 border border-base-300 break-words hover:border-accent w-0 min-w-full">
+                            <template
+                                v-for="article in articlesData.articles.filter((el) => el.title.toLowerCase().includes(searchString.search))">
+                                <div
+                                    class="card bg-base-300 border border-base-300 break-words hover:border-accent w-0 min-w-full">
                                     <div class="card-body p-6">
                                         <h2 class="card-title text-lg break-all w-0 min-w-full">{{ article.title }}</h2>
                                         <p>by {{ article.author.username }}</p>
@@ -179,7 +234,9 @@ const debouncedSearch = debounce(search, 300)
                                             <NuxtLink :to="`/theme/${article.courseId}/article/${article.id}`">
                                                 <button class="btn btn-sm btn-outline">Open</button>
                                             </NuxtLink>
-                                            <button class="btn btn-sm btn-error" @click="deleteArticle(article.id)">Delete</button>
+                                            <button class="btn btn-sm btn-error" @click="deleteArticle(article.id)">
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -215,36 +272,58 @@ const debouncedSearch = debounce(search, 300)
                                 <!-- head -->
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th class="hidden sm:block">ID</th>
                                     <th>Name</th>
-                                    <th>Year</th>
-                                    <th></th>
+                                    <th class="w-1/6">Year</th>
+                                    <th class="w-1/12"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <!-- rows -->
-                                <tr v-for="course in coursesData.courses">
-                                    <th>{{ course.id }}</th>
-                                    <td>{{ course.title }}</td>
-                                    <td>{{ course.year.title }}</td>
+                                <tr v-for="course in coursesState">
+                                    <th class="hidden sm:block">{{ course.id }}</th>
                                     <td>
-                                        <button class="btn btn-sm btn-error" @click="deleteCourse(course.id)">Delete</button>
+                                        <input v-model="course.title" type="text" class="input w-full">
+                                    </td>
+                                    <td>
+                                        <select v-model="course.year.id" class="select w-full max-w-xs">
+                                            <option disabled :value="0">Year</option>
+                                            <option v-for="year in coursesData.years" :value="year.id">
+                                                {{ year.title }}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-error w-full" @click="deleteCourse(course.id)">
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                                 <!-- input -->
                                 <tr>
-                                    <th></th>
+                                    <th class="hidden sm:block"></th>
                                     <td>
                                         <input v-model="newCourse.title" type="text" class="input w-full">
                                     </td>
                                     <td>
                                         <select v-model="newCourse.year" class="select w-full max-w-xs">
                                             <option disabled :value="0">Year</option>
-                                            <option v-for="year in coursesData.years" :value="year.id">{{ year.title }}</option>
+                                            <option v-for="year in coursesData.years" :value="year.id">
+                                                {{ year.title }}
+                                            </option>
                                         </select>
                                     </td>
                                     <td>
                                         <button class="btn btn-sm btn-accent" @click="createCourse()">Create</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="hidden sm:block"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-accent w-full" @click="updateCourse()">Save
+                                        </button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -256,32 +335,47 @@ const debouncedSearch = debounce(search, 300)
                 <template v-if="category === 'YEARS'">
                     <FetchPlaceholder :pending="coursesPending" :error="coursesError">
                         <div class="overflow-x-auto">
-                            <table class="table">
+                            <table class="table table-auto">
                                 <!-- head -->
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th class="hidden sm:block">ID</th>
                                     <th>Name</th>
-                                    <th></th>
+                                    <th class="w-1/6">Priority</th>
+                                    <th class="w-1/12"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <!-- rows -->
-                                <tr v-for="year in coursesData.years">
-                                    <th>{{ year.id }}</th>
-                                    <td>{{ year.title }}</td>
+                                <tr v-for="year in yearsState">
+                                    <th class="hidden sm:block">{{ year.id }}</th>
+                                    <td><input v-model="year.title" type="text" class="input w-full"></td>
+                                    <td><input v-model="year.priority" type="number" class="input w-full"></td>
                                     <td>
-                                        <button class="btn btn-sm btn-error" @click="deleteYear(year.id)">Delete</button>
+                                        <button class="btn btn-sm btn-error" @click="deleteYear(year.id)">Delete
+                                        </button>
                                     </td>
                                 </tr>
                                 <!-- input -->
                                 <tr>
-                                    <th></th>
+                                    <th class="hidden sm:block"></th>
                                     <td>
-                                        <input v-model="newYear" type="text" class="input w-full">
+                                        <input v-model="newYear.title" type="text" class="input w-full">
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-accent" @click="createYear()">Create</button>
+                                        <input v-model="newYear.priority" type="number" class="input w-full">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-accent w-full" @click="createYear()">Create
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="hidden sm:block"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-accent w-full" @click="updateYear()">Save</button>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -54,6 +54,8 @@ model Years {
   id    Int    @id @default(autoincrement())
   title String
 
+  priority Int @default(0)
+
   courses Course[]
 }
 

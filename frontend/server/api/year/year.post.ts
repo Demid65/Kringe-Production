@@ -33,6 +33,7 @@ export default defineEventHandler(async (event) => {
         year = await prisma.years.create({
             data: {
                 title: body.title,
+                priority: body.priority || 0
             }
         })
     } catch (e) {

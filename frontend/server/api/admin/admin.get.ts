@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
             years = prisma.years.findMany({
                 select: {
                     id: true,
-                    title: true
+                    title: true,
+                    priority: true
                 }
             })
         } catch (e) {

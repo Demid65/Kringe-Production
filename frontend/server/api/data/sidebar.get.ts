@@ -10,7 +10,11 @@ export default defineEventHandler(async (event) => {
             select: {
                 title: true,
                 id: true,
-                courses: true
+                courses: true,
+                priority: true
+            },
+            orderBy: {
+                priority: 'desc'
             }
         })
     } catch (e) {
