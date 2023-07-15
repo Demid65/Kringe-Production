@@ -63,13 +63,18 @@ function validateInput() {
     return true
 }
 
-function loadFromFile() {
+async function loadFromFile() {
     if (fileInput.value.file === null) {
         fileInput.value.error = true
         return
     }
 
-    proxyContent.value.content = fileInput.value.file
+    console.log(fileInput.value.file)
+
+    proxyContent.value.content =  await fileInput.value.file[0].text()
+    update()
+
+    window['create_article_file_upload'].close()
 }
 
 function publishArticle() {
@@ -117,13 +122,16 @@ function publishArticle() {
     </Head>
 
     <dialog id="create_article_file_upload" class="modal">
-        <form class="modal-box">
+        <div class="modal-box">
             <h3 class="font-bold text-lg">File Upload!</h3>
             <DnDFIleInput v-model="fileInput.file" :error="fileInput.error" />
             <div class="modal-action">
                 <!-- if there is a button in form, it will close the modal -->
                 <button class="btn" @click="loadFromFile()">Upload</button>
             </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
         </form>
     </dialog>
 
@@ -203,8 +211,8 @@ function publishArticle() {
                         </label>
                     </div>
 
-                    <div class="flex flex-row justify-end">
-                        <button @click="loadFromFile()">
+                    <div class="flex flex-row justify-end gap-2">
+                        <button class="btn btn-outline btn-sm" onclick="window['create_article_file_upload'].showModal()">
                             From File
                         </button>
                         <button @click="publishArticle()" class="btn btn-sm btn-accent">

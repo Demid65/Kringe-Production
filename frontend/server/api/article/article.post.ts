@@ -102,6 +102,8 @@ export default defineEventHandler(async (event) => {
                 points.push(elementsByTagNameElement.innerHTML)
             }
 
+            console.log('points', points)
+
             const data = {
                 source: res['sharing_url'],
                 points: points

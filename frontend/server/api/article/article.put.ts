@@ -80,11 +80,11 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    await storage.setItem(`/${file.path}/content.md`, data.content)
+    await storage.setItem(`/${updatedFile.path}/content.md`, data.content)
 
-    console.log(`update article ${file.id} at ${file.path} by ${session.id}`)
+    console.log(`update article ${updatedFile.id} at ${updatedFile.path} by ${session.id}`)
 
-    await storage.removeItem(`/${file.path}/para.json`).catch((err) => console.log(`could not remove para ${file.path} (${err})`))
+    await storage.removeItem(`/${file.path}/para.json`).catch((err) => console.log(`could not remove para ${updatedFile.path} (${err})`))
 
     const yaGPTurl = 'https://300.ya.ru/api/sharing-url'
     const token = process.env.YAGPT_TOKEN || ''
@@ -119,12 +119,14 @@ export default defineEventHandler(async (event) => {
                 points.push(elementsByTagNameElement.innerHTML)
             }
 
+            console.log('points', points)
+
             const data = {
                 source: res['sharing_url'],
                 points: points
             }
 
-            await storage.setItem(`/${file.path}/para.json`, data)
+            await storage.setItem(`/${updatedFile.path}/para.json`, data)
         }, (err) => {
             console.log('err jsdom', err)
         })
