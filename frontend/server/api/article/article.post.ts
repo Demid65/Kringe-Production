@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import {getServerSession} from "#auth";
-import { JSDOM } from "jsdom";
 import {usePrisma} from "../../utils/usePrisma";
 import {useFileStorage} from "../../utils/useFileStorage";
+import {useBrowser} from "~/server/utils/useBrowser";
 
 export default defineEventHandler(async (event) => {
 
@@ -94,25 +94,32 @@ export default defineEventHandler(async (event) => {
 
     if (isOk && res && res?.status === 'success') {
 
-        await JSDOM.fromURL(res['sharing_url']).then(async (dom) => {
-            const document = dom.window.document
-            const points = []
+        try {
+            const browser = await useBrowser()
 
-            for (let elementsByTagNameElement of document.getElementsByTagName('li')) {
-                points.push(elementsByTagNameElement.innerHTML)
-            }
+            const context = await browser.newContext();
+            const page = await context.newPage();
 
-            console.log('points', points)
+            // The actual interesting bit
+            await page.goto(res.sharing_url || '');
+
+            const points = await page.locator('li').allInnerTexts()
 
             const data = {
-                source: res['sharing_url'],
+                source:  res?.sharing_url ? res.sharing_url : '',
                 points: points
             }
 
+            console.log(`generated points for ${file.id} (length: ${points.length})`)
+
             await storage.setItem(`/${path}/para.json`, data)
-        }, (err) => {
-            console.log('err jsdom', err)
-        })
+
+            // Teardown
+            await context.close();
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     return {

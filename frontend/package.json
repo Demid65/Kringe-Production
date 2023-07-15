@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.0",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
+    "playwright": "^1.36.1",
     "uuid": "^9.0.0"
   }
 }
