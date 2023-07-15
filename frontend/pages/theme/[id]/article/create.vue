@@ -23,6 +23,10 @@ const proxyContent = useState(() => ({
     title: "",
     content: ""
 }))
+const fileInput = useState(() => ({
+    file: null,
+    error: false
+}))
 
 const isWarningVisible = useState(() => true)
 const fetchState = useState(() => ({
@@ -57,6 +61,15 @@ function validateInput() {
     }
 
     return true
+}
+
+function loadFromFile() {
+    if (fileInput.value.file === null) {
+        fileInput.value.error = true
+        return
+    }
+
+    proxyContent.value.content = fileInput.value.file
 }
 
 function publishArticle() {
@@ -102,6 +115,18 @@ function publishArticle() {
         <Link v-if="colorMode.value === 'dark'" rel="stylesheet" href="/css/atom-one-dark.css" crossorigin=""/>
         <Link v-else rel="stylesheet" href="/css/atom-one-light.css" crossorigin=""/>
     </Head>
+
+    <dialog id="create_article_file_upload" class="modal">
+        <form class="modal-box">
+            <h3 class="font-bold text-lg">File Upload!</h3>
+            <DnDFIleInput v-model="fileInput.file" :error="fileInput.error" />
+            <div class="modal-action">
+                <!-- if there is a button in form, it will close the modal -->
+                <button class="btn" @click="loadFromFile()">Upload</button>
+            </div>
+        </form>
+    </dialog>
+
     <div class="flex flex-col container mx-auto px-2 h-full">
         <div class="card bg-base-200 h-full w-0 min-w-full">
             <div class="card-body p-4 gap-0">
@@ -179,6 +204,9 @@ function publishArticle() {
                     </div>
 
                     <div class="flex flex-row justify-end">
+                        <button @click="loadFromFile()">
+                            From File
+                        </button>
                         <button @click="publishArticle()" class="btn btn-sm btn-accent">
                             <span v-if="fetchState.pending" class="loading loading-spinner loading-md"></span>
                             <span v-else>Publish</span>

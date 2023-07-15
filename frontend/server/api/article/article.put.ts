@@ -107,7 +107,7 @@ export default defineEventHandler(async (event) => {
         console.log('err fetching yagpt', err)
     })
 
-    console.log(`fetched yagpt at upload article ${file.id} by ${session.id} (${res})`)
+    console.log(`fetched yagpt at upload article ${file.id} by ${session.id} (${res.status} ${res.sharing_url})`)
 
     if (isOk && res && res.status === 'success') {
 
