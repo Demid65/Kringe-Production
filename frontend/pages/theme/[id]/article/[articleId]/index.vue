@@ -30,7 +30,7 @@
         <Link v-if="colorMode.value === 'dark'" rel="stylesheet" href="/css/atom-one-dark.css" crossorigin=""/>
         <Link v-else rel="stylesheet" href="/css/atom-one-light.css" crossorigin="" />
     </Head>
-    <div class="flex flex-col container mx-auto px-2 h-full w-0 min-w-full">
+    <div class="flex flex-col container mx-auto px-2 h-full w-0 min-w-full sm:w-auto sm:min-w-0">
         <div class="card bg-base-200 h-0 min-h-full overflow-y-auto scrollbar">
             <FetchPlaceholder :pending="pending" :error="error">
                 <div class="card-body p-4 gap-0">
