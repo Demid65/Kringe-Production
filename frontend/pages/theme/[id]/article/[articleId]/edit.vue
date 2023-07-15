@@ -37,6 +37,10 @@ const proxyContent = useState(() => ({
     title: origArticle.value.title,
     content: origArticle.value.content
 }))
+const fileInput = useState(() => ({
+    file: null,
+    error: false
+}))
 
 const isWarningVisible = useState(() => true)
 const fetchState = useState(() => ({
@@ -71,6 +75,20 @@ function validateInput() {
     }
 
     return true
+}
+
+async function loadFromFile() {
+    if (fileInput.value.file === null) {
+        fileInput.value.error = true
+        return
+    }
+
+    console.log(fileInput.value.file)
+
+    proxyContent.value.content =  await fileInput.value.file[0].text()
+    update()
+
+    window['update_article_file_upload'].close()
 }
 
 function updateArticle() {
@@ -116,6 +134,21 @@ function updateArticle() {
         <Link v-if="colorMode.value === 'dark'" rel="stylesheet" href="/css/atom-one-dark.css" crossorigin=""/>
         <Link v-else rel="stylesheet" href="/css/atom-one-light.css" crossorigin=""/>
     </Head>
+
+    <dialog id="update_article_file_upload" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">File Upload</h3>
+            <DnDFIleInput v-model="fileInput.file" :error="fileInput.error" />
+            <div class="modal-action">
+                <!-- if there is a button in form, it will close the modal -->
+                <button class="btn" @click="loadFromFile()">Upload</button>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
     <div class="flex flex-col container mx-auto px-2 h-full">
         <div class="card bg-base-200 h-full w-0 min-w-full">
             <div class="card-body p-4 gap-0">
@@ -190,7 +223,10 @@ function updateArticle() {
                         </label>
                     </div>
 
-                    <div class="flex flex-row justify-end">
+                    <div class="flex flex-row justify-end gap-2">
+                        <button class="btn btn-outline btn-sm" onclick="window['update_article_file_upload'].showModal()">
+                            From File
+                        </button>
                         <button @click="updateArticle()" class="btn btn-sm btn-accent">
                             <span v-if="fetchState.pending" class="loading loading-spinner loading-md"></span>
                             <span v-else>Save</span>
