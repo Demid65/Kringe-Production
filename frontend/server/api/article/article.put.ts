@@ -107,7 +107,9 @@ export default defineEventHandler(async (event) => {
         console.log('err fetching yagpt', err)
     })
 
-    if (isOk && res) {
+    console.log(`fetched yagpt at upload article ${file.id} by ${session.id} (${res})`)
+
+    if (isOk && res && res.status === 'success') {
 
         await JSDOM.fromURL(res['sharing_url']).then(async (dom) => {
             const document = dom.window.document

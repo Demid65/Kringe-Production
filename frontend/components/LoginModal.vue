@@ -47,7 +47,6 @@ async function tryAuth(inputMode: loginModes) {
         } else {
             window[props.id].close()
             console.log('sign in', route.fullPath)
-            // location.reload()
         }
     }
 }

@@ -67,13 +67,13 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    console.log(`upload article ${path} to ${file.path} by ${session.id}`)
+    console.log(`upload article ${file.id} to ${file.path} by ${session.id}`)
 
     const yaGPTurl = 'https://300.ya.ru/api/sharing-url'
     const token = process.env.YAGPT_TOKEN || ''
 
-    const host = process.env.DOMAIN || 'https://capstone.innopolis.university/docs/weekly-tasks/weekly-tasks/week_1/'
-    const url = `/theme/${data.courseId}/article/${file.id}`
+    const host = process.env.DOMAIN || ''
+    const url = `/theme/${file.courseId}/article/${file.id}`
 
     let isOk = true
 
@@ -90,7 +90,9 @@ export default defineEventHandler(async (event) => {
         console.log('err fetching yagpt', err)
     })
 
-    if (isOk && res) {
+    console.log(`fetched yagpt at upload article ${file.id} by ${session.id} (${res})`)
+
+    if (isOk && res && res.status === 'success') {
 
         await JSDOM.fromURL(res['sharing_url']).then(async (dom) => {
             const document = dom.window.document

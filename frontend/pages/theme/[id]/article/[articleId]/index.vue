@@ -13,6 +13,13 @@
         }
     })
 
+    useSeoMeta({
+        title: article.value.title ? article.value.title + ' - UniHub' : 'UniHub',
+        ogTitle: article.value.title ? article.value.title + ' - UniHub' : 'UniHub',
+        description: 'UniHub provides a centralized space where students can collaborate, share resources, and support each other, revolutionizing the way you navigate university life.',
+        ogDescription: 'UniHub provides a centralized space where students can collaborate, share resources, and support each other, revolutionizing the way you navigate university life.',
+    })
+
     function parseMarkdown(content: any) {
         return md.render(content)
     }
@@ -20,9 +27,6 @@
 
 <template>
     <Head>
-        <Title>
-            {{ article?.title ? article.title : 'Wait' }}
-        </Title>
         <Link v-if="colorMode.value === 'dark'" rel="stylesheet" href="/css/atom-one-dark.css" crossorigin=""/>
         <Link v-else rel="stylesheet" href="/css/atom-one-light.css" crossorigin="" />
     </Head>
