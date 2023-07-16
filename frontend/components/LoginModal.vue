@@ -92,7 +92,7 @@ function validateInput(inputMode: loginModes) {
                 <div>
                     <input type="text" :class="`input w-full bg-base-300 ${creds.usernameValid ? '' : 'input-error'}`" name="username" v-model="creds.username" placeholder="username">
                     <label v-if="!creds.usernameValid" class="label p-0 mt-1">
-                        <span class="label-text text-error">3+ chars and match /^[a-zA-Zа-яА-Я\d\-_]{3,30}$/</span>
+                        <span class="label-text text-error">[3, 30] chars and match /^[a-zA-Zа-яА-Я\d\-_]{3,30}$/</span>
                     </label>
                 </div>
                 <div>
@@ -127,7 +127,7 @@ function validateInput(inputMode: loginModes) {
                 <div>
                     <input type="text" :class="`input w-full bg-base-300 ${creds.usernameValid ? '' : 'input-error'}`" name="username" v-model="creds.username" placeholder="username">
                     <label v-if="!creds.usernameValid" class="label p-0 mt-1">
-                        <span class="label-text text-error">3+ chars and match /^[a-zA-Zа-яА-Я\d\-_]{3,30}$/</span>
+                        <span class="label-text text-error">[3, 30] chars and match /^[a-zA-Zа-яА-Я\d\-_]{3,30}$/</span>
                     </label>
                 </div>
                 <div>
