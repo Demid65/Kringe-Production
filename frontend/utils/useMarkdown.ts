@@ -5,6 +5,7 @@ import containerPlugin from 'markdown-it-container';
 const md = new MarkdownIt({
     breaks: true,
     linkify: true,
+    typographer: true,
     highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
             try {
