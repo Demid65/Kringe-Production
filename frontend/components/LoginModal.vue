@@ -56,6 +56,8 @@ function validateInput(inputMode: loginModes) {
     creds.value.passwordValid = true
     creds.value.repeatPasswordValid = true
 
+    const regex = /^[a-zA-Zа-яА-Я\d\-_]{3,30}$/
+
     if(creds.value.password.length < 3) {
         creds.value.passwordValid = false
         return false
@@ -64,7 +66,7 @@ function validateInput(inputMode: loginModes) {
         creds.value.repeatPasswordValid = false
         return false
     }
-    if(creds.value.username.length < 3) {
+    if(creds.value.username.length < 3 || creds.value.username.length > 30 || !regex.test(creds.value.username)) {
         creds.value.usernameValid = false
         return false
     }
@@ -90,7 +92,7 @@ function validateInput(inputMode: loginModes) {
                 <div>
                     <input type="text" :class="`input w-full bg-base-300 ${creds.usernameValid ? '' : 'input-error'}`" name="username" v-model="creds.username" placeholder="username">
                     <label v-if="!creds.usernameValid" class="label p-0 mt-1">
-                        <span class="label-text text-error">3+ chars</span>
+                        <span class="label-text text-error">3+ chars and match /^[a-zA-Zа-яА-Я\d\-_]{3,30}$/</span>
                     </label>
                 </div>
                 <div>
@@ -125,7 +127,7 @@ function validateInput(inputMode: loginModes) {
                 <div>
                     <input type="text" :class="`input w-full bg-base-300 ${creds.usernameValid ? '' : 'input-error'}`" name="username" v-model="creds.username" placeholder="username">
                     <label v-if="!creds.usernameValid" class="label p-0 mt-1">
-                        <span class="label-text text-error">3+ chars</span>
+                        <span class="label-text text-error">3+ chars and match /^[a-zA-Zа-яА-Я\d\-_]{3,30}$/</span>
                     </label>
                 </div>
                 <div>
