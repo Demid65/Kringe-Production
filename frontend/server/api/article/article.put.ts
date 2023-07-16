@@ -110,7 +110,7 @@ export default defineEventHandler(async (event) => {
 
     console.log(`fetched yagpt at upload article ${file.id} by ${session.id} (${res?.status} ${res?.sharing_url})`)
 
-    if (isOk && res && res.status === 'success') {
+    if (true) {
 
         try {
             const browser = await useBrowser()
@@ -119,7 +119,7 @@ export default defineEventHandler(async (event) => {
             const page = await context.newPage();
 
             // The actual interesting bit
-            await page.goto(res.sharing_url || '');
+            await page.goto(res?.sharing_url || 'https://300.ya.ru/dGxRCx56');
 
             // console.log(await page.content())
 

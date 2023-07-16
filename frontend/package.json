@@ -13,7 +13,6 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.7.2",
-    "@playwright/test": "^1.36.1",
     "@sidebase/nuxt-auth": "0.5.0",
     "@types/node": "^18",
     "daisyui": "^3.1.0",
