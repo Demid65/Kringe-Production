@@ -3,7 +3,6 @@ import hljs from "highlight.js";
 import containerPlugin from 'markdown-it-container';
 
 const md = new MarkdownIt({
-    html: true,
     breaks: true,
     linkify: true,
     highlight: function (str, lang) {
