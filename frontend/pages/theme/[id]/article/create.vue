@@ -126,7 +126,6 @@ function publishArticle() {
             <h3 class="font-bold text-lg">File Upload</h3>
             <DnDFIleInput v-model="fileInput.file" :error="fileInput.error" />
             <div class="modal-action">
-                <!-- if there is a button in form, it will close the modal -->
                 <button class="btn" @click="loadFromFile()">Upload</button>
             </div>
         </div>

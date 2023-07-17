@@ -6,6 +6,7 @@ export const routesMap = {
     discussionMessages: '/api/discussion/messages', // GET
     createDiscussion: '/api/discussion/discussion', // POST
     createMessage: '/api/discussion/discussion', // PUT
+    editMessage: '/api/discussion/message', // PUT
     getFile: '/api/file/file', // GET
     uploadFile: '/api/file/file', // POST
     deleteFile: '/api/file/file', // DELETE

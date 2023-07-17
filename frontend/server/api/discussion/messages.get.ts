@@ -48,7 +48,20 @@ export default defineEventHandler(async (event) => {
                         id: true,
                         username: true
                     }
-                }
+                },
+                replyTarget: {
+                    select: {
+                        id: true,
+                        content: true,
+                        author: {
+                            select: {
+                                id: true,
+                                username: true
+                            }
+                        }
+                    }
+                },
+                edited: true
             }
         })
     } catch (e) {

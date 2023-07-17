@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const session = await getServerSession(event)
 
     if (data === undefined) {
-        console.log(`400 create discussion (course: ${data.courseId})`)
+        console.log(`400 edit message (course: ${data.courseId})`)
         throw createError({
             statusCode: 400,
             statusMessage: 'Invalid payload'
@@ -15,40 +15,20 @@ export default defineEventHandler(async (event) => {
     }
 
     if (!session) {
-        console.log(`403 create discussion (course: ${data.courseId})`)
+        console.log(`403 edit message (course: ${data.courseId})`)
         throw createError({
             statusCode: 403,
             statusMessage: 'Unauthenticated'
         })
     }
 
-
     const prisma = usePrisma()
-
-    let theme
-    try {
-        theme = await prisma.discussionTheme.create({
-            data: {
-                title: data.title,
-                courseId: Number.parseInt(data.courseId),
-                authorId: Number.parseInt(session.id)
-            }
-        })
-    } catch (e) {
-        console.log(e)
-        throw createError({
-            statusCode: 500,
-            statusMessage: 'Something went wrong'
-        })
-    }
 
     let message
     try {
-        message = await prisma.discussionMessage.create({
-            data: {
-                themeId: theme.id,
-                authorId: Number.parseInt(session.id),
-                content: data.message,
+        message = await prisma.discussionMessage.findUnique({
+            where: {
+                id: Number.parseInt(data.messageId)
             }
         })
     } catch (e) {
@@ -59,10 +39,42 @@ export default defineEventHandler(async (event) => {
         })
     }
 
+    if (!message) {
+        console.log(`404 edit message (message: ${data.messageId})`)
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Message not found'
+        })
+    }
 
+    if (session.id !== message.authorId) {
+        console.log(`403 edit message (message: ${message.id}) (user: ${session.id})`)
+        throw createError({
+            statusCode: 403,
+            statusMessage: 'Unauthorized'
+        })
+    }
 
-    console.log(`create discussion ${theme.id} ${message}`)
+    try {
+        message = await prisma.discussionMessage.update({
+            where: {
+                id: data.messageId
+            },
+            data: {
+                content: data.message,
+                edited: true
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Something went wrong'
+        })
+    }
 
-    return theme
+    console.log(`edit message ${message.id} (user: ${session.id})`)
+
+    return message
 
 })

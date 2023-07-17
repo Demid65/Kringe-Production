@@ -20,14 +20,19 @@ const fetchState = useState(() => ({
     errorMessage: ''
 }))
 
-const textRows = useState(() => countRows(initMessage.value.data))
 
 const { status, data } = useAuth()
 
 
-function countRows(text: string) {
-    let rows = text.split(/\r\n|\r|\n/).length
-    return rows
+function countRows() {
+
+    const input = document.getElementById('message_input')
+
+    if (input.scrollHeight > input.clientHeight) {
+        input.style.height = `${input.scrollHeight}px`
+    } else {
+        input.style.height = null;
+    }
 }
 
 function validateInput() {
@@ -115,11 +120,12 @@ function createDiscussion() {
                 </div>
                 <div>
                     <textarea
-                        :class="`textarea w-full bg-base-300 resize-none ${initMessage.isValid ? '' : 'textarea-error'}`"
+                        :class="`textarea w-full bg-base-300 resize-none scrollbar ${initMessage.isValid ? '' : 'textarea-error'}`"
+                        id="message_input"
                         v-model="initMessage.data"
                         placeholder="Your message"
-                        :rows="textRows"
-                        @input="() => {textRows = countRows(initMessage.data)}"
+                        rows="1"
+                        @input="countRows()"
                     ></textarea>
                     <label v-if="!initMessage.isValid" class="label p-0 mt-1">
                         <span class="label-text text-error">3+ chars</span>

@@ -24,15 +24,14 @@ export default defineEventHandler(async (event) => {
 
     const prisma = usePrisma()
 
-
-
     let message
     try {
         message = await prisma.discussionMessage.create({
             data: {
                 themeId: Number.parseInt(data.themeId),
                 authorId: session.id,
-                content: data.message
+                content: data.message,
+                replyTargetId: data.replyId
             }
         })
     } catch (e) {

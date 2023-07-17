@@ -97,6 +97,13 @@ model DiscussionMessage {
 
   author   User @relation(fields: [authorId], references: [id])
   authorId Int
+
+  edited Boolean @default(false)
+
+  replies DiscussionMessage[] @relation("reply")
+
+  replyTarget DiscussionMessage? @relation("reply", fields: [replyTargetId], references: [id])
+  replyTargetId Int?
 }
 
 model Article {
