@@ -8,6 +8,7 @@ export const routesMap = {
     createMessage: '/api/discussion/discussion', // PUT
     getFile: '/api/file/file', // GET
     uploadFile: '/api/file/file', // POST
+    deleteFile: '/api/file/file', // DELETE
     uploadArticle: '/api/article/article', // POST
     deleteArticle: '/api/article/article', // DELETE
     updateArticle: '/api/article/article', // PUT

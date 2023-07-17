@@ -92,7 +92,7 @@ export default defineEventHandler(async (event) => {
                 id: true,
                 title: true,
                 author: true,
-                courseId: true
+                course: true
             }
         })
     } catch (e) {

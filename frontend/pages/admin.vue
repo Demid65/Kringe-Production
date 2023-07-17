@@ -86,6 +86,20 @@ function deleteArticle(id) {
     })
 }
 
+function deleteFile(id) {
+    $fetch(routesMap['deleteFile'], {
+        method: 'DELETE',
+        body: {
+            fileId: id
+        }
+    }).then((val) => {
+        console.log(`deleted file ${val}`)
+        articlesRefresh()
+    }, (err) => {
+        console.log(err.data)
+    })
+}
+
 function deleteCourse(id) {
     $fetch(routesMap['editCourses'], {
         method: 'DELETE',
@@ -236,7 +250,7 @@ const debouncedSearch = debounce(search, 300)
                                     class="card bg-base-300 border border-base-300 break-words hover:border-accent w-0 min-w-full">
                                     <div class="card-body p-6">
                                         <h2 class="card-title text-lg break-all w-0 min-w-full">{{ article.title }}</h2>
-                                        <p>by {{ article.author.username }}</p>
+                                        <p>by {{ article.author.username }} in {{ article.course.title }}</p>
                                         <div class="card-actions justify-end">
                                             <NuxtLink :to="`/theme/${article.courseId}/article/${article.id}`">
                                                 <button class="btn btn-sm btn-outline">Open</button>
@@ -263,13 +277,42 @@ const debouncedSearch = debounce(search, 300)
 
 
                 <template v-if="category === 'FILES'">
-                    <div class="hero min-h-full bg-base-200">
-                        <div class="hero-content text-center">
-                            <div class="max-w-md">
-                                <h1 class="text-5xl font-bold">There will be admin tools for files</h1>
-                            </div>
+                    <FetchPlaceholder :pending="articlesPending" :error="articlesError">
+                        <input type="text" class="input bg-base-300 my-2 border border-accent flex-none"
+                               @input="debouncedSearch()" v-model="searchString.proxy" placeholder="search...">
+
+                        <div class="flex flex-col gap-2 h-0 min-h-full">
+                            <template
+                                v-for="file in articlesData.files.filter((el) => el.title.toLowerCase().includes(searchString.search))">
+                                <div
+                                    class="card bg-base-300 border border-base-300 break-words hover:border-accent w-0 min-w-full">
+                                    <div class="card-body p-6">
+                                        <h2 class="card-title text-lg break-all w-0 min-w-full">{{ file.title }}
+                                            ({{ file.type }})</h2>
+                                        <p>by {{ file.author.username }} in {{ file.course.title }}</p>
+                                        <div class="card-actions justify-end">
+                                            <a :href="`${routesMap['getFile']}?fileId=${file.id}`"
+                                               :download="`${file.title}.${file.type}`">
+                                                <button class="btn btn-sm btn-outline">Download</button>
+                                            </a>
+                                            <button class="btn btn-sm btn-error" @click="deleteFile(file.id)">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <template v-if="articlesData.articles.length === 0">
+                                <div class="hero min-h-full bg-base-200">
+                                    <div class="hero-content text-center">
+                                        <div class="max-w-md">
+                                            <h1 class="text-5xl font-bold">No file</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
                         </div>
-                    </div>
+                    </FetchPlaceholder>
                 </template>
 
                 <template v-if="category === 'COURSES'">
