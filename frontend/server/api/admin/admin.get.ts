@@ -1,11 +1,15 @@
 import {usePrisma} from "../../utils/usePrisma";
 import {getServerSession} from "#auth";
+import {useSettingsStorage} from "~/server/utils/useFileStorage";
 
 export default defineEventHandler(async (event) => {
 
     const query = getQuery(event)
     const session = await getServerSession(event)
 
+    const settingsStorage = useSettingsStorage()
+
+    const featuredArticleId = await settingsStorage.getItem('main:featuredArticleId')
 
     if (!session || session.role !== 'ADMIN') {
         console.log(`403 admin panel (user: ${session?.id || 'none'})`)
@@ -104,6 +108,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const data = {
+        featuredArticleId: featuredArticleId,
         files: await files,
         articles: await articles
     }

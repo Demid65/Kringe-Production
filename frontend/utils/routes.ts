@@ -16,5 +16,6 @@ export const routesMap = {
     adminPanel: '/api/admin/admin', // GET
     profile: '/api/data/profile', // GET
     editCourses: '/api/course/course', // POST DELETE
-    editYears: '/api/year/year' // POST DELETE
+    editYears: '/api/year/year', // POST DELETE
+    editFeatured: '/api/admin/featured' // PUT
 }

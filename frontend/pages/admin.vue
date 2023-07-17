@@ -164,7 +164,7 @@ function deleteYear(id) {
 }
 
 function createYear() {
-    if (newYear.value === "") {
+    if (newYear.value.title === "") {
         return
     }
 
@@ -194,6 +194,20 @@ function updateYear() {
     }).then((val) => {
         console.log(`updated years ${val}`)
         coursesRefresh()
+    }, (err) => {
+        console.log(err.data)
+    })
+}
+
+function updateFeatured(id) {
+    $fetch(routesMap['editFeatured'], {
+        method: 'PUT',
+        body: {
+            articleId: id
+        }
+    }).then((val) => {
+        console.log(`updated featured ${val}`)
+        articlesRefresh()
     }, (err) => {
         console.log(err.data)
     })
@@ -252,6 +266,11 @@ const debouncedSearch = debounce(search, 300)
                                         <h2 class="card-title text-lg break-all w-0 min-w-full">{{ article.title }}</h2>
                                         <p>by {{ article.author.username }} in {{ article.course.title }}</p>
                                         <div class="card-actions justify-end">
+                                            <button
+                                                :class="`btn btn-sm btn-outline ${articlesData.featuredArticleId === article.id ? 'btn-disabled' : '' }`"
+                                                @click="updateFeatured(article.id)">
+                                                Set as featured
+                                            </button>
                                             <NuxtLink :to="`/theme/${article.courseId}/article/${article.id}`">
                                                 <button class="btn btn-sm btn-outline">Open</button>
                                             </NuxtLink>
