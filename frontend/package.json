@@ -1,0 +1,33 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "start": "NODE_ENV=production node .output/server/index.mjs",
+    "dev": "nuxt dev",
+    "migrate": "prisma migrate deploy",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/tailwindcss": "^6.7.2",
+    "@sidebase/nuxt-auth": "0.5.0",
+    "@types/node": "^18",
+    "daisyui": "^3.1.0",
+    "nuxt": "^3.5.2",
+    "prisma": "^4.16.2"
+  },
+  "dependencies": {
+    "@nuxtjs/color-mode": "^3.3.0",
+    "@prisma/client": "^4.16.2",
+    "bcrypt": "^5.1.0",
+    "highlight.js": "^11.8.0",
+    "jsdom": "^22.1.0",
+    "jsonwebtoken": "^9.0.0",
+    "markdown-it": "^13.0.1",
+    "markdown-it-container": "^3.0.0",
+    "uuid": "^9.0.0"
+  }
+}

@@ -1,0 +1,22 @@
+.scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-accent bg-opacity-30;
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent;
+}
+
+.scrollbar::-webkit-scrollbar {
+    @apply w-1;
+}
+.scrollbar::-webkit-scrollbar-button:single-button:vertical {
+    @apply w-0 h-4 bg-transparent;
+}
+
+.scrollbar {
+    scrollbar-color: #737373 transparent;
+    scrollbar-width: thin;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent bg-clip-border  border-y-4 border-transparent;
+}

@@ -1,0 +1,5 @@
+/* purgecss start ignore */
+.article-block h1 {
+    @apply mt-4 text-lg text-accent;
+}
+/* purgecss end ignore */

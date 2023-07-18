@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum FileCategory {
+  LECTURES
+  TUTORIALS
+  LABS
+  SHARED
+  EXAMS
+  ADDITIONAL
+  INFO
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  password String
+  role     UserRole @default(USER)
+
+  files    File[]
+  article  Article[]
+  themes   DiscussionTheme[]
+  messages DiscussionMessage[]
+}
+
+model Course {
+  id    Int    @id @default(autoincrement())
+  title String @unique
+
+  year   Years @relation(fields: [yearId], references: [id])
+  yearId Int
+
+  files    File[]
+  articles Article[]
+
+  themes DiscussionTheme[]
+}
+
+model Years {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  priority Int @default(0)
+
+  courses Course[]
+}
+
+model File {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  category FileCategory @default(SHARED)
+
+  path String
+  type String @default("FILE")
+}
+
+model DiscussionTheme {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  messages DiscussionMessage[]
+}
+
+model DiscussionMessage {
+  id      Int    @id @default(autoincrement())
+  content String
+
+  theme   DiscussionTheme @relation(fields: [themeId], references: [id])
+  themeId Int
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  edited Boolean @default(false)
+
+  replies DiscussionMessage[] @relation("reply")
+
+  replyTarget DiscussionMessage? @relation("reply", fields: [replyTargetId], references: [id])
+  replyTargetId Int?
+}
+
+model Article {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  path String
+}
