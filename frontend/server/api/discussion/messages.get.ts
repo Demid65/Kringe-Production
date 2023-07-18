@@ -46,7 +46,8 @@ export default defineEventHandler(async (event) => {
                 author: {
                     select: {
                         id: true,
-                        username: true
+                        username: true,
+                        role: true
                     }
                 },
                 replyTarget: {
@@ -56,7 +57,8 @@ export default defineEventHandler(async (event) => {
                         author: {
                             select: {
                                 id: true,
-                                username: true
+                                username: true,
+                                role: true
                             }
                         }
                     }
